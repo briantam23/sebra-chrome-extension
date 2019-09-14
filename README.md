@@ -14,7 +14,7 @@ A Libra Cryptocurrency Payment app developed with the aim of creating a simple U
 * [Installation](#installation)
 * [Running Locally](#running-locally)
 * [Tests](#tests)
-* [Contact](#contact)
+* [Contributors](#contributors)
 
 ## Motivation
 
