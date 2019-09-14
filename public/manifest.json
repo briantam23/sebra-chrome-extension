@@ -1,25 +1,17 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
-  "icons": [
-    {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+    "manifest_version": 2,
+    "name": "Sebra",
+    "author": "Brian Tam, Sydney Lai, & Allen Shegay",
+    "version": "1.0.1",
+    "description": "A Libra Cryptocurrency Payment app developed with the aim of creating a simple UX that allows users to make simple transactions without the complexities of dealing with public / private keys.A Libra Cryptocurrency Payment app developed with the aim of creating a simple UX that allows users to make simple transactions without the complexities of dealing with public / private keys.",
+    "browser_action": {
+      "default_popup": "index.html"
     },
-    {
-      "src": "logo192.png",
-      "type": "image/png",
-      "sizes": "192x192"
+    "icons": {
+      "16": "16.png",
+      "48": "48.png",
+      "128": "128.png"
     },
-    {
-      "src": "logo512.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    }	    
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+    "permissions": [
+    ]
 }
