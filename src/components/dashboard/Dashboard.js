@@ -26,59 +26,44 @@ const useStyles = makeStyles(theme => ({
   },
   paperLeftContainer: { 
     padding: theme.spacing(3, 3),
-    height: '325px',
-    marginTop: '70px',
-    [theme.breakpoints.down('1080')]: {
-      height: '350px',
-      marginTop: '13px'
-    }  
+    height: '350px',
+    marginTop: '13px'
   },
   headerContainer: {
     width: '100%',
     /* maxWidth: 500, */
-    margin: '40px 0px',
-    [theme.breakpoints.down('1080')]: { margin: '0px' }  
+    margin: '0px'
   },
   header1: {
-    [theme.breakpoints.down('1080')]: { fontSize: '45px' }  
+    ontSize: '45px'
   },
   header2: {
-    margin: '65px 0px',
-    fontWeight: 250,
-    [theme.breakpoints.down('1080')]: { 
-      margin: '30px 0px 110px',
-      fontSize: '22px'
-    }
+    margin: '30px 0px 110px',
+    fontSize: '22px'
   },
   balanceContainer: { textAlign: 'right' },
-  balance: { [theme.breakpoints.down('1080')]: { fontSize: '40px' } },
+  balance: { fontSize: '40px' },
   rightContainer: {
     display: 'flex',
     justifyContent: 'space-between',
     margin: 'auto',
     width: '50%',
-    [theme.breakpoints.down('1080')]: { marginRight: '40px' } 
+    marginRight: '40px'
   },
   paperRightContainer: {
     padding: theme.spacing(3, 3),
     backgroundColor: 'rgba(250,250,250)',
-    height: '230px',
-    marginTop: '100px',
-    [theme.breakpoints.down('1080')]: {
-      height: '180px',
-      width: '380px',
-      marginTop: '-4px'
-    }  
+    height: '180px',
+    width: '380px',
+    marginTop: '-4px'
   },
   margin: { margin: theme.spacing(1) },
   textField: {
     /* flexBasis: 200, */
-    width: '400',
-    [theme.breakpoints.down('1080')]: { width: '367px' }  
+    width: '367px'
   },
   error: { 
-    margin: '-1px 0px 10px 8px',
-    [theme.breakpoints.down('1080')]: { margin: '-1px 0px 0px 8px' }  
+    margin: '-1px 0px 0px 8px'
   }
 }));
 

@@ -23,35 +23,24 @@ const useStyles = makeStyles(theme => ({
     marginTop: '1.5%'
   },
   paperContainer: { 
-    padding: theme.spacing(3, 3),
-    [theme.breakpoints.down('1080')]: {
-      height: '394px',
-      marginTop: '-4px'
-    } 
+    padding: '12px 12px',
+    height: '394px',
+    marginTop: '-4px'
   },
   headerContainer: {
     width: '100%',
     maxWidth: 500,
-    margin: '20px 0px',
-    [theme.breakpoints.down('1080')]: {
-      margin: '10px 0px',
-    }
+    margin: '10px 0px'
   },
   header1: {
     marginLeft: '8px',
-    [theme.breakpoints.down('1080')]: {
-      margin: '-13px 0px',
-      fontSize: '45px'
-    }
+    margin: '-13px 0px',
+    fontSize: '33px'
   },
   header2: {
-    margin: '45px 0px 45px 13px',
-    fontWeight: 250,
-    [theme.breakpoints.down('1080')]: {
-      margin: '40px 0px -13px 13px',
-      fontWeight: '240',
-      fontSize: '25px'
-    }
+    margin: '40px 0px -13px 13px',
+    fontWeight: '240',
+    fontSize: '23px'
   },
   formContainer1: {
     backgroundColor: 'white'
@@ -61,9 +50,8 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column'
   },
   formControl: {
-    margin: theme.spacing(1),
+    margin: '0px 8px',
     width: '93%',
-    [theme.breakpoints.down('1080')]: { margin: '0px 8px' }
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -72,10 +60,8 @@ const useStyles = makeStyles(theme => ({
   },
   error: {
     marginLeft: '8px',
-    [theme.breakpoints.down('1080')]: { 
-      marginBottom: '-15px',
-      marginTop: '0px'
-    }
+    marginBottom: '-15px',
+    marginTop: '0px'
   },
   textFieldType: {
     marginLeft: theme.spacing(1),
@@ -91,25 +77,19 @@ const useStyles = makeStyles(theme => ({
   },
   button: {
     textAlign: 'right',
-    marginTop: '41px',
-    marginLeft: '76%',
-    fontSize: '19px',
-    padding: '20px 40px',
-    [theme.breakpoints.down('1080')]: {
-      marginTop: '20px',
-      marginLeft: '80%',
-      fontSize: '12px',
-      padding: '8px 8px'
-    }
+    marginTop: '20px',
+    marginLeft: '80%',
+    fontSize: '12px',
+    padding: '8px 8px'
   },
-  link: {
+  linkParent: {
+    margin: '5px 0px 0px'
+  },
+  linkChild: {
     textDecoration: 'none',
-    marginLeft: '19px',
-    [theme.breakpoints.down('1080')]: {
-      marginTop: '20px',
-      marginLeft: '16px',
-      fontSize: '12px',
-    }
+    marginTop: '20px',
+    marginLeft: '16px',
+    fontSize: '12px'
   }
 }));
 
@@ -226,8 +206,8 @@ const Auth = ({ pathname, params, history }) => {
           </form>
           { 
             pathname.slice(0, 6) === '/login' 
-            ? <Typography variant="body2" align="left">
-                <Link to={`/create-account/${recipientAddress}/${chargeAmount}`} className={classes.link}>New to Sebra? Create your account here.</Link>
+            ? <Typography className={classes.linkParent} variant="body2" align="left">
+                <Link to={`/create-account/${recipientAddress}/${chargeAmount}`} className={classes.linkChild}>New to Sebra? Create your account here.</Link>
               </Typography> 
             : null
           }

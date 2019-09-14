@@ -1,7 +1,7 @@
 {
   "name": "sebra",
   "version": "0.1.0",
-  "description": "A Libra Cryptocurrency Payment app developed with the aim of creating a simple UX that allows users to make simple transactions without the complexities of dealing with public / private keys.A Libra Cryptocurrency Payment app developed with the aim of creating a simple UX that allows users to make simple transactions without the complexities of dealing with public / private keys.",
+  "description": "A Libra Cryptocurrency Payment app developed with the aim of creating a simple UX that allows users to make simple transactions without the complexities of dealing with public / private keys.",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.3.2",

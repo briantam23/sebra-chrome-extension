@@ -12,28 +12,22 @@ import Button from '@material-ui/core/Button';
 const useStyles = makeStyles(theme => ({
   root: { flexGrow: 1, },
   nav: {
-    [theme.breakpoints.down('1080')]: {
-      marginTop: '-8px',
-      minHeight: '45px'
-    }
+    marginTop: '-8px',
+    minHeight: '45px'
   },
   title: { 
     flexGrow: 1,
     fontSize: '27px',
-    [theme.breakpoints.down('1080')]: {
-      marginTop: '8px',
-      fontSize: '18px'
-    } 
+    marginTop: '8px',
+    fontSize: '18px'
   },
   link: {
     color: 'white',
     textDecoration: 'none'
   },
   button: {
-    [theme.breakpoints.down('1080')]: {
-      fontSize: '12px',
-      margin: '9px -9px 0px 0px'
-    } 
+    fontSize: '12px',
+    margin: '9px -9px 0px 0px'
   }
 }));
 

@@ -1,68 +1,62 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# 🦓 Libra Cryptocurrency Payment Chrome Extension
 
-## Available Scripts
+A Libra Cryptocurrency Payment app developed with the aim of creating a simple UX that allows users to make simple transactions without the complexities of dealing with public / private keys.
 
-In the project directory, you can run:
+![Auth page screenshot](./public/screenshots/auth_page.png)
 
-### `npm start`
+## Table of contents
+* [Motivation](#motivation)
+* [What is Libra?](#what-is-twilio?)
+* [Login Credentials](#login-credentials)
+* [Live Demo](#live-demo)
+* [Dependencies](#dependencies)
+* [Requirements](#requirements)
+* [Installation](#installation)
+* [Running Locally](#running-locally)
+* [Tests](#tests)
+* [Contact](#contact)
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Motivation
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## What is Libra?
+Libra is a permissioned blockchain digital currency proposed by the American social media company Facebook. The project, currency and transactions are to be managed and cryptographically entrusted to the Libra Association, a membership organization founded by Facebook's subsidiary Calibra and 27 others across payment, technology, telecommunication, online marketplace, venture capital and nonprofits. The currency and network do not yet exist, and only rudimentary experimental code has been released.[2] The launch is planned to be in 2020
 
-### `npm test`
+## Login Credentials
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Live Demo
 
-### `npm run build`
+## Dependencies
+* [React](https://reactjs.org)
+* [Redux](https://redux.js.org)
+* [Material-UI](https://material-ui.com/)
+* [Axios](https://github.com/axios/axios)
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Requirements
+* [Node.js (v10.16.0)](https://nodejs.org/en/)
+* [Git](https://git-scm.com/downloads)
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+## Installation
+Step 1: Clone Repo
+```sh
+git clone https://github.com/briantam23/sebra-chrome-extension.git` # or clone your own fork
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Step 2: Install `node_modules`
+```sh
+npm install # or yarn install
+```
 
-### `npm run eject`
+## Running Locally
+1. Run `npm run build` to put everything required into build folder, then launch `chrome://extensions/` in Google Chrome.
+2. On the upper-right hand side of the window, make sure developer mode is on.
+3. Click “Load unpacked” and open the “build” folder in this project, it should contain `index.html`, `manifest.json`, different sizes of logos, and bundled JavaScript files.
+4. If you have already published a version in production and you are testing a newer version, you should also disable the production version.
+5. To update the extension, run `npm build again`, and click the “Refresh” button.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Tests
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Contributors
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+> [Brian Tam](https://github.com/briantam23) <br/>
+> [Sydney Lai](https://github.com/sydneylai) <br/>
+> [Allen Shegay](https://github.com/jnsead)

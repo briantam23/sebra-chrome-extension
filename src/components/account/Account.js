@@ -17,27 +17,20 @@ const useStyles = makeStyles(theme => ({
   },
   paperContainer: { 
     padding: theme.spacing(3, 2),
-    [theme.breakpoints.down('1080')]: {
-      height: '394px',
-      marginTop: '-4px'
-    }  
+    height: '394px',
+    marginTop: '-4px'
   },
   headerContainer: {
     width: '100%',
     maxWidth: 500,
-    margin: '40px 0px',
-    [theme.breakpoints.down('1080')]: { margin: '0px' }  
+    margin: '0px'
   },
   header1: {
-    [theme.breakpoints.down('1080')]: { fontSize: '45px' }  
+    fontSize: '45px'
   },
   header2: {
-    margin: '65px 0px',
-    fontWeight: 250,
-    [theme.breakpoints.down('1080')]: { 
-      margin: '40px 0px',
-      fontSize: '22px'
-    }
+    margin: '40px 0px',
+    fontSize: '22px'
   },
   balanceContainer: {
     width: '50%',
@@ -46,14 +39,10 @@ const useStyles = makeStyles(theme => ({
   },  
   balance: {
     display: 'inline-block',
-    fontSize: '75px',
-    lineHeight: '225px',
+    fontSize: '50px',
+    lineHeight: '125px',
     textAlign: 'center',
-    paddingTop: '7px',
-    [theme.breakpoints.down('1080')]: { 
-      fontSize: '50px',
-      lineHeight: '125px'
-    }
+    paddingTop: '7px'
   },
   emojiContainer: {
     width: '50px',
@@ -63,24 +52,16 @@ const useStyles = makeStyles(theme => ({
   emoji: {
     display: 'inline-block',
     fontSize: '75px',
-    lineHeight: '225px',
+    lineHeight: '170px',
     textAlign: 'center',
     paddingTop: '7px',
-    [theme.breakpoints.down('1080')]: { lineHeight: '170px' }
   },
   button: {
+    padding: '10px 20px',
+    fontSize: '17px',
+    marginTop: '-22px',
     textAlign: 'right',
-    marginTop: '41px',
-    marginLeft: '67%',
-    fontSize: '19px',
-    padding: '15px 35px',
-    [theme.breakpoints.down('1080')]: { 
-      padding: '10px 20px',
-      fontSize: '17px',
-      marginTop: '-22px',
-      textAlign: 'right',
-      marginLeft: '70%'
-    }
+    marginLeft: '70%'
   },
 }));
 
