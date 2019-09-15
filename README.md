@@ -2,7 +2,7 @@
 
 A Libra Cryptocurrency Payment app developed with the aim of creating a simple UX that allows users to make simple transactions without the complexities of dealing with public / private keys.
 
-![Auth page screenshot](./public/screenshots/auth_page.png)
+![Auth page screenshot](./public/img/screenshots/auth_page.png)
 
 ## Table of contents
 * [Motivation](#motivation)

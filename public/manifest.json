@@ -8,9 +8,9 @@
       "default_popup": "index.html"
     },
     "icons": {
-      "16": "16.png",
-      "48": "48.png",
-      "128": "128.png"
+      "16": "img/icons/16.png",
+      "48": "img/icons/48.png",
+      "128": "img/icons/128.png"
     },
     "permissions": [
     ]
