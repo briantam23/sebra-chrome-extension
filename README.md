@@ -1,6 +1,6 @@
-# 🦓 Libra Cryptocurrency Payment Chrome Extension
+# 🦓 Libra Cryptocurrency Micropayment Chrome Extension
 
-A Libra Cryptocurrency Payment app developed with the aim of creating a simple UX that allows users to make simple transactions without the complexities of dealing with public / private keys.
+A Libra Cryptocurrency Micropayment Chrome Extension developed with the aim of creating a simple UX that allows readers to bypass paywalls without a paid subscription or access free articles without ads via Libra micropayments. 
 
 ![Auth page screenshot](./public/img/screenshots/auth_page.png)
 

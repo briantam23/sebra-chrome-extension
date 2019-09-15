@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
+    <title>wallet</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M20,13 L20,16 L0,16 L0,13 L20,13 Z M20,9 L20,12 L11,12 L11,9 L20,9 Z M16,0 L16,2 L0,2 L0,0 L16,0 Z" id="path-1"></path>
+        <path d="M16,0 C17.1045695,0 18,0.8954305 18,2 L18,4 L20,4 C21.1045695,4 22,4.8954305 22,6 L22,18 C22,19.1045695 21.1045695,20 20,20 L2,20 C0.8954305,20 0,19.1045695 0,18 L0,2 C0,0.8954305 0.8954305,0 2,0 L16,0 Z M20,6 L2,6 L2,18 L20,18 L20,16 L12,16 C11.4477153,16 11,15.5522847 11,15 L11,9 C11,8.44771525 11.4477153,8 12,8 L20,8 L20,6 Z M20,10 L13,10 L13,14 L20,14 L20,10 Z M15,11 C15.5522847,11 16,11.4477153 16,12 C16,12.5522847 15.5522847,13 15,13 C14.4477153,13 14,12.5522847 14,12 C14,11.4477153 14.4477153,11 15,11 Z M16,2 L2,2 L2,4 L16,4 L16,2 Z" id="path-3"></path>
+    </defs>
+    <g id="wallet" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(1.000000, 2.000000)">
+            <g id="Color/Fill" transform="translate(1.000000, 3.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Mask" fill="#D8D8D8" xlink:href="#path-1"></use>
+                <g mask="url(#mask-2)" fill="#FFA0A0">
+                    <g transform="translate(-2.000000, -5.000000)">
+                        <rect x="0" y="0" width="24" height="24"></rect>
+                    </g>
+                </g>
+            </g>
+            <g id="Color/Stroke">
+                <mask id="mask-4" fill="white">
+                    <use xlink:href="#path-3"></use>
+                </mask>
+                <use id="Mask" fill="#000000" fill-rule="nonzero" xlink:href="#path-3"></use>
+                <g mask="url(#mask-4)" fill="#7600FF">
+                    <g transform="translate(-1.000000, -2.000000)">
+                        <rect x="0" y="0" width="24" height="24"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
