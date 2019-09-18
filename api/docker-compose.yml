@@ -1,0 +1,20 @@
+version: '3.4'
+
+services:
+  sebraapp:
+    build: .
+    links:
+      - db
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - 5000:81
+      - 5001:82
+  db:
+    image: mysql:5.7
+    ports:
+      - "32000:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: e0N28ttq@%B
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/:ro
