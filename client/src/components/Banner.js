@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -24,22 +25,26 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const Activate = ({ history }) => {
+const Banner = ({ history }) => {
   const classes = useStyles();
+  const auth = useSelector(store => store.auth);
+  const handleClick = () => {
+    !auth.address ? history.push('/create-account') : history.push(`/account/${auth.address}`)
+  }
   return(
       <div className={classes.container}>
           <Typography variant="h2" className={classes.header}>Sebra</Typography>
           <Button 
-            onClick={ () => history.push('/create-account') } 
+            onClick={ () => handleClick() } 
             variant="contained" 
             color="primary" 
             className={classes.button}
           >
-            Activate to Pay for Content
+            { !auth.address ? 'Activate to Pay for Content' : 'Start Enjoying Content' }
           </Button>
       </div>
   )
 }
 
 
-export default Activate;
+export default Banner;
