@@ -16,13 +16,13 @@ const useStyles = makeStyles(theme => ({
   mainContainer: {
     display: 'flex',
     flexDirection: 'column',
-    marginRight: '14px',
-    width: '275px'
+    margin: '15px 10px',
+    width: '253px'
   },
   header: {
     fontWeight: '240',
     fontSize: '25px',
-    margin: '0px 0px 15px 15px'
+    margin: '0px 0px 20px 15px'
   },
   formContainer1: {
     backgroundColor: 'white'
@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column'
   },
   formControl: {
-    width: '83%'
+    width: '227px'
   },
   textField: {
     marginLeft: '15px',
