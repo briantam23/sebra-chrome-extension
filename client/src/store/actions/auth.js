@@ -48,11 +48,9 @@ const _removeAuth = auth => ({
     auth
 })
 
-export const logout = (history, recipientAddress, chargeAmount) => {
+export const logout = history => {
     window.localStorage.removeItem('token');
-    recipientAddress && chargeAmount 
-        ? history.push(`/login/${recipientAddress}/${chargeAmount}`) 
-        : history.push('/login')
+    history.push('/')
     return _removeAuth({});
  }
 

@@ -11,7 +11,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 
 const useStyles = makeStyles({
   root: {
-    width: 500
+    width: '253px'
   }
 });
 
