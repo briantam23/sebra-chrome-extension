@@ -1,81 +1,43 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../store/actions/auth';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import PaymentIcon from '@material-ui/icons/Payment';
+import SearchIcon from '@material-ui/icons/Search';
+import FolderOpenIcon from '@material-ui/icons/FolderOpen';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 
-const useStyles = makeStyles(theme => ({
-  root: { flexGrow: 1, },
-  nav: {
-    marginTop: '-8px',
-    minHeight: '45px'
-  },
-  title: { 
-    flexGrow: 1,
-    fontSize: '27px',
-    marginTop: '8px',
-    fontSize: '18px'
-  },
-  link: {
-    color: 'white',
-    textDecoration: 'none'
-  },
-  button: {
-    fontSize: '12px',
-    margin: '9px -9px 0px 0px'
+const useStyles = makeStyles({
+  root: {
+    width: 500
   }
-}));
+});
+
 
 const Nav = ({ pathname, history }) => {
-  const _pathname = pathname.split('/').slice(-2);
-  let recipientAddress = null;
-  if(typeof Number(_pathname[0]) === 'number') recipientAddress = Number(_pathname[0]);
-  let chargeAmount = null;
-  if(typeof Number(_pathname[1]) === 'number') chargeAmount = Number(_pathname[1]);
-  
   const classes = useStyles();
+
+  const [value, setValue] = useState('payment');
   const auth = useSelector(store => store.auth);
-  const dispatch = useDispatch();
 
-  if(pathname === '/') auth.username ? history.push('/account') : history.push('/login'); 
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    if(auth.username) {
-      recipientAddress && chargeAmount 
-        ? dispatch(logout(history, recipientAddress, chargeAmount ))
-        : dispatch(logout(history))
-    }
-    else {
-      recipientAddress && chargeAmount 
-        ? history.push(`/login/${recipientAddress}/${chargeAmount}`) 
-        : history.push('/login')
-    }
+  const handleChange = (e, newValue) => {
+    setValue(newValue);
+    if(newValue === 'payment') history.push(`/account/${auth.address}/payment`);
+    else if(newValue === 'search') history.push(`/account/${auth.address}/search`);
+    else if(newValue === 'participatingSites') history.push(`/account/${auth.address}/search-results`);
+    else history.push(`/account/${auth.address}/settings`);
   }
 
+  if(!auth.address || pathname === '/') return null;
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar className={classes.nav}>
-          <Typography variant="h6" className={classes.title}>
-          <Link 
-            to={ recipientAddress && chargeAmount ? `/login/${recipientAddress}/${chargeAmount}` : '/login' } 
-            className={classes.link}
-          >
-            Sebra
-          </Link>
-          </Typography>
-          <Button className={classes.button} onClick={ e => handleSubmit(e) } color="inherit">
-            { auth.username ? 'Logout' : 'Login' }
-          </Button>
-        </Toolbar>
-      </AppBar>
-    </div>
+    <BottomNavigation value={value} onChange={handleChange} className={classes.root}>
+      <BottomNavigationAction label="Payment" value="payment" icon={<PaymentIcon />} />
+      <BottomNavigationAction label="Search" value="search" icon={<SearchIcon />} />
+      <BottomNavigationAction label="Participating Sites" value="participatingSites" icon={<FolderOpenIcon />} />
+      <BottomNavigationAction label="Settings" value="settings" icon={<SettingsIcon />} />
+    </BottomNavigation>
   );
 }
 

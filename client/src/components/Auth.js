@@ -5,11 +5,9 @@ import { login } from '../store/actions/auth';
 import { createUser } from '../store/actions/users';
 import Loading from './Loading';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
@@ -18,29 +16,13 @@ const useStyles = makeStyles(theme => ({
   mainContainer: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: '1.5%'
+    margin: '15px 10px',
+    width: '253px'
   },
-  paperContainer: { 
-    padding: '12px 12px',
-    height: '394px',
-    marginTop: '-4px'
-  },
-  headerContainer: {
-    width: '100%',
-    maxWidth: 500,
-    margin: '10px 0px'
-  },
-  header1: {
-    marginLeft: '8px',
-    margin: '-13px 0px',
-    fontSize: '33px'
-  },
-  header2: {
-    margin: '40px 0px -13px 13px',
+  header: {
     fontWeight: '240',
-    fontSize: '23px'
+    fontSize: '25px',
+    margin: '0px 0px 20px 15px'
   },
   formContainer1: {
     backgroundColor: 'white'
@@ -50,12 +32,10 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column'
   },
   formControl: {
-    margin: '0px 8px',
-    width: '93%',
+    width: '227px'
   },
   textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
+    marginLeft: '15px',
     width: '100%'
   },
   error: {
@@ -63,24 +43,10 @@ const useStyles = makeStyles(theme => ({
     marginBottom: '-15px',
     marginTop: '0px'
   },
-  textFieldType: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: '100%',
-    marginTop: '25px'
-  },
-  dense: {
-    marginTop: 19,
-  },
-  menu: {
-    width: 200,
-  },
   button: {
-    textAlign: 'right',
-    marginTop: '20px',
-    marginLeft: '80%',
+    margin: '9px 0px 5px 14px',
     fontSize: '12px',
-    padding: '8px 8px'
+    width: '229px'
   },
   linkParent: {
     margin: '5px 0px 0px'
@@ -93,16 +59,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const types = [
-  {
-    value: 'customer',
-    label: 'Customer',
-  },
-  {
-    value: 'business',
-    label: 'Business',
-  },
-];
+const inputStyle = {
+  fontSize: '13px',
+  height: '3px'
+}
+const inputLabelStyle = {
+  fontSize: '13px',
+  top: '-6px'
+}
 
 const Auth = ({ pathname, params, history }) => {
   const { recipientAddress, chargeAmount } = params;
@@ -112,7 +76,6 @@ const Auth = ({ pathname, params, history }) => {
   const [state, setState] = useState({
     username: '',
     password: '',
-    type: 'customer',
     loading: false,
     error: ''
   });
@@ -139,80 +102,69 @@ const Auth = ({ pathname, params, history }) => {
   return (
     <div className={classes.mainContainer}>
       { state.loading ? <Loading/> : null }
-      <Paper className={classes.paperContainer}>
-        <div className={classes.headerContainer}>
-          <Typography variant="h2" align="left" className={classes.header1}>Welcome to Sebra!</Typography>
-          <Typography variant="h5" align="left" className={classes.header2}>
-            { pathname.slice(0, 6) === '/login' ? 'Login.' : 'Create your account.' }  
-          </Typography>
-        </div>
-        <div className={classes.formContainer1}>
-          <form className={classes.formContainer2} noValidate autoComplete="off">
-          <FormControl className={classes.formControl} error>
-            <TextField
-              required
-              autoFocus
-              fullWidth
-              id="username"
-              label="Username"
-              className={classes.textField}
-              value={state.username}
-              onChange={handleChange('username')}
-              margin="normal"
-            />
-            {
-              state.error 
-                ? <FormHelperText className={classes.error}>{state.error}</FormHelperText>  
-                : null
-            }
-          </FormControl>
-          <FormControl className={classes.formControl}>
-            <TextField
-              required
-              fullWidth
-              id="password"
-              type="password"
-              label="Password"
-              className={classes.textField}
-              value={state.password}
-              onChange={handleChange('password')}
-              margin="normal"
-            />
-          </FormControl>
-          <FormControl className={classes.formControl}>
-            <TextField
-              id="type"
-              select
-              label=""
-              className={classes.textFieldType}
-              value={state.type}
-              onChange={handleChange('type')}
-              SelectProps={{ MenuProps: { className: classes.menu }}}
-              helperText="Please select type (Customer or Business)"
-              margin="normal"
-            >
-            { types.map(option => <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>)}
-            </TextField>
-          </FormControl>
-            <Button 
-              onClick={ e => handleSubmit(e) } 
-              disabled={ !state.username || !state.password }
-              variant="contained" 
-              color="primary" 
-              className={classes.button}
-            >
-              { pathname.slice(0, 6) === '/login' ? 'Login' : 'Create' }  
-            </Button>
-          </form>
-          { 
-            pathname.slice(0, 6) === '/login' 
-            ? <Typography className={classes.linkParent} variant="body2" align="left">
-                <Link to={`/create-account/${recipientAddress}/${chargeAmount}`} className={classes.linkChild}>New to Sebra? Create your account here.</Link>
-              </Typography> 
-            : null
+      <Typography variant="h5" align="left" className={classes.header}>
+        { pathname.slice(0, 6) === '/login' ? 'Login.' : 'Create your account.' }  
+      </Typography>
+      <div className={classes.formContainer1}>
+        <form className={classes.formContainer2} noValidate autoComplete="off">
+        <FormControl className={classes.formControl} error>
+          <TextField
+            required
+            autoFocus
+            fullWidth
+            id="username"
+            label="Username"
+            className={classes.textField}
+            value={state.username}
+            onChange={handleChange('username')}
+            margin="normal"
+            variant="outlined"
+            inputProps={{ style: inputStyle }} 
+            InputLabelProps={{ style: inputLabelStyle }}
+          />
+          {
+            state.error 
+              ? <FormHelperText className={classes.error}>{state.error}</FormHelperText>  
+              : null
           }
-        </div>
-      </Paper>
+        </FormControl>
+        <FormControl className={classes.formControl}>
+          <TextField
+            required
+            fullWidth
+            id="password"
+            type="password"
+            label="Password"
+            className={classes.textField}
+            value={state.password}
+            onChange={handleChange('password')}
+            margin="normal"
+            variant="outlined"
+            inputProps={{ style: inputStyle }} 
+            InputLabelProps={{ style: inputLabelStyle }}
+          />
+        </FormControl>
+          <Button 
+            onClick={ e => handleSubmit(e) } 
+            variant="contained" 
+            color="primary" 
+            className={classes.button}
+          >
+            { pathname.slice(0, 6) === '/login' ? 'Login' : 'Create' }  
+          </Button>
+        </form>
+        <Typography className={classes.linkParent} variant="body2" align="left">
+          {
+            pathname.slice(0, 6) === '/login' 
+              ? <Link to={`/create-account/${recipientAddress}/${chargeAmount}`} className={classes.linkChild}>
+                  New to Sebra? Create your account here.
+                </Link>
+              : <Link to={`/login/${recipientAddress}/${chargeAmount}`} className={classes.linkChild}>
+                  Have an account? Log in here.
+                </Link>
+          }
+        </Typography> 
+      </div>
     </div>
   );
 }
