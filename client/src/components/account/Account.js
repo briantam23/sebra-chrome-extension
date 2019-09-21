@@ -11,38 +11,37 @@ const useStyles = makeStyles(theme => ({
   mainContainer: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: '1.5%'
+    height: '300px',
+    width: '253px'
+  },
+  header: {
+    fontSize: '30px',
+    fontWeight: 400,
+    margin: '0px 0px 0px 15px',
+    color: 'darkslateblue',
+    alignSelf: 'center'
   },
   paperContainer: { 
+    margin: '22px 10px 0px 10px',
     padding: theme.spacing(3, 2),
-    height: '394px',
-    marginTop: '-4px'
+    backgroundColor: 'whitesmoke',
+    height: '200px'
   },
-  headerContainer: {
-    width: '100%',
-    maxWidth: 500,
-    margin: '0px'
-  },
-  header1: {
-    fontSize: '45px'
-  },
-  header2: {
-    margin: '40px 0px',
-    fontSize: '22px'
-  },
-  balanceContainer: {
-    width: '50%',
-    height: '225px',
-    margin: 'auto',
+  subheaderContainer: {
+    /* height: '225px' */
   },  
-  balance: {
+  subheader1: {
     display: 'inline-block',
-    fontSize: '50px',
-    lineHeight: '125px',
+    fontSize: '22px',
+    fontWeight: 400,
     textAlign: 'center',
-    paddingTop: '7px'
+    margin: '17px 0px 0px 11px'
+  },
+  subheader2: {
+    display: 'inline-block',
+    fontSize: '18px',
+    textAlign: 'center',
+    margin: '22px 0px 0px 33px'
   },
   emojiContainer: {
     width: '50px',
@@ -73,21 +72,17 @@ const Account = ({ pathname, params, history }) => {
   
   return (
     <div className={classes.mainContainer}>
+      <Typography className={classes.header} variant="h2" align="left">
+        Sebra
+      </Typography>
       <Paper className={classes.paperContainer}>
-        <div className={classes.headerContainer}>
-            <Typography className={classes.header1} variant="h2" align="left">
-              { pathname !== '/completed' ? 'Pay with Libra.' : 'Paid with Libra!' }
-            </Typography>
-            <Typography variant="h5" align="left" className={classes.header2}>Your account.</Typography>
-        </div>
         {
           pathname !== '/completed' 
             ? (
               <Fragment>
-                <div className={classes.balanceContainer}>
-                  <Typography className={classes.balance} variant="h2">
-                    { auth.accountBalance ? '≋' + auth.accountBalance : '≋' }
-                  </Typography>
+                <div className={classes.subheaderContainer}>
+                <Typography className={classes.subheader1} variant="h2">Wall Street Journal</Typography>
+                  <Typography className={classes.subheader2} variant="h2">Pay ≋0.25 to read</Typography>
                 </div>
                 <ErrorSnackbar history={ history } params={ params }/>
               </Fragment>

@@ -26,7 +26,7 @@ const App = () => {
         {/* <Route exact path='/dashboard' render={ ({ history }) => <Dashboard history={ history }/> } /> */}
         <Route path='/account/:authAddress/search' render={ () => <FindSites/> } />
         <Route path='/account/:authAddress/search-results' render={ () => <SiteResults/> } />
-        <Route path='/account/:authAddress/settings' render={ () => <Settings/> } />
+        <Route path='/account/:authAddress/settings' render={ ({ history }) => <Settings history={ history }/> } />
         <Route render={ ({ location, history }) => <Nav pathname={ location.pathname } history={ history }/> } />
       </Router>
     )

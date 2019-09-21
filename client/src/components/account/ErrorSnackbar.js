@@ -66,22 +66,11 @@ MySnackbarContentWrapper.propTypes = {
 };
 const useStyles2 = makeStyles(theme => ({
   button: {
-    textAlign: 'right',
-    width: '272px',
+    width: '202px',
     height: '56px',
-    marginTop: '41px',
-    marginLeft: '26%',
-    fontSize: '19px',
-    padding: '10px 20px',
-    [theme.breakpoints.down('1080')]: { 
-      width: '249px',
-      height: '47px',
-      padding: '5px 10px',
-      fontSize: '17px',
-      marginTop: '-22px',
-      textAlign: 'right',
-      marginLeft: '12%'
-    }
+    marginTop: '60px',
+    fontSize: '17px',
+    padding: '10px 20px'
   },
 }))
 
@@ -121,12 +110,11 @@ const ErrorSnackbar = ({ history, params }) => {
         color="primary" 
         className={classes.button} 
         onClick={handleClick}
-        disabled={ !recipientAddress || !chargeAmount }
       >
         { 
           recipientAddress && chargeAmount 
-            ? `Pay  ≋   ${chargeAmount / 100}  Libra` 
-            : 'Find Sebra merchant!'
+            ? 'Find Participating Sites'
+            : 'Pay with Libra'
         }
       </Button>
       <Snackbar
