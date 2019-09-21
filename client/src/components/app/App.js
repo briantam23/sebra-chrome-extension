@@ -6,6 +6,9 @@ import Banner from '../Banner';
 import Auth from '../Auth';
 import Account from '../account/Account';
 //import Dashboard from '../dashboard/Dashboard';
+import FindSites from '../FindSites';
+import SiteResults from '../SiteResults';
+import Settings from '../Settings';
 import Nav from '../Nav';
 
 
@@ -18,10 +21,13 @@ const App = () => {
         <Route exact path='/' render={ ({ history }) => <Banner history={ history }/> } />
         <Route exact path='/(login|create-account)' render={ ({ location, match, history }) => <Auth pathname={ location.pathname } params={ match.params } history={ history }/> } />
         <Route path='/(login|create-account)/:recipientAddress/:chargeAmount' render={ ({ location, match, history }) => <Auth pathname={ location.pathname } params={ match.params } history={ history }/> } />
-        <Route /* exact  */path='/(account|account/completed)' render={ ({ location, match, history }) => <Account pathname={ location.pathname } params={ match.params } history={ history }/> } />
+        <Route /* exact  */path='/account/:authAddress/payment' render={ ({ location, match, history }) => <Account pathname={ location.pathname } params={ match.params } history={ history }/> } />
         {/* <Route path='/(account|account/completed)/:recipientAddress/:chargeAmount' render={ ({ location, match, history }) => <Account pathname={ location.pathname } params={ match.params } history={ history }/> } /> */}
         {/* <Route exact path='/dashboard' render={ ({ history }) => <Dashboard history={ history }/> } /> */}
-        <Route render={ ({ location }) => <Nav pathname={ location.pathname }/> } />
+        <Route path='/account/:authAddress/search' render={ () => <FindSites/> } />
+        <Route path='/account/:authAddress/search-results' render={ () => <SiteResults/> } />
+        <Route path='/account/:authAddress/settings' render={ () => <Settings/> } />
+        <Route render={ ({ location, history }) => <Nav pathname={ location.pathname } history={ history }/> } />
       </Router>
     )
 }

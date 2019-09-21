@@ -16,20 +16,26 @@ const useStyles = makeStyles({
 });
 
 
-const Nav = ({ pathname }) => {
+const Nav = ({ pathname, history }) => {
   const classes = useStyles();
 
   const [value, setValue] = useState('payment');
   const auth = useSelector(store => store.auth);
 
-  const handleChange = (e, newValue) => setValue(newValue);
+  const handleChange = (e, newValue) => {
+    setValue(newValue);
+    if(newValue === 'payment') history.push(`/account/${auth.address}/payment`);
+    else if(newValue === 'search') history.push(`/account/${auth.address}/search`);
+    else if(newValue === 'participatingSites') history.push(`/account/${auth.address}/search-results`);
+    else history.push(`/account/${auth.address}/settings`);
+  }
 
   if(!auth.address || pathname === '/') return null;
   return (
     <BottomNavigation value={value} onChange={handleChange} className={classes.root}>
       <BottomNavigationAction label="Payment" value="payment" icon={<PaymentIcon />} />
       <BottomNavigationAction label="Search" value="search" icon={<SearchIcon />} />
-      <BottomNavigationAction label="Participating Sites" value="folderOpen" icon={<FolderOpenIcon />} />
+      <BottomNavigationAction label="Participating Sites" value="participatingSites" icon={<FolderOpenIcon />} />
       <BottomNavigationAction label="Settings" value="settings" icon={<SettingsIcon />} />
     </BottomNavigation>
   );
