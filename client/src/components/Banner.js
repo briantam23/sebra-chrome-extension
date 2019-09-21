@@ -29,7 +29,7 @@ const Banner = ({ history }) => {
   const classes = useStyles();
   const auth = useSelector(store => store.auth);
   const handleClick = () => {
-    !auth.address ? history.push('/create-account') : history.push(`/account/${auth.address}/payment`)
+    !auth.address ? history.push('/login') : history.push(`/account/${auth.address}/payment`)
   }
   return(
       <div className={classes.container}>

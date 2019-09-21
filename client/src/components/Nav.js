@@ -11,7 +11,10 @@ import SettingsIcon from '@material-ui/icons/Settings';
 
 const useStyles = makeStyles({
   root: {
-    width: '253px'
+    width: '243px'
+  },
+  navContainer: {
+    width: '233px'
   }
 });
 
@@ -32,12 +35,14 @@ const Nav = ({ pathname, history }) => {
 
   if(!auth.address || pathname === '/') return null;
   return (
-    <BottomNavigation value={value} onChange={handleChange} className={classes.root}>
-      <BottomNavigationAction label="Payment" value="payment" icon={<PaymentIcon />} />
-      <BottomNavigationAction label="Search" value="search" icon={<SearchIcon />} />
-      <BottomNavigationAction label="Participating Sites" value="participatingSites" icon={<FolderOpenIcon />} />
-      <BottomNavigationAction label="Settings" value="settings" icon={<SettingsIcon />} />
-    </BottomNavigation>
+    <div className={classes.root}>
+      <BottomNavigation value={value} onChange={handleChange} className={classes.navContainer}>
+        <BottomNavigationAction value="payment" icon={<PaymentIcon />} />
+        <BottomNavigationAction value="search" icon={<SearchIcon />} />
+        <BottomNavigationAction value="participatingSites" icon={<FolderOpenIcon />} />
+        <BottomNavigationAction value="settings" icon={<SettingsIcon />} />
+      </BottomNavigation>
+    </div>
   );
 }
 
