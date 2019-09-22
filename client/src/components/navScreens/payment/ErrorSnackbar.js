@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from 'react';
-import Loading from '../../Loading';
+import Loading from '../../shared/Loading';
 import Buttons from './Buttons';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';

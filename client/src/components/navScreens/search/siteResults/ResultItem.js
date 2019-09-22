@@ -71,7 +71,7 @@ const ResultItem = ({ name }) => {
                 secondary={urlAddress}
             />
             <ListItemSecondaryAction>
-                <a className={classes.link} rel="noopener noreferrer" href={`https://${urlAddress}`}>
+                <a className={classes.link} href={`https://${urlAddress}`} rel="noopener noreferrer" target="_blank">
                     <Button className={classes.button} size='small' variant="contained">Read</Button>
                 </a>
             </ListItemSecondaryAction>

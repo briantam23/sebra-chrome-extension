@@ -1,6 +1,8 @@
 import React from 'react';
+import Header from '../../shared/Header';
+import WalletBalance from './WalletBalance';
+import InviteLink from './InviteLink';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 
 
 const useStyles = makeStyles(theme => ({
@@ -9,13 +11,6 @@ const useStyles = makeStyles(theme => ({
         flexDirection: 'column',
         height: '300px',
         width: '253px'
-    },
-    header: {
-        fontSize: '30px',
-        fontWeight: 400,
-        margin: '0px 0px 0px 15px',
-        color: 'darkslateblue',
-        alignSelf: 'center'
     }
 }));
 
@@ -24,7 +19,9 @@ const Wallet = () => {
     
     return(
         <div className={classes.mainContainer}>
-            <Typography variant="h2" className={classes.header}>Wallet</Typography>
+            <Header heading='Sebra'/>
+            <WalletBalance/>
+            <InviteLink/>
         </div>
     )
 }

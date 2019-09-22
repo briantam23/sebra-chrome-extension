@@ -44,7 +44,7 @@ const Buttons = ({ pathname, history, params, setOpen, setLoading, setError }) =
         ? <Button onClick={handleClick} className={classes.button} variant="contained" color="primary" >
             Pay with Libra
           </Button>
-        : <a className={classes.redirectLink} rel="noopener noreferrer" href='https://www.wsj.com'>
+        : <a className={classes.redirectLink} href='https://www.wsj.com' rel="noopener noreferrer" target="_blank">
             <Button className={classes.button} variant="contained" color="primary" >
                 Proceed to WSJ!
             </Button>

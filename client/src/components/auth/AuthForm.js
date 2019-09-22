@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import Loading from '../Loading';
+import Loading from '../shared/Loading';
 import AuthInput from './AuthInput';
 
 import { login } from '../../store/actions/auth';
