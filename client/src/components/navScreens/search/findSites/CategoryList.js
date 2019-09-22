@@ -26,9 +26,9 @@ const CategoryList = () => {
   return (
     <List className={classes.root}>
     { 
-      ['Photos', 'Work', 'Vacation'].map((categoryName, idx) => (
-        <Link to={`/account/${auth.address}/search-results`} className={classes.link}>
-          <CategoryItem name={ categoryName } key={ idx }/>
+      ['Trending Sites', 'Money', 'Productivity'].map((categoryName, idx) => (
+        <Link to={`/account/${auth.address}/search-results`} className={classes.link} key={ idx }>
+          <CategoryItem name={ categoryName }/>
         </Link>
       ))
     }

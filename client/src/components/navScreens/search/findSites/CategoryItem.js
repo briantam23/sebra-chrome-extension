@@ -4,9 +4,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
-import ImageIcon from '@material-ui/icons/Image';
-import WorkIcon from '@material-ui/icons/Work';
-import BeachAccessIcon from '@material-ui/icons/BeachAccess';
+import ShareIcon from '@material-ui/icons/Share';
+import CreditCardIcon from '@material-ui/icons/CreditCard';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
 
 
 const useStyles = makeStyles(theme => ({
@@ -27,9 +27,9 @@ const CategoryItem = ({ name }) => {
     const classes = useStyles();
 
     let iconComponent = null;
-    if(name === 'Photos') iconComponent = <ImageIcon fontSize='inherit'/>;
-    else if(name === 'Work') iconComponent = <WorkIcon fontSize='inherit'/>;
-    else if(name === 'Vacation') iconComponent = <BeachAccessIcon fontSize='inherit'/>;
+    if(name === 'Trending Sites') iconComponent = <ShareIcon fontSize='inherit'/>;
+    else if(name === 'Money') iconComponent = <CreditCardIcon fontSize='inherit'/>;
+    else if(name === 'Productivity') iconComponent = <MailOutlineIcon fontSize='inherit'/>;
     
     return(
         <ListItem>
