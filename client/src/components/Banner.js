@@ -35,7 +35,7 @@ const Banner = ({ history }) => {
       <div className={classes.container}>
           <Typography variant="h2" className={classes.header}>Sebra</Typography>
           <Button 
-            onClick={ () => handleClick() } 
+            onClick={ handleClick } 
             variant="contained" 
             color="primary" 
             className={classes.button}

@@ -3,7 +3,7 @@ import { HashRouter as Router, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { exchangeTokenForAuth } from '../../store/actions/auth';
 import Banner from '../Banner';
-import Auth from '../Auth';
+import Auth from '../auth/Auth';
 import Payment from '../navScreens/payment/Payment';
 import FindSites from '../navScreens/FindSites';
 import SiteResults from '../navScreens/SiteResults';
