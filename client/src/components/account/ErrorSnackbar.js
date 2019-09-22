@@ -74,8 +74,8 @@ const useStyles2 = makeStyles(theme => ({
   },
 }))
 
-const ErrorSnackbar = ({ history, params }) => {
-  const { recipientAddress, chargeAmount } = params;
+const ErrorSnackbar = ({ pathname, history, params }) => {
+  /* const { recipientAddress, chargeAmount } = params; */
   const classes = useStyles2();
   const auth = useSelector(store => store.auth);
   const dispatch = useDispatch();
@@ -105,32 +105,23 @@ const ErrorSnackbar = ({ history, params }) => {
   return (
     <Fragment>
       { loading ? <Loading/> : null }
-      <Button 
-        variant="contained" 
-        color="primary" 
-        className={classes.button} 
-        onClick={handleClick}
-      >
-        { 
-          recipientAddress && chargeAmount 
-            ? 'Find Participating Sites'
-            : 'Pay with Libra'
-        }
+      <Button onClick={handleClick} className={classes.button} variant="contained" color="primary" >
+        { pathname !== '/payment-complete' ? 'Pay with Libra' : 'Proceed to WSJ!' }
       </Button>
       <Snackbar
-          anchorOrigin={{
+        anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'left',
-          }}
-          open={open}
-          autoHideDuration={6000}
-          onClose={handleClose}
+          horizontal: 'left'
+        }}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
       >
-          <MySnackbarContentWrapper
-              onClose={handleClose}
-              variant={error ? "error" : "success"}
-              message={error ? 'Payment error!' : "Success payment!"}
-          />
+        <MySnackbarContentWrapper
+          onClose={handleClose}
+          variant={error ? "error" : "success"}
+          message={error ? 'Payment error!' : "Success payment!"}
+        />
       </Snackbar>
     </Fragment>
   )

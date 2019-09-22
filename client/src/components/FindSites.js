@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
         margin: '0px 0px 0px 15px',
         color: 'darkslateblue',
         alignSelf: 'center'
-    },
+    }
 }));
 
 const FindSites = () => {

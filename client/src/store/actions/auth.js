@@ -1,4 +1,4 @@
-import { SET_CUSTOMER_AUTH, /* SET_BUSINESS_AUTH, */ REMOVE_AUTH } from '../constants';
+import { SET_CUSTOMER_AUTH, REMOVE_AUTH } from '../constants';
 import axios from 'axios';
 
 
@@ -12,21 +12,6 @@ export const exchangeTokenForAuth = (params = {}, history) => (
         if(!token) return;
         return axios.get('https://vast-plains-55545.herokuapp.com/api/auth', { headers: { authorization: token } })
             .then(res => res.data.data)
-            /* .then(auth => {
-                if(auth.type === 'customer') { 
-                    dispatch(_setCustomerAuth(auth));
-                    if(history) {
-                        if(recipientAddress && chargeAmount) {
-                            history.push(`/account/${recipientAddress}/${chargeAmount}`);
-                        }
-                        else history.push('/account');
-                    }
-                }
-                else {
-                    dispatch(_setBusinessAuth(auth));
-                    if(history) history.push('/dashboard'); 
-                }   
-            })  */
             .then(auth => {
                 dispatch(_setCustomerAuth(auth));
                 history.push('/');
@@ -39,10 +24,6 @@ const _setCustomerAuth = auth => ({
     type: SET_CUSTOMER_AUTH,
     auth
 })
-/* const _setBusinessAuth = auth => ({
-    type: SET_BUSINESS_AUTH,
-    auth
-}) */
 const _removeAuth = auth => ({
     type: REMOVE_AUTH,
     auth

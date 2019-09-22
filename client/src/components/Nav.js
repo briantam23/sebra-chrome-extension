@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
@@ -11,10 +11,22 @@ import SettingsIcon from '@material-ui/icons/Settings';
 
 const useStyles = makeStyles({
   root: {
-    width: '243px'
+    /* width: '243px' */
   },
   navContainer: {
     width: '233px'
+  },
+  paymentButton: {
+    marginLeft:'20px'
+  },
+  searchButton: {
+    marginLeft:'-17px'
+  },
+  resultsButton: {
+    marginLeft:'-17px'
+  },
+  settingsButton: {
+    marginLeft:'-17px'
   }
 });
 
@@ -24,6 +36,8 @@ const Nav = ({ pathname, history }) => {
 
   const [value, setValue] = useState('payment');
   const auth = useSelector(store => store.auth);
+
+  useEffect(() => setValue('payment'), [auth]);
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
@@ -37,10 +51,10 @@ const Nav = ({ pathname, history }) => {
   return (
     <div className={classes.root}>
       <BottomNavigation value={value} onChange={handleChange} className={classes.navContainer}>
-        <BottomNavigationAction value="payment" icon={<PaymentIcon />} />
-        <BottomNavigationAction value="search" icon={<SearchIcon />} />
-        <BottomNavigationAction value="participatingSites" icon={<FolderOpenIcon />} />
-        <BottomNavigationAction value="settings" icon={<SettingsIcon />} />
+        <BottomNavigationAction className={classes.paymentButton} label="Payment" value="payment" icon={<PaymentIcon fontSize="small"/>} />
+        <BottomNavigationAction className={classes.searchButton} label="Search" value="search" icon={<SearchIcon fontSize="small"/>} />
+        <BottomNavigationAction className={classes.resultsButton} label="Results" value="participatingSites" icon={<FolderOpenIcon fontSize="small"/>} />
+        <BottomNavigationAction className={classes.settingsButton} label="Settings" value="settings" icon={<SettingsIcon fontSize="small"/>} />
       </BottomNavigation>
     </div>
   );
