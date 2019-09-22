@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateOrder } from '../../store/actions/orders';
-import Loading from '../Loading';
+import { updateOrder } from '../../../store/actions/orders';
+import Loading from '../../Loading';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -72,6 +72,10 @@ const useStyles2 = makeStyles(theme => ({
     fontSize: '17px',
     padding: '10px 20px'
   },
+  redirectLink: {
+    textDecoration: 'none',
+    color: 'white'
+  }
 }))
 
 const ErrorSnackbar = ({ pathname, history, params }) => {
@@ -105,9 +109,17 @@ const ErrorSnackbar = ({ pathname, history, params }) => {
   return (
     <Fragment>
       { loading ? <Loading/> : null }
-      <Button onClick={handleClick} className={classes.button} variant="contained" color="primary" >
-        { pathname !== '/payment-complete' ? 'Pay with Libra' : 'Proceed to WSJ!' }
-      </Button>
+      { 
+        pathname !== '/payment-complete' 
+          ? <Button onClick={handleClick} className={classes.button} variant="contained" color="primary" >
+              Pay with Libra
+            </Button>
+          : <a className={classes.redirectLink} rel="noopener noreferrer" href='https://www.wsj.com'>
+              <Button className={classes.button} variant="contained" color="primary" >
+                Proceed to WSJ!
+              </Button>
+            </a>
+      }
       <Snackbar
         anchorOrigin={{
           vertical: 'bottom',

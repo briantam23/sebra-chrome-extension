@@ -55,7 +55,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const Account = ({ pathname, params, history }) => {
+const Payment = ({ pathname, params, history }) => {
   const classes = useStyles();
   //const auth = useSelector(store => store.auth);
   pathname = pathname.slice(-17);
@@ -87,4 +87,4 @@ const Account = ({ pathname, params, history }) => {
 }
 
 
-export default Account;
+export default Payment;
