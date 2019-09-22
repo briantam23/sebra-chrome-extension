@@ -5,8 +5,8 @@ import { exchangeTokenForAuth } from '../../store/actions/auth';
 import Banner from '../Banner';
 import Auth from '../auth/Auth';
 import Payment from '../navScreens/payment/Payment';
-import FindSites from '../navScreens/FindSites';
-import SiteResults from '../navScreens/SiteResults';
+import FindSites from '../navScreens/findSites/FindSites';
+import SiteResults from '../navScreens/siteResults/SiteResults';
 import Settings from '../navScreens/Settings';
 import Nav from '../Nav';
 

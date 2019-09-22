@@ -14,7 +14,8 @@ const useStyles = makeStyles({
     /* width: '243px' */
   },
   navContainer: {
-    width: '233px'
+    width: '233px',
+    height: '42px'
   },
   paymentButton: {
     marginLeft:'20px'
