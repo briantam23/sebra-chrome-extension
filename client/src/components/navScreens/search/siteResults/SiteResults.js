@@ -1,4 +1,6 @@
 import React from 'react';
+import SiteResultsIcons from './SiteResultsIcons';
+import ResultList from './ResultList';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
@@ -11,11 +13,10 @@ const useStyles = makeStyles(theme => ({
         width: '253px'
     },
     header: {
-        fontSize: '30px',
-        fontWeight: 400,
-        margin: '0px 0px 0px 15px',
+        fontSize: '20px',
+        fontWeight: 500,
+        margin: '5px 0px 0px 15px',
         color: 'darkslateblue',
-        alignSelf: 'center'
     }
 }));
 
@@ -23,7 +24,9 @@ const SiteResults = () => {
     const classes = useStyles();
     return(
         <div className={classes.mainContainer}>
-            <Typography variant="h2" className={classes.header}>Search Results</Typography>
+            <SiteResultsIcons/>
+            <Typography variant="h2" className={classes.header}>Technology</Typography>
+            <ResultList/>
         </div>
     )
 }

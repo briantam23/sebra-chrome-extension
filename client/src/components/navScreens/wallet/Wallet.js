@@ -16,17 +16,18 @@ const useStyles = makeStyles(theme => ({
         margin: '0px 0px 0px 15px',
         color: 'darkslateblue',
         alignSelf: 'center'
-    },
+    }
 }));
 
-const FindSites = () => {
+const Wallet = () => {
     const classes = useStyles();
+    
     return(
         <div className={classes.mainContainer}>
-            <Typography variant="h2" className={classes.header}>Find Participating Sites</Typography>
+            <Typography variant="h2" className={classes.header}>Wallet</Typography>
         </div>
     )
 }
 
 
-export default FindSites;
+export default Wallet;

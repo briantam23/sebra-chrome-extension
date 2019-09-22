@@ -1,7 +1,6 @@
 import React, { useState, Fragment } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { updateOrder } from '../../store/actions/orders';
-import Loading from '../Loading';
+import Loading from '../../Loading';
+import Buttons from './Buttons';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -12,25 +11,16 @@ import ErrorIcon from '@material-ui/icons/Error';
 import { green } from '@material-ui/core/colors';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-import Button from '@material-ui/core/Button';
 
 
-const variantIcon = {
-  success: CheckCircleIcon,
-  error: ErrorIcon
-}
+const variantIcon = { success: CheckCircleIcon, error: ErrorIcon };
+
 const useStyles1 = makeStyles(theme => ({
   success: { backgroundColor: green[600] },
   error: { backgroundColor: theme.palette.error.dark },
   icon: { fontSize: 20 },
-  iconVariant: {
-    opacity: 0.9,
-    marginRight: theme.spacing(1),
-  },
-  message: {
-    display: 'flex',
-    alignItems: 'center',
-  },
+  iconVariant: { opacity: 0.9, marginRight: theme.spacing(1) },
+  message: { display: 'flex', alignItems: 'center' }
 }));
 
 const MySnackbarContentWrapper = ({ className, message, onClose, variant, ...other }) => {
@@ -50,7 +40,7 @@ const MySnackbarContentWrapper = ({ className, message, onClose, variant, ...oth
       action={[
         <IconButton key="close" aria-label="close" color="inherit" onClick={onClose}>
           <CloseIcon className={classes.icon} />
-        </IconButton>,
+        </IconButton>
       ]}
       {...other}
     />
@@ -64,39 +54,15 @@ MySnackbarContentWrapper.propTypes = {
   onClose: func,
   variant: oneOf(['error', 'success']).isRequired
 };
-const useStyles2 = makeStyles(theme => ({
-  button: {
-    width: '202px',
-    height: '56px',
-    marginTop: '60px',
-    fontSize: '17px',
-    padding: '10px 20px'
-  },
-}))
 
-const ErrorSnackbar = ({ history, params }) => {
-  const { recipientAddress, chargeAmount } = params;
-  const classes = useStyles2();
-  const auth = useSelector(store => store.auth);
-  const dispatch = useDispatch();
+
+const ErrorSnackbar = ({ pathname, history, params }) => {
+  /* const { recipientAddress, chargeAmount } = params; */
 
   const [open, setOpen] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleClick = e => {
-    e.preventDefault();
-    setOpen(true);
-    setLoading(true);
-    return (
-      dispatch(updateOrder(auth, history, params))
-        .then(() => setLoading(false))
-        .catch(() => {
-          setLoading(false);
-          setError('Payment error!');
-        })
-    )
-  }
   const handleClose = (event, reason) => {
     if(reason === 'clickaway') return;
     setOpen(false);
@@ -105,32 +71,25 @@ const ErrorSnackbar = ({ history, params }) => {
   return (
     <Fragment>
       { loading ? <Loading/> : null }
-      <Button 
-        variant="contained" 
-        color="primary" 
-        className={classes.button} 
-        onClick={handleClick}
-      >
-        { 
-          recipientAddress && chargeAmount 
-            ? 'Find Participating Sites'
-            : 'Pay with Libra'
-        }
-      </Button>
+      <Buttons 
+        pathname={ pathname }
+        history={ history }
+        params={ params } 
+        setOpen={ setOpen } 
+        setLoading={ setLoading }
+        setError={ setError }
+      />
       <Snackbar
-          anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-          }}
-          open={open}
-          autoHideDuration={6000}
-          onClose={handleClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
       >
-          <MySnackbarContentWrapper
-              onClose={handleClose}
-              variant={error ? "error" : "success"}
-              message={error ? 'Payment error!' : "Success payment!"}
-          />
+        <MySnackbarContentWrapper
+          onClose={handleClose}
+          variant={error ? "error" : "success"}
+          message={error ? 'Payment error!' : "Success payment!"}
+        />
       </Snackbar>
     </Fragment>
   )

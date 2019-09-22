@@ -1,4 +1,4 @@
-export const calcLineItemCost = (unitPrice, quantity) => {
+/* export const calcLineItemCost = (unitPrice, quantity) => {
     return (unitPrice * quantity).toFixed(2);
 }
 export const calcSubtotal = cart => {
@@ -11,4 +11,4 @@ export const calcTaxes = (subtotal, shippingCost, taxRate) => {
 
 export const calcTotal = (subtotal, shippingCost, taxes) => {
     return (Number(subtotal) + shippingCost + Number(taxes)).toFixed(2);
-}
+} */
