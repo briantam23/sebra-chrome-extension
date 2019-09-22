@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import Loading from '../shared/Loading';
+import Spinner from '../shared/Spinner';
 import AuthInput from './AuthInput';
 
 import { login } from '../../store/actions/auth';
@@ -54,7 +54,7 @@ const AuthForm = ({ pathname, params, history, recipientAddress, chargeAmount })
     }
     return(
         <form className={classes.formContainer2} noValidate autoComplete="off">
-          { state.loading ? <Loading/> : null }
+          { state.loading ? <Spinner/> : null }
           <AuthInput state={ state } handleChange={ handleChange }/>
           <Button 
             onClick={ handleClick } 

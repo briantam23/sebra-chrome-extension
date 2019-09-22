@@ -11,11 +11,11 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const Loading = () => {
+const Spinner = () => {
   const classes = useStyles();
 
   return <CircularProgress className={classes.progress} />
 }
 
 
-export default Loading;
+export default Spinner;

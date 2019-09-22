@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from 'react';
-import Loading from '../../shared/Loading';
+import Spinner from '../../shared/Spinner';
 import Buttons from './Buttons';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -70,7 +70,7 @@ const ErrorSnackbar = ({ pathname, history, params }) => {
   
   return (
     <Fragment>
-      { loading ? <Loading/> : null }
+      { loading ? <Spinner/> : null }
       <Buttons 
         pathname={ pathname }
         history={ history }

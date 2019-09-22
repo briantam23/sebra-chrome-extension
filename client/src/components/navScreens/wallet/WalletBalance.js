@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import Loading from '../../shared/Loading';
+import Spinner from '../../shared/Spinner';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -18,7 +18,8 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center'
     },
     smallHeader: {
-        fontSize: '15px'
+        fontSize: '15px',
+        fontWeight: 200
     },
     largeHeader: {
         fontSize: '35px',
@@ -30,10 +31,10 @@ const useStyles = makeStyles(theme => ({
 const WalletBalance = () => {
     const classes = useStyles();
     const auth = useSelector(store => store.auth);
-
+    
     return(
         <Paper className={classes.paperContainer}>
-            { !auth.accountBalance ? <Loading/> : null }
+            { !auth.accountBalance ? <Spinner/> : null }
             <Typography variant="h2" className={classes.smallHeader}>Wallet</Typography> 
             <Typography variant="h2" className={classes.largeHeader}>
                 { auth.accountBalance ? `≋${auth.accountBalance} Libra` : '≋  Libra' }
