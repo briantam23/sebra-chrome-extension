@@ -5,9 +5,10 @@ import { exchangeTokenForAuth } from '../../store/actions/auth';
 import Banner from '../Banner';
 import Auth from '../auth/Auth';
 import Payment from '../navScreens/payment/Payment';
-import FindSites from '../navScreens/findSites/FindSites';
-import SiteResults from '../navScreens/siteResults/SiteResults';
-import Settings from '../navScreens/Settings';
+import FindSites from '../navScreens/search/findSites/FindSites';
+import SiteResults from '../navScreens/search/siteResults/SiteResults';
+import Wallet from '../navScreens/wallet/Wallet';
+import Settings from '../navScreens/settings/Settings';
 import Nav from '../Nav';
 
 
@@ -24,6 +25,7 @@ const App = () => {
         <Route path='/account/:authAddress/payment-complete' render={ ({ location, match, history }) => <Payment pathname={ location.pathname } params={ match.params } history={ history }/> } />
         <Route path='/account/:authAddress/search' render={ () => <FindSites/> } />
         <Route path='/account/:authAddress/search-results' render={ () => <SiteResults/> } />
+        <Route path='/account/:authAddress/wallet' render={ () => <Wallet/> } />
         <Route path='/account/:authAddress/settings' render={ ({ history }) => <Settings history={ history }/> } />
         <Route render={ ({ location, history }) => <Nav pathname={ location.pathname } history={ history }/> } />
       </Router>

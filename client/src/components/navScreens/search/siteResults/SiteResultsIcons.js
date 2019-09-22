@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ShareIcon from '@material-ui/icons/Share';
@@ -12,7 +14,8 @@ const useStyles = makeStyles(theme => ({
         marginTop: '5px'
     },
     arrowIcon: {
-        marginLeft: '10px'
+        marginLeft: '10px',
+        color: 'black'
     },
     deleteIcon: {
         margin: '0px 10px'
@@ -21,10 +24,13 @@ const useStyles = makeStyles(theme => ({
 
 const SiteResultsIcons = () => {
     const classes = useStyles();
+    const auth = useSelector(store => store.auth);
 
     return(
         <div className={classes.iconContainer}>
-            <ArrowBackIcon className={classes.arrowIcon}/>
+            <Link to={`/account/${auth.address}/search`}>
+                <ArrowBackIcon className={classes.arrowIcon}/>
+            </Link>
             <div>
                 <ShareIcon/>
                 <DeleteOutlineIcon className={classes.deleteIcon}/>

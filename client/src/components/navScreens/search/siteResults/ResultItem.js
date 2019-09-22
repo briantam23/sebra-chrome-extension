@@ -28,6 +28,10 @@ const useStyles = makeStyles(theme => ({
     secondaryText:{
         fontSize: '10px'
     },
+    link: {
+        textDecoration: 'none',
+        color: 'black'
+    },
     button: {
         fontSize: '10px',
         maxWidth: '45px',
@@ -67,7 +71,9 @@ const ResultItem = ({ name }) => {
                 secondary={urlAddress}
             />
             <ListItemSecondaryAction>
-                <Button className={classes.button} size='small' variant="contained">Read</Button>
+                <a className={classes.link} rel="noopener noreferrer" href={`https://${urlAddress}`}>
+                    <Button className={classes.button} size='small' variant="contained">Read</Button>
+                </a>
             </ListItemSecondaryAction>
         </ListItem>
     )

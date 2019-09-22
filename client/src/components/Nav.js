@@ -5,7 +5,7 @@ import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import PaymentIcon from '@material-ui/icons/Payment';
 import SearchIcon from '@material-ui/icons/Search';
-import FolderOpenIcon from '@material-ui/icons/FolderOpen';
+import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 import SettingsIcon from '@material-ui/icons/Settings';
 
 
@@ -23,7 +23,7 @@ const useStyles = makeStyles({
   searchButton: {
     marginLeft:'-17px'
   },
-  resultsButton: {
+  walletButton: {
     marginLeft:'-17px'
   },
   settingsButton: {
@@ -44,7 +44,7 @@ const Nav = ({ pathname, history }) => {
     setValue(newValue);
     if(newValue === 'payment') history.push(`/account/${auth.address}/payment`);
     else if(newValue === 'search') history.push(`/account/${auth.address}/search`);
-    else if(newValue === 'participatingSites') history.push(`/account/${auth.address}/search-results`);
+    else if(newValue === 'wallet') history.push(`/account/${auth.address}/wallet`);
     else history.push(`/account/${auth.address}/settings`);
   }
 
@@ -54,7 +54,7 @@ const Nav = ({ pathname, history }) => {
       <BottomNavigation value={value} onChange={handleChange} className={classes.navContainer}>
         <BottomNavigationAction className={classes.paymentButton} label="Payment" value="payment" icon={<PaymentIcon fontSize="small"/>} />
         <BottomNavigationAction className={classes.searchButton} label="Search" value="search" icon={<SearchIcon fontSize="small"/>} />
-        <BottomNavigationAction className={classes.resultsButton} label="Results" value="participatingSites" icon={<FolderOpenIcon fontSize="small"/>} />
+        <BottomNavigationAction className={classes.walletButton} label="Wallet" value="wallet" icon={<AccountBalanceWalletIcon fontSize="small"/>} />
         <BottomNavigationAction className={classes.settingsButton} label="Settings" value="settings" icon={<SettingsIcon fontSize="small"/>} />
       </BottomNavigation>
     </div>

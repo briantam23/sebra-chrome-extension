@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
         height: '30px'
     },
     listItemText:{
-        fontSize:'0.7em'
+        fontSize:'12px'
     }
 }));
 
