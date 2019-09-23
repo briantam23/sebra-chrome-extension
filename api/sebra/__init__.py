@@ -89,8 +89,8 @@ def authenticate(userType, request):
         if(data is not None and 'username' in data and 'password' in data):    
             username =  data['username'].lower()
             password =  data['password']
-            res = apiHelper.verifyUserByPassword(username, password, userType)
-            return json.dumps({'message': 'success', 'data': ret})
+            ret = apiHelper.verifyUserByPassword(username, password, userType)
+            return ret
         return json.dumps({'message': 'Token invalid'}), 401
     else:  
         return json.dumps({'message': 'Bad Request'}), 400

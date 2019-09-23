@@ -1,5 +1,5 @@
 import os, json, hashlib, jwt, datetime, mysql.connector
-
+from flask import session
 from libra_actions import account, balance, mint, transfer
 
 class ApiHelper:
@@ -44,7 +44,15 @@ class ApiHelper:
             return data
         except:
             return None
+    
+    def fields(self, cursor):
+        results = {}
+        column = 0
+        for d in cursor.description:
+            results[d[0]] = column
+            column = column + 1
 
+        return results
     def verifyUserByPassword(self, username, password, userType):
         dbObj = self.dbConn()
         cursor = dbObj['cursor']
@@ -54,14 +62,16 @@ class ApiHelper:
         cursor.execute("SELECT * FROM `"+table+"` WHERE username = '" + username + "' LIMIT 1" )
         res = cursor.fetchall()
 
-        if(res.rowcount == 0):
+        if(cursor.rowcount == 0):
             return json.dumps({'message': 'error', 'data': 'Not registered.'}), 401
         
         userId = None
         mnemonic = None
+        fieldMap = self.fields(cursor)
         for row in res:
-            userId = row["id"]
-            passStored = row['password']
+            userId = row[fieldMap['id']]
+            passStored = row[fieldMap['password']]
+            mnemonic = row[fieldMap['mnemonic']]
         
         dbObj['db'].close()
 
@@ -69,12 +79,11 @@ class ApiHelper:
         if(passStored == passProvided and userId is not None and mnemonic is not None):
             session['userId'] = userId
             session['userType'] = userType
-            ret = returnSuccessfulLogin(userId, mnemonic, userType)
+            ret = self.returnSuccessfulLogin(userId, mnemonic, userType)
             response = json.dumps({'message': 'success', 'data': ret})
             return response
         else:
-            response = json.dumps({'message': 'Not authorized'})
-            return response, 401
+            return json.dumps({'message': 'Not authorized'}), 401
 
     def returnSuccessfulLogin(self, userId, mnemonic, userType):
         ret = {}
@@ -105,5 +114,6 @@ class ApiHelper:
         cursor.execute("INSERT INTO `"+table+"` WHERE username = '" + username + "' LIMIT 1" )
         res= cursor.fetchall()
         return res.rowcount == 0
+
 
    
