@@ -1,8 +1,8 @@
 import React from 'react';
-import SettingsNav from './SettingsNav';
+import ResultsAppBar from './ResultsAppBar';
+import ResultList from './ResultList';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import SettingsForm from './SettingsForm';
 
 
 const useStyles = makeStyles(theme => ({
@@ -13,25 +13,23 @@ const useStyles = makeStyles(theme => ({
         width: '253px'
     },
     header: {
-        fontSize: '30px',
-        fontWeight: 400,
+        fontSize: '20px',
+        fontWeight: 500,
         margin: '5px 0px 0px 15px',
         color: 'darkslateblue',
-        alignSelf: 'center'
     }
 }));
 
-const Settings = ({ history }) => {
+const SiteResults = () => {
     const classes = useStyles();
-
     return(
         <div className={classes.mainContainer}>
-            <SettingsNav history={ history }/>
-            <Typography variant="h2" className={classes.header}>Settings</Typography>
-            <SettingsForm/>
+            <ResultsAppBar/>
+            <Typography variant="h2" className={classes.header}>Technology</Typography>
+            <ResultList/>
         </div>
     )
 }
 
 
-export default Settings;
+export default SiteResults;

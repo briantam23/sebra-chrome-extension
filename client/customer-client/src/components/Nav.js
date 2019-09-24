@@ -37,11 +37,19 @@ const Nav = ({ pathname, history }) => {
 
   const [value, setValue] = useState('payment');
   const auth = useSelector(store => store.auth);
+  //if(pathname) pathname = pathname.split('/')[3];
 
-  useEffect(() => setValue('payment'), [auth]);
+  useEffect(() => {
+    setValue('payment');
+    /* if(pathname === 'payment') history.push(`/account/${auth.address}/payment`);
+    else if(pathname === 'search') history.push(`/account/${auth.address}/search`);
+    else if(pathname === 'wallet') history.push(`/account/${auth.address}/wallet`);
+    else history.push(`/account/${auth.address}/settings`); */
+  }, [auth])
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
+
     if(newValue === 'payment') history.push(`/account/${auth.address}/payment`);
     else if(newValue === 'search') history.push(`/account/${auth.address}/search`);
     else if(newValue === 'wallet') history.push(`/account/${auth.address}/wallet`);

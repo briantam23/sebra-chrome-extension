@@ -48,8 +48,8 @@ const SettingsForm = () => {
     const classes = useStyles();
 
     const [state, setState] = useState({
-        firstName: '',
-        lastName: ''
+        username: '',
+        password: ''
     })
     
     const handleChange = id => e => setState({ ...state, [id]: e.target.value });
@@ -60,11 +60,11 @@ const SettingsForm = () => {
             <TextField
               required
               fullWidth
-              id="firstName"
-              label="First Name"
+              id="username"
+              label="Username"
               className={classes.textField}
-              value={state.firstName}
-              onChange={handleChange('firstName')}
+              value={state.username}
+              onChange={handleChange('username')}
               margin="normal"
               variant="filled"
               inputProps={{ style: inputStyle }} 
@@ -75,11 +75,12 @@ const SettingsForm = () => {
             <TextField
               required
               fullWidth
-              id="lastName"
-              label="Last Name"
+              id="password"
+              type='password'
+              label="Password"
               className={classes.textField}
               value={state.lastName}
-              onChange={handleChange('lastName')}
+              onChange={handleChange('password')}
               margin="normal"
               variant="filled"
               inputProps={{ style: inputStyle }} 
