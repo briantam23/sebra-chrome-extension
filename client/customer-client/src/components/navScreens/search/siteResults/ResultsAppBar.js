@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const SiteResultsIcons = () => {
+const ResultsAppBar = () => {
     const classes = useStyles();
     const auth = useSelector(store => store.auth);
 
@@ -40,4 +40,4 @@ const SiteResultsIcons = () => {
 }
 
 
-export default SiteResultsIcons;
+export default ResultsAppBar;

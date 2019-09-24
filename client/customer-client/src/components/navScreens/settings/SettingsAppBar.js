@@ -1,6 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { logout } from '../../../store/actions/auth';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -15,7 +14,8 @@ const useStyles = makeStyles(theme => ({
     },
     arrowIcon: {
         marginLeft: '10px',
-        color: 'black'
+        color: 'black',
+        cursor: 'pointer'
     },
     button: {
         fontSize: '9px',
@@ -28,20 +28,18 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const SettingsNav = ({ history }) => {
+const SettingsAppBar = ({ history }) => {
     const dispatch = useDispatch();
     const classes = useStyles();
     
+    const handleArrowBack = () => history.goBack();
     const handleLogout = () => dispatch(logout(history));
-    const auth = useSelector(store => store.auth);
 
     return(
         <div className={classes.navContainer}>
-            <Link to={`/account/${auth.address}/search`}>
-                <ArrowBackIcon className={classes.arrowIcon}/>
-            </Link>
+            <ArrowBackIcon onClick={ handleArrowBack } className={classes.arrowIcon}/>
             <div>
-                <Button onClick={ () => handleLogout() } className={classes.button} variant='contained' color='secondary'>
+                <Button onClick={ handleLogout } className={classes.button} variant='contained' color='secondary'>
                     Logout
                 </Button>
             </div>
@@ -50,4 +48,4 @@ const SettingsNav = ({ history }) => {
 }
 
 
-export default SettingsNav;
+export default SettingsAppBar;
