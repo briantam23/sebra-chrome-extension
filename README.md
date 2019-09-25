@@ -12,7 +12,7 @@ A Libra Cryptocurrency Micropayment Chrome Extension developed with the aim of c
 * [Dependencies](#dependencies)
 * [Requirements](#requirements)
 * [Installation](#installation)
-* [Running Locally](#running-locally)
+* [Running Customer-Client Locally](#running-customer-client-locally)
 * [Tests](#tests)
 * [Contributors](#contributors)
 
@@ -35,15 +35,15 @@ Libra is a permissioned blockchain digital currency proposed by the American soc
 * [Node.js (v10.16.0)](https://nodejs.org/en/)
 * [Git](https://git-scm.com/downloads)
 
-## Client Installation
+## Customer-Client Installation
 Step 1: Clone Repo
 ```sh
 git clone https://github.com/briantam23/sebra-chrome-extension.git` # or clone your own fork
 ```
 
-Step 2: Change Directory to `client`
+Step 2: Change Directory to `customer-client`
 ```sh
-cd client
+cd client/customer-client
 ```
 
 Step 3: Install `node_modules`
@@ -51,8 +51,8 @@ Step 3: Install `node_modules`
 npm install # or yarn install
 ```
 
-## Running Locally
-1. Make sure you're in the `client` directory.
+## Running Customer-Client Locally
+1. Make sure you're in the `customer-client` directory.
 2. Run `npm run build` to put everything required into build folder, then launch `chrome://extensions/` in Google Chrome.
 3. On the upper-right hand side of the window, make sure developer mode is on.
 4. Click “Load unpacked” and open the “build” folder in this project, it should contain `index.html`, `manifest.json`, different sizes of logos, and bundled JavaScript files.
