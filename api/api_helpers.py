@@ -20,19 +20,30 @@ class ApiHelper:
         ret['db'] = db
         ret['cursor'] = cursor
         return ret
-
-    def getUserById(self, userId, userType):
-        dbObj = self.dbConn()
+    #TODO: Value provided must be unique otherwise we will return several results.
+        #Check needs to be inplace that dbField is a unique key...
+    def getUserByUniqueValue(self, dbField, dbObj, dbValue, userType):
         cursor = dbObj['cursor']
+        result = {}
         table = 'customers'
         if(userType == 'business'):
             table = 'businesses'
-        cursor.execute("SELECT * FROM `"+table+"` WHERE id = " + userId)
+        cursor.execute("SELECT * FROM `"+table+"` WHERE "+dbField+" = '"+str(dbValue)+"' LIMIT 1" )
         res = cursor.fetchall()
-        for i in res:
-            print(result.fetch_row())
-        dbObj['db'].close()
-        return None
+        if(cursor.rowcount == 0):
+            result['success'] = False
+            result['message'] = "Not registered"
+        else:   
+            fieldMap = self.fields(cursor)
+            for row in res:
+                result['success'] = True
+                result['id'] = row[fieldMap['id']]
+                result['username'] = row[fieldMap['username']]
+                result['address'] = row[fieldMap['address']]
+                result['password'] = row[fieldMap['password']]
+                result['mnemonic'] = row[fieldMap['mnemonic']]  
+                result['sequence'] = row[fieldMap['sequence']]  
+        return result
 
     #Decode JWT token, check for validity
     def verifyToken(self, token, app):
@@ -41,6 +52,10 @@ class ApiHelper:
             return data
         except:
             return None
+            
+    def createToken(self, userId, app):
+        tokenResp = jwt.encode({'userId': userId, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60)}, app.config['SECRET_KEY'])
+        return tokenResp.decode('UTF-8')
 
     def fields(self, cursor):
         results = {}
@@ -50,43 +65,27 @@ class ApiHelper:
             column = column + 1
         return results
 
-    def verifyUserByPassword(self, username, password, userType, app):
-        dbObj = self.dbConn()
-        cursor = dbObj['cursor']
-        table = 'customers'
-        if(userType == 'business'):
-            table = 'businesses'
-        cursor.execute("SELECT * FROM `"+table+"` WHERE username = '" + username + "' LIMIT 1" )
-        res = cursor.fetchall()
-        if(cursor.rowcount == 0):
-            return json.dumps({'message': 'error', 'data': 'Not registered.'}), 401     
-        userId = None
-        mnemonic = None
-        fieldMap = self.fields(cursor)
-        for row in res:
-            userId = row[fieldMap['id']]
-            passStored = row[fieldMap['password']]
-            mnemonic = row[fieldMap['mnemonic']]   
-        dbObj['db'].close()
+    def verifyUserByPassword(self, dbObj, username, password, userType, app):
+        userInfo = self.getUserByUniqueValue('username', dbObj, username, userType)
         passProvided = hashlib.md5(password.encode('utf-8')).hexdigest()
-        if(passStored == passProvided and userId is not None and mnemonic is not None):
-            session['userId'] = userId
+        if(userInfo['success'] and userInfo['password'] == passProvided and userInfo['id'] is not None and userInfo['mnemonic'] is not None):
+            session['userId'] = userInfo['id']
             session['userType'] = userType
-            ret = self.returnSuccessfulLogin(userId, mnemonic, userType, app)
+            ret = self.returnSuccessfulLogin(userInfo, userType, app)
             response = json.dumps({'message': 'success', 'data': ret})
             return response
         else:
             return json.dumps({'message': 'Not authorized'}), 401
 
-    def returnSuccessfulLogin(self, userId, mnemonic, userType, app):
+    def returnSuccessfulLogin(self, userInfo, userType, app):
         ret = {}
-        acc = account(mnemonic)
-        ret['userId'] = userId
+        acc = account(userInfo['mnemonic'])
         ret['address'] = acc['address']
         ret['accountBalance'] = balance(acc['address'])
+        ret['userName'] = userInfo['username']
         ret['userType'] = userType
-        tokenResp = jwt.encode({'user': userId, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60)}, app.config['SECRET_KEY'])
-        ret['token'] = tokenResp.decode('UTF-8')
+        tokenResp = jwt.encode({'user': userInfo['id'], 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60)}, app.config['SECRET_KEY'])
+        ret['token'] = self.createToken(userInfo['id'], app)
         return ret
 
     def existingUserCheck(self, dbObj, userName, userType):
@@ -96,9 +95,17 @@ class ApiHelper:
         cursor = dbObj['cursor']
         cursor.execute("SELECT * FROM `"+table+"` WHERE username = '" + userName + "' LIMIT 1" )
         #test - but delete if diesnot work
-        test = cursor.rowcount
         cursor.fetchall()
         return cursor.rowcount > 0
+
+    def updateCustomerSequence(self, dbObj, userId, userType, newSequenceNumber):
+        table = 'customers'
+        if(userType == 'business'):
+            table = 'businesses'
+        cursor = dbObj['cursor']
+        affectedCount = cursor.execute("UPDATE `"+table+"` SET sequence = "+newSequenceNumber+" WHERE id = '"+userId+"'")
+        dbObj['db'].commit()
+        return affectedCount
 
     def registerNewUser(self, dbObj, acc):
         table = 'customers'

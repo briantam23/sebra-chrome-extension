@@ -66,7 +66,7 @@ def transfer(senderMnemonic, recipientAddress, amount, sequenceNumber):
     arg1.data = bytes.fromhex(recipientAddress)
     arg2 = raw_tx.program.arguments.add()
     arg2.type = TransactionArgument.U64
-    arg2.data = (int(amount)*1000000).to_bytes(8, 'little') # Send 0.001 lib
+    arg2.data = (int(amount)*1000000).to_bytes(8, 'little')
     tx = raw_tx.SerializeToString()
     request = SubmitTransactionRequest()
     signed_tx = request.signed_txn
