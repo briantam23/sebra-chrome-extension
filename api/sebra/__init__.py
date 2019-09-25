@@ -1,4 +1,4 @@
-import os, hashlib, jwt, datetime, ptvsd, mysql.connector
+import os, hashlib, jwt, datetime, time, ptvsd, mysql.connector
 from flask import Flask, g, session, request, json
 from flask_restful import Resource, Api, reqparse
 from libra_actions import account, balance, mint, transfer
@@ -66,43 +66,6 @@ def register():
     dbObj['db'].close()
     return ret
 
-#TODO: 
-#Authenticate based on Articles read
-#Check the header (JWT) based auth works as it did before.
-#SECURITY: SQL injection before we go live...
-#SECURITY: How do we ensure transaction requests don't get modified to go to anyone...?
-def authenticate(userType, request):
-    dbObj = _apiHelper.dbConn()
-    token = None
-    ret = None
-    if(request.method == 'GET' and 'authorization' in request.headers):
-        token = request.headers.get('authorization')
-        data = _apiHelper.verifyToken(token, app)
-        userId = None
-        if(data is not None and 'userId' in data):
-            userId = str(data['userId'])
-            session['userId'] = userId
-            session['userType'] = userType
-            userInfo = _apiHelper.getUserByUniqueValue(dbObj, 'id', userId, userType)
-            result = _apiHelper.returnSuccessfulLogin(userInfo, userType, app)
-            ret = json.dumps({'message': 'success', 'data': result})
-        else:
-            ret = json.dumps({'message': 'Token invalid'}), 401
-    elif(request.method == 'POST'):
-        data = request.get_json() 
-        if(data is not None and 'username' in data and 'password' in data and 'userType' in data):    
-            username =  data['username'].lower()
-            password =  data['password']
-            ret = _apiHelper.verifyUserByPassword(dbObj, username, password, userType, app)
-        else:
-            ret = requiredParams(data, 'username', 'password')
-    else:  
-        ret = json.dumps({'message': 'Bad Request'}), 400
-    
-    dbObj['db'].close()
-    return ret
-
-
 #req params: None
 @app.route('/api/logout', methods=['POST'])
 def logout():
@@ -142,6 +105,100 @@ def transaction():
         ret = json.dumps({'message': 'Success', 'data': result})
     else :
         ret = json.dumps({'message': 'Not authorized', 'session': 'none'}), 401
+    dbObj['db'].close()
+    return ret
+
+@app.route('/api/addDbScript', methods=['GET'])
+def addDbScript():
+    dbObj = _apiHelper.dbConn()
+    
+    script = "DROP TABLE `consumerArticles`;"
+    script2 = "CREATE TABLE `consumerArticles` (\
+                `id` int(11) NOT NULL,\
+                `userId` int(11) NOT NULL,\
+                `username` varchar(500) NOT NULL,\
+                `url` varchar(500) NOT NULL,\
+                `timestamp` varchar(500) NOT NULL\
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;\
+            "
+    script3 =  "ALTER TABLE `consumerArticles`\
+                ADD PRIMARY KEY (`id`);\
+            "
+    script4 = "ALTER TABLE `consumerArticles`\
+            MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;"
+
+    cursor = dbObj['cursor']
+
+    cursor.execute(script)
+    cursor.execute(script2)
+    cursor.execute(script3)
+    cursor.execute(script4)
+
+    dbObj['db'].commit()
+    return json.dumps({'message': 'success'})
+
+@app.route('/api/insertRecord', methods=['GET'])
+def insertRecord():
+    dbObj = _apiHelper.dbConn()
+    userId = '5'
+    username = 'allen3'
+    url = 'http://www.google.com'
+    ts = time.time()
+    timestamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+    script = "INSERT INTO consumerArticles (userId, username, url, timestamp) \
+                VALUES ('{userId}', '{username}', '{url}', '{timestamp}')"\
+                .format(userId=userId, username=username, url=url, timestamp=timestamp)
+    cursor = dbObj['cursor']
+    cursor.execute(script)
+    dbObj['db'].commit()
+    return json.dumps({'message': 'success'})
+
+@app.route('/api/checkRecord', methods=['GET'])
+def checkRecord():
+    dbObj = _apiHelper.dbConn()
+    script = "SELECT * FROM consumerArticles"
+    cursor = dbObj['cursor']
+    cursor.execute(script)
+    res = cursor.fetchall()
+    result = {}
+    fieldMap = _apiHelper.fields(cursor)
+    for row in res:
+        result['id'] = row[fieldMap['id']]
+
+
+#TODO: 
+#Authenticate based on Articles read
+#Check the header (JWT) based auth works as it did before.
+#SECURITY: SQL injection before we go live...
+#SECURITY: How do we ensure transaction requests don't get modified to go to anyone...?
+def authenticate(userType, request):
+    dbObj = _apiHelper.dbConn()
+    token = None
+    ret = None
+    if(request.method == 'GET' and 'authorization' in request.headers):
+        token = request.headers.get('authorization')
+        data = _apiHelper.verifyToken(token, app)
+        userId = None
+        if(data is not None and 'userId' in data):
+            userId = str(data['userId'])
+            session['userId'] = userId
+            session['userType'] = userType
+            userInfo = _apiHelper.getUserByUniqueValue(dbObj, 'id', userId, userType)
+            result = _apiHelper.returnSuccessfulLogin(userInfo, userType, app)
+            ret = json.dumps({'message': 'success', 'data': result})
+        else:
+            ret = json.dumps({'message': 'Token invalid'}), 401
+    elif(request.method == 'POST'):
+        data = request.get_json() 
+        if(data is not None and 'username' in data and 'password' in data and 'userType' in data):    
+            username =  data['username'].lower()
+            password =  data['password']
+            ret = _apiHelper.verifyUserByPassword(dbObj, username, password, userType, app)
+        else:
+            ret = requiredParams(data, 'username', 'password')
+    else:  
+        ret = json.dumps({'message': 'Bad Request'}), 400
+    
     dbObj['db'].close()
     return ret
 
