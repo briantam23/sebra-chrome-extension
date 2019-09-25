@@ -1,4 +1,4 @@
-import os, json, hashlib, jwt, datetime, mysql.connector
+import os, json, hashlib, jwt, datetime, time, mysql.connector
 from flask import session
 from libra_actions import account, balance, mint, transfer
 
@@ -65,13 +65,18 @@ class ApiHelper:
             column = column + 1
         return results
 
-    def verifyUserByPassword(self, dbObj, username, password, userType, app):
+    def verifyUserByPassword(self, dbObj, username, password, userType, itemUrl, app):
         userInfo = self.getUserByUniqueValue('username', dbObj, username, userType)
         passProvided = hashlib.md5(password.encode('utf-8')).hexdigest()
         if(userInfo['success'] and userInfo['password'] == passProvided and userInfo['id'] is not None and userInfo['mnemonic'] is not None):
             session['userId'] = userInfo['id']
             session['userType'] = userType
             ret = self.returnSuccessfulLogin(userInfo, userType, app)
+            articleGranted = False
+            if(itemUrl is not None):
+                articleGranted = self.checkIfItemPurchased(dbObj, itemUrl, userInfo['id'])
+            
+            ret['articleGranted'] = articleGranted
             response = json.dumps({'message': 'success', 'data': ret})
             return response
         else:
@@ -98,15 +103,24 @@ class ApiHelper:
         cursor.fetchall()
         return cursor.rowcount > 0
 
-    def updateCustomerSequence(self, dbObj, userId, userType, newSequenceNumber):
+    def updateCustomerSequenceAndItems(self, dbObj, userId, userType, username, newSequenceNumber, itemUrl):
         table = 'customers'
         if(userType == 'business'):
             table = 'businesses'
         cursor = dbObj['cursor']
-        affectedCount = cursor.execute("UPDATE `"+table+"` SET sequence = "+newSequenceNumber+" WHERE id = '"+userId+"'")
+        #commenting out until we fix Libra Testnet Integration for transfers
+        #affectedCount = cursor.execute("UPDATE `"+table+"` SET sequence = "+newSequenceNumber+" WHERE id = '"+userId+"'")
+       
+        if(userType == 'business' and itemUrl is not None):
+            insertScript = "INSERT INTO consumerArticles (userId, username, url, timestamp)\
+                VALUES ('{userId}', '{username}', '{itemUrl}', '{timestamp}')"\
+                .format(userId=userId, username=username, itemUrl=itemUrl, timestamp=getTimestamp())
+            cursor.execute(insertScript)
         dbObj['db'].commit()
-        return affectedCount
-
+        
+        #return affectedCount
+        #UNDO this once Testnet changes are done.
+        return 0
     def registerNewUser(self, dbObj, acc):
         table = 'customers'
         if(acc['userType'] == 'business'):
@@ -117,3 +131,15 @@ class ApiHelper:
             dbObj['db'].commit()
             return cursor.lastrowid
         return None
+
+    def checkIfItemPurchased(self, dbObj, itemUrl, userId):
+        cursor = dbObj['cursor']
+        script ="SELECT * FROM consumerArticles WHERE userId = {userId} AND url = '{itemUrl}'"\
+                    .format(userId=userId, itemUrl=itemUrl)
+        cursor.execute(script)
+        res = cursor.fetchall()
+        return cursor.rowcount > 0
+    
+    def getTimestamp():
+        ts = time.time()
+        return datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')

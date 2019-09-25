@@ -73,100 +73,56 @@ def logout():
     session.pop('userType', None)
     return json.dumps({'message': 'success', 'data': 'Logged out'})
 
-#Transactions
-@app.route('/api/transaction', methods=['POST'])
-def transaction():
+#TODO: when on Main Net should verify payment amounts with a value
+# stored against DB.
+@app.route('/api/buyItem', methods=['POST'])
+def buyArticle():
     data = request.get_json()
     dbObj = _apiHelper.dbConn()
     customerInfo = None
-    recipientUsername =  data['recipientUsername']
-    amount =  data['amount']
-    senderUsername=  data['senderUsername']
-    token = request.headers.get('authorization')
-    tokenInfo = _apiHelper.verifyToken(token, app)
-    if(tokenInfo is not None and 'userId' in tokenInfo):
-        customerInfo = _apiHelper.getUserByUniqueValue('id', dbObj, tokenInfo['userId'], 'customer')
+    
+    if(data is not None and 'amount' in data and 'itemUrl' in data and 'senderUsername' in data and 'recipientUsername' in data): 
+        recipientUsername =  data['recipientUsername']
+        amount =  data['amount']
+        itemUrl =  data['itemUrl']
+        senderUsername=  data['senderUsername']
+
+        token = request.headers.get('authorization')
+        tokenInfo = _apiHelper.verifyToken(token, app)
+
+        if(tokenInfo is not None and 'userId' in tokenInfo):
+            customerInfo = _apiHelper.getUserByUniqueValue('id', dbObj, tokenInfo['userId'], 'customer')
+        else:
+            ret = json.dumps({'message': 'Token not valid'}), 401
+
+        recipientInfo = _apiHelper.getUserByUniqueValue('username', dbObj, recipientUsername, 'business')
+
+        if(customerInfo is not None and 'username' in customerInfo and customerInfo['username'] == senderUsername \
+            and recipientInfo is not None and 'itemUrl' in data):
+
+            #Check the customer has not yet paid for this item..
+            if(_apiHelper.checkIfItemPurchased(dbObj, itemUrl, tokenInfo['userId'])):
+                ret = json.dumps({'message': 'Success', 'data': 'Item already purchased'})
+            else:
+                senderMnemonic = customerInfo['mnemonic']
+                sequenceNumber = customerInfo['sequence']
+                newSequenceNumber = transfer(senderMnemonic, recipientInfo['address'], amount, sequenceNumber)
+                result = {}
+                result['success'] = True
+                result['transferAmount'] = amount
+                result['recipientUsername'] = recipientUsername
+                result['senderUsername'] = senderUsername
+                _apiHelper.updateCustomerSequenceAndItems(dbObj, tokenInfo['userId'], 'customer', senderUsername, newSequenceNumber, itemUrl)
+                ret = json.dumps({'message': 'Success', 'data': result})
+        else :
+            ret = json.dumps({'message': 'Not authorized', 'session': 'none'}), 401
+        dbObj['db'].close()
     else:
-        ret = json.dumps({'message': 'Token not valid'}), 401
-
-    recipientInfo = _apiHelper.getUserByUniqueValue('username', dbObj, recipientUsername, 'business')
-
-    if(customerInfo is not None and 'username' in customerInfo and customerInfo['username'] == senderUsername \
-        and recipientInfo is not None):
-        senderMnemonic = customerInfo['mnemonic']
-        sequenceNumber = customerInfo['sequence']
-        newSequenceNumber = transfer(senderMnemonic, recipientInfo['address'], amount, sequenceNumber)
-        result = {}
-        result['success'] = True
-        result['transferAmount'] = amount
-        result['recipientUsername'] = recipientUsername
-        result['senderUsername'] = senderUsername
-        #_apiHelper.updateCustomerSequence(dbObj, tokenInfo['userId'], 'customer', newSequenceNumber)
-        ret = json.dumps({'message': 'Success', 'data': result})
-    else :
-        ret = json.dumps({'message': 'Not authorized', 'session': 'none'}), 401
-    dbObj['db'].close()
+        ret = requiredParams(data, 'amount', 'itemUrl', 'senderUsername', 'recipientUsername')
     return ret
 
-@app.route('/api/addDbScript', methods=['GET'])
-def addDbScript():
-    dbObj = _apiHelper.dbConn()
-    
-    script = "DROP TABLE `consumerArticles`;"
-    script2 = "CREATE TABLE `consumerArticles` (\
-                `id` int(11) NOT NULL,\
-                `userId` int(11) NOT NULL,\
-                `username` varchar(500) NOT NULL,\
-                `url` varchar(500) NOT NULL,\
-                `timestamp` varchar(500) NOT NULL\
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;\
-            "
-    script3 =  "ALTER TABLE `consumerArticles`\
-                ADD PRIMARY KEY (`id`);\
-            "
-    script4 = "ALTER TABLE `consumerArticles`\
-            MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;"
 
-    cursor = dbObj['cursor']
-
-    cursor.execute(script)
-    cursor.execute(script2)
-    cursor.execute(script3)
-    cursor.execute(script4)
-
-    dbObj['db'].commit()
-    return json.dumps({'message': 'success'})
-
-@app.route('/api/insertRecord', methods=['GET'])
-def insertRecord():
-    dbObj = _apiHelper.dbConn()
-    userId = '5'
-    username = 'allen3'
-    url = 'http://www.google.com'
-    ts = time.time()
-    timestamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
-    script = "INSERT INTO consumerArticles (userId, username, url, timestamp) \
-                VALUES ('{userId}', '{username}', '{url}', '{timestamp}')"\
-                .format(userId=userId, username=username, url=url, timestamp=timestamp)
-    cursor = dbObj['cursor']
-    cursor.execute(script)
-    dbObj['db'].commit()
-    return json.dumps({'message': 'success'})
-
-@app.route('/api/checkRecord', methods=['GET'])
-def checkRecord():
-    dbObj = _apiHelper.dbConn()
-    script = "SELECT * FROM consumerArticles"
-    cursor = dbObj['cursor']
-    cursor.execute(script)
-    res = cursor.fetchall()
-    result = {}
-    fieldMap = _apiHelper.fields(cursor)
-    for row in res:
-        result['id'] = row[fieldMap['id']]
-
-
-#TODO: 
+#TODO (when on Main Net): 
 #Authenticate based on Articles read
 #Check the header (JWT) based auth works as it did before.
 #SECURITY: SQL injection before we go live...
@@ -175,7 +131,9 @@ def authenticate(userType, request):
     dbObj = _apiHelper.dbConn()
     token = None
     ret = None
+    itemUrl = None
     if(request.method == 'GET' and 'authorization' in request.headers):
+        itemUrl = request.args.get('itemUrl')
         token = request.headers.get('authorization')
         data = _apiHelper.verifyToken(token, app)
         userId = None
@@ -183,8 +141,12 @@ def authenticate(userType, request):
             userId = str(data['userId'])
             session['userId'] = userId
             session['userType'] = userType
-            userInfo = _apiHelper.getUserByUniqueValue(dbObj, 'id', userId, userType)
+            userInfo = _apiHelper.getUserByUniqueValue('id', dbObj, userId, userType)
             result = _apiHelper.returnSuccessfulLogin(userInfo, userType, app)
+            articleGranted = False
+            if(itemUrl is not None):
+                articleGranted = _apiHelper.checkIfItemPurchased(dbObj, itemUrl, userInfo['id'])
+            result['articleGranted'] = articleGranted
             ret = json.dumps({'message': 'success', 'data': result})
         else:
             ret = json.dumps({'message': 'Token invalid'}), 401
@@ -193,7 +155,11 @@ def authenticate(userType, request):
         if(data is not None and 'username' in data and 'password' in data and 'userType' in data):    
             username =  data['username'].lower()
             password =  data['password']
-            ret = _apiHelper.verifyUserByPassword(dbObj, username, password, userType, app)
+            if('itemUrl' in data):
+                itemUrl = data['itemUrl']
+            ret = _apiHelper.verifyUserByPassword(dbObj, username, password, userType, itemUrl, app)
+           
+
         else:
             ret = requiredParams(data, 'username', 'password')
     else:  
@@ -201,6 +167,7 @@ def authenticate(userType, request):
     
     dbObj['db'].close()
     return ret
+
 
 #api shared method
 def requiredParams(data, *args):
