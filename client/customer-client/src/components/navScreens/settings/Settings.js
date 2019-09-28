@@ -28,7 +28,7 @@ const Settings = ({ history }) => {
         <div className={classes.mainContainer}>
             <SettingsAppBar history={ history }/>
             <Typography variant="h2" className={classes.header}>Settings</Typography>
-            <SettingsForm/>
+            <SettingsForm history={ history }/>
         </div>
     )
 }

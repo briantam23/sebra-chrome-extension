@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 
 
 const useStyles = makeStyles(theme => ({
-    navContainer: {
+    appBarContainer: {
         display: 'flex',
         justifyContent: 'space-between',
         marginTop: '5px'
@@ -36,7 +36,7 @@ const SettingsAppBar = ({ history }) => {
     const handleLogout = () => dispatch(logout(history));
 
     return(
-        <div className={classes.navContainer}>
+        <div className={classes.appBarContainer}>
             <ArrowBackIcon onClick={ handleArrowBack } className={classes.arrowIcon}/>
             <div>
                 <Button onClick={ handleLogout } className={classes.button} variant='contained' color='secondary'>

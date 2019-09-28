@@ -46,7 +46,7 @@ const Nav = ({ pathname, history }) => {
     else if(_pathname === 'search') setValue('search');
     else if(_pathname === 'search-results') setValue('search');
     else if(_pathname === 'wallet') setValue('wallet');
-    else setValue('settings');
+    else if(_pathname === 'wallet') setValue('settings');
   }, [_pathname])
 
   const handleChange = (e, newValue) => {

@@ -9,6 +9,7 @@ import FindSites from '../navScreens/search/findSites/FindSites';
 import SiteResults from '../navScreens/search/siteResults/SiteResults';
 import Wallet from '../navScreens/wallet/Wallet';
 import Settings from '../navScreens/settings/Settings';
+import Faq from '../navScreens/settings/Faq';
 import Nav from '../Nav';
 
 
@@ -27,6 +28,7 @@ const App = () => {
         <Route path='/account/:authAddress/search-results' render={ () => <SiteResults/> } />
         <Route path='/account/:authAddress/wallet' render={ () => <Wallet/> } />
         <Route path='/account/:authAddress/settings' render={ ({ history }) => <Settings history={ history }/> } />
+        <Route path='/account/:authAddress/faq' render={ ({ history }) => <Faq history={ history }/> } />
         <Route render={ ({ location, history }) => <Nav pathname={ location.pathname } history={ history }/> } />
       </Router>
     )

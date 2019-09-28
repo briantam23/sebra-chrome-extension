@@ -1,4 +1,5 @@
 import React, { useState, Fragment } from 'react';
+import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
@@ -44,8 +45,9 @@ const inputLabelStyle = {
     top: '-6px'
 }
 
-const SettingsForm = () => {
+const SettingsForm = ({ history }) => {
     const classes = useStyles();
+    const auth = useSelector(store => store.auth);
 
     const [state, setState] = useState({
         username: '',
@@ -53,6 +55,8 @@ const SettingsForm = () => {
     })
     
     const handleChange = id => e => setState({ ...state, [id]: e.target.value });
+
+    const handleFaqClick = () => history.push(`/account/${auth.address}/faq`);
 
     return(
         <Fragment>
@@ -88,7 +92,7 @@ const SettingsForm = () => {
             />
           </FormControl>
           <Button className={classes.updateButton} color='primary' variant='contained'>Update</Button>
-          <Button className={classes.faqButton} variant='contained'>FAQ</Button>
+          <Button onClick={handleFaqClick} className={classes.faqButton} variant='contained'>FAQ</Button>
         </Fragment>
     )
 }
