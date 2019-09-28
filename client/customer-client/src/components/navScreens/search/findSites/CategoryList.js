@@ -19,14 +19,14 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const CategoryList = () => {
+const CategoryList = ({ filteredList }) => {
   const classes = useStyles();
   const auth = useSelector(store => store.auth);
 
   return (
     <List className={classes.root}>
     { 
-      ['Trending Sites', 'Money', 'Productivity'].map((categoryName, idx) => (
+      filteredList.map((categoryName, idx) => (
         <Link to={`/account/${auth.address}/search-results`} className={classes.link} key={ idx }>
           <CategoryItem name={ categoryName }/>
         </Link>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { handleCopyClick } from '../../../util';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -43,15 +44,15 @@ const useStyles = makeStyles(theme => ({
 
 const InviteLink = () => {
     const classes = useStyles();
-    
+
     return(
         <Paper className={classes.paperContainer}>
             <Typography variant="h2" className={classes.header}>
                 Invite friends to enjoy great content with Libra
             </Typography> 
             <div>
-                <Input value='sebra.co/ref/jTTG4QU8' className={classes.input}/>
-                <Button variant="contained" className={classes.button}>Copy</Button>
+                <Input value='sebra.co/ref/jTTG4QU8' id='copyInput' className={classes.input}/>
+                <Button onClick={ handleCopyClick } variant="contained" className={classes.button}>Copy</Button>
             </div>
         </Paper>
     )

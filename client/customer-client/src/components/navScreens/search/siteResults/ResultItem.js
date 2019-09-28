@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import PoolIcon from '@material-ui/icons/Pool';
 import MultilineChartIcon from '@material-ui/icons/MultilineChart';
 import StoreIcon from '@material-ui/icons/Store';
+//import WebIcon from '@material-ui/icons/Web';
 
 
 const useStyles = makeStyles(theme => ({
@@ -57,6 +58,10 @@ const ResultItem = ({ name }) => {
         iconComponent = <StoreIcon fontSize='inherit'/>;
         urlAddress = 'shopify.com/blog';
     }
+    /* else if(name === 'Heroku') {
+        iconComponent = <WebIcon fontSize='inherit'/>;
+        urlAddress = 'heroku.com';
+    } */
     
     return(
         <ListItem>

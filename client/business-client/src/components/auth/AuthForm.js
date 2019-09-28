@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import AuthInput from './AuthInput';
 import { login } from '../../store/actions/auth';
 import { createUser } from '../../store/actions/users';
-import Loading from './Loading';
+import Spinner from '../spinner/Spinner';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
@@ -42,7 +42,8 @@ const AuthForm = ({ pathname, params, history }) => {
     username: '',
     password: '',
     loading: false,
-    error: ''
+    error: '',
+    showPassword: false
   });
 
   useEffect(() => setState({ 
@@ -69,10 +70,17 @@ const AuthForm = ({ pathname, params, history }) => {
         .catch(() => setState({ ...state, loading: false, error: 'Error! Username taken. Please try again.'}))
     }
   }
+
+  const handleClickShowPassword = () => setState({ ...state, showPassword: !state.showPassword });
+
   return (
     <form className={classes.formContainer2} noValidate autoComplete="off">
-    { state.loading ? <Loading/> : null }
-      <AuthInput state={ state } handleChange={ handleChange }/>
+    { state.loading ? <Spinner/> : null }
+      <AuthInput 
+        state={ state } 
+        handleChange={ handleChange }
+        handleClickShowPassword={ handleClickShowPassword }
+      />
       <Button 
         onClick={ handleClick } 
         variant="contained" 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import CategoryList from './CategoryList';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -48,15 +48,40 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+const categories = ['Trending Sites', 'Money', 'Productivity', 'Technology'];
 
 const FindSites = () => {
     const classes = useStyles();
+
+    const [filteredList, setFilteredList] = useState(categories);
+
+    useEffect(() => setFilteredList(filteredList), [filteredList]);
+
+    const handleChange = e => {
+        let currentList = [];
+        let newList = [];
+
+        if(e.target.value !== "") {
+            currentList = categories;
+            newList = currentList.filter(item => {
+                const _item = item.toLowerCase();
+                const searchStr = e.target.value.toLowerCase();
+
+                return _item.includes(searchStr);
+            })
+        } 
+        else newList = categories;
+            
+        setFilteredList(newList);
+    }
+
     return(
         <div className={classes.mainContainer}>
             <Typography variant="h2" className={classes.header}>Find Participating Sites</Typography>
             <div className={classes.search}>
                 <div className={classes.searchIcon}><SearchIcon/></div>
                 <InputBase
+                    onChange={ handleChange }
                     placeholder="Search…"
                     classes={{
                         root: classes.inputRoot,
@@ -65,7 +90,7 @@ const FindSites = () => {
                     inputProps={{ 'aria-label': 'search' }}
                 />
             </div>
-            <CategoryList/>
+            <CategoryList filteredList={ filteredList }/>
         </div>
     )
 }

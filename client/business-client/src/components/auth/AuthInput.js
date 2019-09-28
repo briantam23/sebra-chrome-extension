@@ -3,6 +3,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import IconButton from '@material-ui/core/IconButton';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 
 const useStyles = makeStyles(theme => ({
@@ -20,6 +24,7 @@ const useStyles = makeStyles(theme => ({
             width: '104%' 
         }
     },
+    visibilityIcon: { top: '-2px' },
     error: {
         margin: '2px 0px -14px 8px',
         [theme.breakpoints.down('1080')]: { 
@@ -29,8 +34,9 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-const AuthInput = ({ state, handleChange }) => {
+const AuthInput = ({ state, handleChange, handleClickShowPassword }) => {
   const classes = useStyles();
+  const handleMouseDownPassword = e => e.preventDefault();
 
   return (
     <Fragment>
@@ -59,7 +65,7 @@ const AuthInput = ({ state, handleChange }) => {
                 required
                 fullWidth
                 id="password"
-                type="password"
+                type={state.showPassword ? 'text' : 'password'}
                 label="Password"
                 className={classes.textField}
                 value={state.password}
@@ -67,6 +73,21 @@ const AuthInput = ({ state, handleChange }) => {
                 margin="normal"
                 inputProps={{ style: { height: '6px' } }} 
                 InputLabelProps={{ style: { top: '-9px' }}}
+                InputProps={{
+                    endAdornment: (
+                        <InputAdornment position="end">
+                            <IconButton
+                                className={classes.visibilityIcon}
+                                edge="end"
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowPassword}
+                                onMouseDown={handleMouseDownPassword}
+                            >
+                                {state.showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                        </InputAdornment>
+                    )
+                }}
             />
         </FormControl> 
     </Fragment>

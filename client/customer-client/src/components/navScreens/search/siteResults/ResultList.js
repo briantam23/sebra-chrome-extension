@@ -12,6 +12,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const Results = ['Digital Ocean', 'Heap Analytics', 'Shopify'/* , 'Heroku' */];
 
 const ResultList = () => {
   const classes = useStyles();
@@ -19,7 +20,7 @@ const ResultList = () => {
   return (
     <List className={classes.root}>
     { 
-        ['Digital Ocean', 'Heap Analytics', 'Shopify'].map((resultName, idx) => (
+        Results.map((resultName, idx) => (
             <ResultItem name={ resultName } key={ idx }/>
         ))
     }
