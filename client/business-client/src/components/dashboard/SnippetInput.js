@@ -14,8 +14,7 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.down('1080')]: { width: '367px' }  
     },
     error: { 
-        margin: '-1px 0px 10px 8px',
-        [theme.breakpoints.down('1080')]: { margin: '-1px 0px 0px 8px' }  
+        margin: '-1px 0px -11px 8px'  
     }
 }))
 
