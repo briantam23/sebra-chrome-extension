@@ -9,18 +9,21 @@ const useStyles = makeStyles(theme => ({
     formControl: {
         margin: theme.spacing(1),
         width: '93%',
-        [theme.breakpoints.down('1080')]: { margin: '0px 8px' }
+        [theme.breakpoints.down('1080')]: { margin: theme.spacing(1) }
     },
     textField: {
         marginLeft: theme.spacing(1),
         marginRight: theme.spacing(1),
-        width: '100%'
+        width: '102.5%',
+        [theme.breakpoints.down('1080')]: { 
+            marginLeft: '-2px',
+            width: '104%' 
+        }
     },
     error: {
-        marginLeft: '8px',
+        margin: '2px 0px -14px 8px',
         [theme.breakpoints.down('1080')]: { 
-          marginBottom: '-15px',
-          marginTop: '0px'
+            margin: '0px 0px -12px -2px'
         }
     }
 }))

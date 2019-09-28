@@ -7,23 +7,20 @@ const useStyles = makeStyles(theme => ({
     headerContainer: {
         width: '100%',
         maxWidth: 500,
-        margin: '20px 0px',
-        [theme.breakpoints.down('1080')]: {
-          margin: '10px 0px',
-        }
+        margin: '20px 0px'
     },
     header1: {
         marginLeft: '8px',
         [theme.breakpoints.down('1080')]: {
           margin: '-13px 0px',
-          fontSize: '45px'
+          fontSize: '50px'
         }
     },
     header2: {
         margin: '45px 0px 45px 13px',
         fontWeight: 250,
         [theme.breakpoints.down('1080')]: {
-          margin: '40px 0px -13px 13px',
+          margin: '45px 0px -13px 5px',
           fontWeight: '240',
           fontSize: '25px'
         }

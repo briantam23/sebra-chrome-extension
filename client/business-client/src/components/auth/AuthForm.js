@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import AuthInput from './AuthInput';
 import { login } from '../../store/actions/auth';
@@ -23,13 +23,13 @@ const useStyles = makeStyles(theme => ({
         textAlign: 'right',
         marginTop: '41px',
         marginLeft: '76%',
+        marginRight: '7px',
         fontSize: '19px',
-        padding: '20px 40px',
+        padding: '18px 36px',
         [theme.breakpoints.down('1080')]: {
-          marginTop: '20px',
-          marginLeft: '80%',
-          fontSize: '12px',
-          padding: '8px 8px'
+          marginBottom: '7px',
+          fontSize: '13px',
+          padding: '12px 24px'
         }
     }
 }))
@@ -44,6 +44,12 @@ const AuthForm = ({ pathname, params, history }) => {
     loading: false,
     error: ''
   });
+
+  useEffect(() => setState({ 
+    username: '',
+    password: '',
+    error: ''
+  }), [pathname])
 
   const handleChange = id => e => setState({ ...state, [id]: e.target.value });
 
@@ -69,7 +75,6 @@ const AuthForm = ({ pathname, params, history }) => {
       <AuthInput state={ state } handleChange={ handleChange }/>
       <Button 
         onClick={ handleClick } 
-        disabled={ !state.username || !state.password }
         variant="contained" 
         color="primary" 
         className={classes.button}
