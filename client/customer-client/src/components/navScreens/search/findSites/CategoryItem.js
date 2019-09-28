@@ -7,6 +7,7 @@ import Avatar from '@material-ui/core/Avatar';
 import ShareIcon from '@material-ui/icons/Share';
 import CreditCardIcon from '@material-ui/icons/CreditCard';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
+import SmartphoneIcon from '@material-ui/icons/Smartphone';
 
 
 const useStyles = makeStyles(theme => ({
@@ -30,6 +31,7 @@ const CategoryItem = ({ name }) => {
     if(name === 'Trending Sites') iconComponent = <ShareIcon fontSize='inherit'/>;
     else if(name === 'Money') iconComponent = <CreditCardIcon fontSize='inherit'/>;
     else if(name === 'Productivity') iconComponent = <MailOutlineIcon fontSize='inherit'/>;
+    else if(name === 'Technology') iconComponent = <SmartphoneIcon fontSize='inherit'/>;
     
     return(
         <ListItem>

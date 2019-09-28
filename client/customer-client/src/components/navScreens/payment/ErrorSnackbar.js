@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from 'react';
-import Spinner from '../../shared/Spinner';
+import Spinner from '../../shared/spinner/Spinner';
 import Buttons from './Buttons';
 import SnackbarContentWrapper from './SnackbarContentWrapper';
 import Snackbar from '@material-ui/core/Snackbar';

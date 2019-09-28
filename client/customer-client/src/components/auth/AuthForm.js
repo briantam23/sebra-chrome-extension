@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import Spinner from '../shared/Spinner';
+import Spinner from '../shared/spinner/Spinner';
 import AuthInput from './AuthInput';
 
 import { login } from '../../store/actions/auth';
@@ -32,9 +32,16 @@ const AuthForm = ({ pathname, params, history, recipientAddress, chargeAmount })
       username: '',
       password: '',
       loading: false,
-      error: ''
+      error: '',
+      showPassword: false
     });
   
+    useEffect(() => setState({
+      username: '',
+      password: '',
+      error: ''
+     }), [pathname])
+
     const handleChange = id => e => setState({ ...state, [id]: e.target.value });
   
     const handleClick = () => {
@@ -49,13 +56,19 @@ const AuthForm = ({ pathname, params, history, recipientAddress, chargeAmount })
         dispatch(createUser(state))
           .then(() => dispatch(login(state, params, history)))
           .then(() => setState({ ...state, loading: false }))
-          .catch(() => setState({ ...state, loading: false, error: 'Error! Username taken. Please try again.'}))
+          .catch(() => setState({ ...state, loading: false, error: 'Username taken! Please try again.'}))
       }
     }
+
+    const handleClickShowPassword = () => setState({ ...state, showPassword: !state.showPassword });
     return(
       <form className={classes.formContainer2} noValidate autoComplete="off">
         { state.loading ? <Spinner/> : null }
-        <AuthInput state={ state } handleChange={ handleChange }/>
+        <AuthInput 
+          state={ state } 
+          handleChange={ handleChange } 
+          handleClickShowPassword={ handleClickShowPassword }
+        />
         <Button 
           onClick={ handleClick } 
           variant="contained" 
