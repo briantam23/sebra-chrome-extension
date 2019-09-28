@@ -105,7 +105,7 @@ def buyArticle():
                 ret = json.dumps({'message': 'Success', 'data': 'Item already purchased'})
             else:
                 senderMnemonic = customerInfo['mnemonic']
-                sequenceNumber = customerInfo['sequence']
+                sequenceNumber = 1
                 newSequenceNumber = transfer(senderMnemonic, recipientInfo['address'], amount, sequenceNumber)
                 result = {}
                 result['success'] = True
