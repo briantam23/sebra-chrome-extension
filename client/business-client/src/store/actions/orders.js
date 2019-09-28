@@ -16,6 +16,7 @@ export const updateOrder = (auth, history, params) => {
     return dispatch => (
         axios.post('https://vast-plains-55545.herokuapp.com/api/transaction', 
             { username, recipientAddress, amount }, 
+            //{ amount, itemUrl, senderUsername, recipientUsername }
             { headers: { authorization: token } }
         )
             .then(res => res.data.data)

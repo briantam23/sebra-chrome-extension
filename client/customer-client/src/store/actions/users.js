@@ -11,7 +11,9 @@ export const createUser = state => {
     const { username, password } = state;
 
     return dispatch => (
-        axios.post('https://vast-plains-55545.herokuapp.com/api/register', { username, password })
+        axios.post('https://vast-plains-55545.herokuapp.com/api/register', 
+            { username, password, userType: 'customer' }
+        )
             .then(res => res.data.data)
             .then(data => dispatch(_createCustomerUser(data)))
     )

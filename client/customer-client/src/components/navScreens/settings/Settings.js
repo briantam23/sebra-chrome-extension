@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     header: {
         fontSize: '30px',
         fontWeight: 400,
-        margin: '5px 0px 0px 15px',
+        margin: '5px 0px 10px 15px',
         color: 'darkslateblue',
         alignSelf: 'center'
     }
