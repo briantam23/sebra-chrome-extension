@@ -19,9 +19,9 @@ const App = () => {
 
     return (
       <Router>
-        <Route exact path='/' render={ ({ history }) => <Banner history={ history }/> } />
-        <Route exact path='/(login|create-account)' render={ ({ location, match, history }) => <Auth pathname={ location.pathname } params={ match.params } history={ history }/> } />
-        <Route path='/(login|create-account)/:recipientAddress/:chargeAmount' render={ ({ location, match, history }) => <Auth pathname={ location.pathname } params={ match.params } history={ history }/> } />
+        <Route exact path='/:itemUrl/:recipientAddress' render={ ({ match, history }) => <Banner params={ match.params } history={ history }/> } />
+        <Route exact path='/(login|create-account)' render={ ({ location, history }) => <Auth pathname={ location.pathname } history={ history }/> } />
+        <Route path='/(login|create-account)/:itemUrl/:recipientAddress' render={ ({ location, match, history }) => <Auth pathname={ location.pathname } params={ match.params } history={ history }/> } />
         <Route path='/account/:authAddress/payment' render={ ({ location, match, history }) => <Payment pathname={ location.pathname } params={ match.params } history={ history }/> } />
         <Route path='/account/:authAddress/payment-complete' render={ ({ location, match, history }) => <Payment pathname={ location.pathname } params={ match.params } history={ history }/> } />
         <Route path='/account/:authAddress/search' render={ () => <FindSites/> } />

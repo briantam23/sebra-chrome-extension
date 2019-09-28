@@ -10,7 +10,7 @@ export const exchangeTokenForAuth = (params = {}, history) => (
         const token = window.localStorage.getItem('token');
 
         if(!token) return;
-        return axios.get('https://vast-plains-55545.herokuapp.com/api/authBusiness', 
+        return axios.get('https://sebraapi.herokuapp.com/api/authBusiness', 
             { headers: { authorization: token } }
         )
             .then(res => res.data.data)
@@ -43,7 +43,7 @@ export const login = (state, params, history) => {
     const { username, password } = state;
     
     return dispatch => (
-        axios.post('https://vast-plains-55545.herokuapp.com/api/authBusiness', 
+        axios.post('https://sebraapi.herokuapp.com/api/authBusiness', 
             { username, password }
         )
             .then(res => res.data.data)

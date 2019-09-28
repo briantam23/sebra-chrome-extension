@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
 
 
 const Auth = ({ pathname, params, history }) => {
-  const { recipientAddress, chargeAmount } = params;
+  const { recipientAddress, itemUrl } = params;
   const classes = useStyles();
  
   return (
@@ -35,15 +35,14 @@ const Auth = ({ pathname, params, history }) => {
       <div className={classes.formContainer1}>
         <AuthForm
           pathname={ pathname } 
-          params={ params }
           history={ history }
-          recipientAddress={ recipientAddress } 
-          chargeAmount={ chargeAmount }
+          recipientAddress={ recipientAddress }
+          itemUrl={ itemUrl }
         />
         <AuthLinks 
           pathname={ pathname } 
-          recipientAddress={ recipientAddress } 
-          chargeAmount={ chargeAmount }
+          recipientAddress={ recipientAddress }
+          itemUrl={ itemUrl }
         />
       </div>
     </div>

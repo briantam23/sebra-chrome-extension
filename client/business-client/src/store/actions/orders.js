@@ -14,7 +14,7 @@ export const updateOrder = (auth, history, params) => {
     const token = window.localStorage.getItem('token');
 
     return dispatch => (
-        axios.post('https://vast-plains-55545.herokuapp.com/api/transaction', 
+        axios.post('https://sebraapi.herokuapp.com/api/transaction', 
             { username, recipientAddress, amount }, 
             //{ amount, itemUrl, senderUsername, recipientUsername }
             { headers: { authorization: token } }
