@@ -4,8 +4,8 @@ import axios from 'axios';
 
 export const exchangeTokenForAuth = (params = {}, history) => (
     dispatch => {
-        const { recipientAddress } = params;
-        const chargeAmount = Number(params.chargeAmount);
+        /* const { recipientAddress } = params;
+        const chargeAmount = Number(params.chargeAmount); */
 
         const token = window.localStorage.getItem('token');
 

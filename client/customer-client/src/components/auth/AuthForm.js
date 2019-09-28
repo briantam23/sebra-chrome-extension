@@ -53,18 +53,18 @@ const AuthForm = ({ pathname, params, history, recipientAddress, chargeAmount })
       }
     }
     return(
-        <form className={classes.formContainer2} noValidate autoComplete="off">
-          { state.loading ? <Spinner/> : null }
-          <AuthInput state={ state } handleChange={ handleChange }/>
-          <Button 
-            onClick={ handleClick } 
-            variant="contained" 
-            color="primary" 
-            className={classes.button}
-          >
-            { pathname.slice(0, 6) === '/login' ? 'Login' : 'Create' }  
-          </Button>
-        </form>
+      <form className={classes.formContainer2} noValidate autoComplete="off">
+        { state.loading ? <Spinner/> : null }
+        <AuthInput state={ state } handleChange={ handleChange }/>
+        <Button 
+          onClick={ handleClick } 
+          variant="contained" 
+          color="primary" 
+          className={classes.button}
+        >
+          { pathname.slice(0, 6) === '/login' ? 'Login' : 'Create' }  
+        </Button>
+      </form>
     )
 }
 
