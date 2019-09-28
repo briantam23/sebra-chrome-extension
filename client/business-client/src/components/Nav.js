@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
   nav: {
     [theme.breakpoints.down('1080')]: {
       marginTop: '-8px',
-      minHeight: '45px'
+      minHeight: '55px'
     }
   },
   title: { 
