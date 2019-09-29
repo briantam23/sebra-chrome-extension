@@ -10,9 +10,9 @@ app.secret_key = os.urandom(24)
 app.config['SECRET_KEY'] = 'zj8F?7uj9x41'
 
 #---------DEBUGGING-------------
-address = ('0.0.0.0', 81)
-ptvsd.enable_attach(address)
-ptvsd.wait_for_attach()
+# address = ('0.0.0.0', 3001)
+# ptvsd.enable_attach(address)
+# ptvsd.wait_for_attach()
 #---------DEBUGGING-------------
 
 CORS(app, supports_credentials=True)
@@ -27,7 +27,6 @@ def authCustomer():
 def authBusiness():
     return authenticate('business', request)
 
-
 #-----------REGISTER BUSINESS-----------
 @app.route('/api/register', methods=['POST'])
 def register():
@@ -39,32 +38,32 @@ def register():
 
     if(_apiHelper.existingUserCheck(dbObj, data['username'], data['userType'])):
         ret = json.dumps({'message': 'error', 'data': 'Already registered.'}), 409
-
-    acc = account()
-    acc['password'] = hashlib.md5(data['password'].encode('utf-8')).hexdigest()
-    acc['username'] = data['username'].lower()
-    acc['userType'] = data['userType'].lower()
-    if(acc['userType'] == 'customer'):
-        #Customers get minted free Testnet money :D
-        mintamount = 1000
-        mint(acc['mnemonic'], mintamount)
-    userId = _apiHelper.registerNewUser(dbObj, acc)
-
-    if(userId is not None):
-        result = {}
-        result['username'] = acc['username']
-        result['address'] = acc['address']
-        result['accountBalance'] = balance(acc['address'])
-        result['userType'] = acc['userType']
-        result['token'] = _apiHelper.createToken(userId, app)
-        session['userId'] = userId
-        session['userType'] = acc['userType']
-        ret = json.dumps({'message': 'success', 'data': result})
     else:
-        ret = json.dumps({'message': 'error', 'data': 'Could not register user.'}), 500
+        acc = account()
+        acc['password'] = hashlib.md5(data['password'].encode('utf-8')).hexdigest()
+        acc['username'] = data['username'].lower()
+        acc['userType'] = data['userType'].lower()
+        if(acc['userType'] == 'customer'):
+            #Customers get minted free Testnet money :D
+            mintamount = 1000
+            mint(acc['mnemonic'], mintamount)
+        userId = _apiHelper.registerNewUser(dbObj, acc)
 
+        if(userId is not None):
+            result = {}
+            result['username'] = acc['username']
+            result['address'] = acc['address']
+            result['accountBalance'] = balance(acc['address'])
+            result['userType'] = acc['userType']
+            result['token'] = _apiHelper.createToken(userId, app)
+            session['userId'] = userId
+            session['userType'] = acc['userType']
+            ret = json.dumps({'message': 'success', 'data': result})
+        else:
+            ret = json.dumps({'message': 'error', 'data': 'Could not register user.'}), 500
     dbObj['db'].close()
     return ret
+    
 
 #req params: None
 @app.route('/api/logout', methods=['POST'])
@@ -121,6 +120,10 @@ def buyArticle():
         ret = requiredParams(data, 'amount', 'itemUrl', 'senderUsername', 'recipientUsername')
     return ret
 
+@app.route('/api/updateUser', methods=['PUT'])
+def updateUser():
+    return updateCustomer(request)
+
 
 #TODO (when on Main Net): 
 #Authenticate based on Articles read
@@ -152,7 +155,7 @@ def authenticate(userType, request):
             ret = json.dumps({'message': 'Token invalid'}), 401
     elif(request.method == 'POST'):
         data = request.get_json() 
-        if(data is not None and 'username' in data and 'password' in data and 'userType' in data):    
+        if(data is not None and 'username' in data and 'password' in data):    
             username =  data['username'].lower()
             password =  data['password']
             if('itemUrl' in data):
@@ -176,3 +179,7 @@ def requiredParams(data, *args):
         if(arg not in data):
             missingValue = arg+' field'
     return json.dumps({'message': 'error', 'data': missingValue + ' is missing.'}), 400
+
+
+def updateCustomer(request):
+    return ""

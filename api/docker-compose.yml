@@ -3,13 +3,13 @@ version: '3.4'
 services:
   sebraapp:
     build: .
-    links:
+    depends_on:
       - db
     volumes:
       - .:/usr/src/app
     ports:
-      - 5000:81
-      - 5001:82
+      - 81:3001
+      - 80:3000
   db:
     image: mysql:5.7
     ports:

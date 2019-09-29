@@ -1,19 +1,31 @@
 import os, json, hashlib, jwt, datetime, time, mysql.connector
 from flask import session
 from libra_actions import account, balance, mint, transfer
-
+port = int(os.environ.get("PORT", 3306))
 class ApiHelper:
     def dbConn(self):
-        config = {
-            'host': 'db',
-            'port': 3306,
-            'database': 'sebra',
-            'user': 'root',
-            'password': 'e0N28ttq@%B',
-            'charset': 'utf8',
-            'use_unicode': True,
-            'get_warnings': True,
-        }
+        if 'RUNNING_ON_HEROKU' in os.environ:
+            config = {
+                'host': 'us-cdbr-iron-east-02.cleardb.net',
+                'port': 3306,
+                'database': 'heroku_c4d228263403f24',
+                'user': 'b7127d57b25e59',
+                'password': 'e18842fa',
+                'charset': 'utf8',
+                'use_unicode': True,
+                'get_warnings': True,
+            }
+        else:
+            config = {
+                'host': 'db',
+                'port': port,
+                'database': 'sebra',
+                'user': 'root',
+                'password': 'e0N28ttq@%B',
+                'charset': 'utf8',
+                'use_unicode': True,
+                'get_warnings': True,
+            }
         ret = {}
         db = mysql.connector.Connect(**config)
         cursor = db.cursor()
@@ -112,7 +124,7 @@ class ApiHelper:
         #affectedCount = cursor.execute("UPDATE `"+table+"` SET sequence = "+newSequenceNumber+" WHERE id = '"+userId+"'")
        
         if(userType == 'business' and itemUrl is not None):
-            insertScript = "INSERT INTO consumerArticles (userId, username, url, timestamp)\
+            insertScript = "INSERT INTO consumerarticles (userId, username, url, timestamp)\
                 VALUES ('{userId}', '{username}', '{itemUrl}', '{timestamp}')"\
                 .format(userId=userId, username=username, itemUrl=itemUrl, timestamp=getTimestamp())
             cursor.execute(insertScript)
@@ -134,7 +146,7 @@ class ApiHelper:
 
     def checkIfItemPurchased(self, dbObj, itemUrl, userId):
         cursor = dbObj['cursor']
-        script ="SELECT * FROM consumerArticles WHERE userId = {userId} AND url = '{itemUrl}'"\
+        script ="SELECT * FROM consumerarticles WHERE userId = {userId} AND url = '{itemUrl}'"\
                     .format(userId=userId, itemUrl=itemUrl)
         cursor.execute(script)
         res = cursor.fetchall()
