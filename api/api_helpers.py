@@ -66,7 +66,7 @@ class ApiHelper:
             return None
             
     def createToken(self, userId, app):
-        tokenResp = jwt.encode({'userId': userId, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60)}, app.config['SECRET_KEY'])
+        tokenResp = jwt.encode({'userId': userId, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=10360)}, app.config['SECRET_KEY'])
         return tokenResp.decode('UTF-8')
 
     def fields(self, cursor):

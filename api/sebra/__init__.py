@@ -27,8 +27,7 @@ def authCustomer():
 def authBusiness():
     return authenticate('business', request)
 
-#-----------REGISTER BUSINESS-----------
-@app.route('/api/register', methods=['POST'])
+@app.route('/api/register', methods=['POST', 'GET'])
 def register():
     data = request.get_json()
     dbObj = _apiHelper.dbConn()
@@ -68,18 +67,19 @@ def register():
 #req params: None
 @app.route('/api/logout', methods=['POST'])
 def logout():
-    session.pop('userId', None)
-    session.pop('userType', None)
+    session['userId'] = None
+    session['userType'] = None
     return json.dumps({'message': 'success', 'data': 'Logged out'})
 
 #TODO: when on Main Net should verify payment amounts with a value
 # stored against DB.
 @app.route('/api/buyItem', methods=['POST'])
-def buyArticle():
+def buyItem():
     data = request.get_json()
     dbObj = _apiHelper.dbConn()
     customerInfo = None
-    
+    userType = 'customer'
+
     if(data is not None and 'amount' in data and 'itemUrl' in data and 'senderUsername' in data and 'recipientUsername' in data): 
         recipientUsername =  data['recipientUsername']
         amount =  data['amount']
@@ -90,34 +90,35 @@ def buyArticle():
         tokenInfo = _apiHelper.verifyToken(token, app)
 
         if(tokenInfo is not None and 'userId' in tokenInfo):
-            customerInfo = _apiHelper.getUserByUniqueValue('id', dbObj, tokenInfo['userId'], 'customer')
+            if(session is not None and 'userId' in session and session['userId'] == tokenInfo['userId'] and session['userType'] == userType):
+                customerInfo = _apiHelper.getUserByUniqueValue('id', dbObj, tokenInfo['userId'], userType)
+                recipientInfo = _apiHelper.getUserByUniqueValue('username', dbObj, recipientUsername, 'business')
+                if(customerInfo is not None and 'username' in customerInfo and customerInfo['username'] == senderUsername \
+                    and recipientInfo is not None and 'itemUrl' in data):
+                    #Check the customer has not yet paid for this item..
+                    if(_apiHelper.checkIfItemPurchased(dbObj, itemUrl, tokenInfo['userId'])):
+                        ret = json.dumps({'message': 'Success', 'data': 'Item already purchased'})
+                    else:
+                        senderMnemonic = customerInfo['mnemonic']
+                        sequenceNumber = 1
+                        newSequenceNumber = transfer(senderMnemonic, recipientInfo['address'], amount, sequenceNumber)
+                        result = {}
+                        result['success'] = True
+                        result['transferAmount'] = amount
+                        result['recipientUsername'] = recipientUsername
+                        result['senderUsername'] = senderUsername
+                        _apiHelper.updateCustomerSequenceAndItems(dbObj, tokenInfo['userId'], userType, senderUsername, newSequenceNumber, itemUrl)
+                        ret = json.dumps({'message': 'Success', 'data': result})
+                else :
+                    ret = json.dumps({'message': 'Not authorized', 'session': 'none'}), 401
+            else:
+                ret = json.dumps({'message': 'Session invalid'}), 401
         else:
             ret = json.dumps({'message': 'Token not valid'}), 401
-
-        recipientInfo = _apiHelper.getUserByUniqueValue('username', dbObj, recipientUsername, 'business')
-
-        if(customerInfo is not None and 'username' in customerInfo and customerInfo['username'] == senderUsername \
-            and recipientInfo is not None and 'itemUrl' in data):
-
-            #Check the customer has not yet paid for this item..
-            if(_apiHelper.checkIfItemPurchased(dbObj, itemUrl, tokenInfo['userId'])):
-                ret = json.dumps({'message': 'Success', 'data': 'Item already purchased'})
-            else:
-                senderMnemonic = customerInfo['mnemonic']
-                sequenceNumber = 1
-                newSequenceNumber = transfer(senderMnemonic, recipientInfo['address'], amount, sequenceNumber)
-                result = {}
-                result['success'] = True
-                result['transferAmount'] = amount
-                result['recipientUsername'] = recipientUsername
-                result['senderUsername'] = senderUsername
-                _apiHelper.updateCustomerSequenceAndItems(dbObj, tokenInfo['userId'], 'customer', senderUsername, newSequenceNumber, itemUrl)
-                ret = json.dumps({'message': 'Success', 'data': result})
-        else :
-            ret = json.dumps({'message': 'Not authorized', 'session': 'none'}), 401
-        dbObj['db'].close()
     else:
         ret = requiredParams(data, 'amount', 'itemUrl', 'senderUsername', 'recipientUsername')
+    
+    dbObj['db'].close()
     return ret
 
 @app.route('/api/updateUser', methods=['PUT'])
@@ -126,10 +127,7 @@ def updateUser():
 
 
 #TODO (when on Main Net): 
-#Authenticate based on Articles read
-#Check the header (JWT) based auth works as it did before.
 #SECURITY: SQL injection before we go live...
-#SECURITY: How do we ensure transaction requests don't get modified to go to anyone...?
 def authenticate(userType, request):
     dbObj = _apiHelper.dbConn()
     token = None
@@ -141,16 +139,19 @@ def authenticate(userType, request):
         data = _apiHelper.verifyToken(token, app)
         userId = None
         if(data is not None and 'userId' in data):
-            userId = str(data['userId'])
-            session['userId'] = userId
-            session['userType'] = userType
-            userInfo = _apiHelper.getUserByUniqueValue('id', dbObj, userId, userType)
-            result = _apiHelper.returnSuccessfulLogin(userInfo, userType, app)
-            articleGranted = False
-            if(itemUrl is not None):
-                articleGranted = _apiHelper.checkIfItemPurchased(dbObj, itemUrl, userInfo['id'])
-            result['articleGranted'] = articleGranted
-            ret = json.dumps({'message': 'success', 'data': result})
+            userId = data['userId']
+            if(session is not None and 'userId' in session and session['userId'] == userId and session['userType'] == userType):
+                session['userId'] = userId
+                session['userType'] = userType
+                userInfo = _apiHelper.getUserByUniqueValue('id', dbObj, str(userId), userType)
+                result = _apiHelper.returnSuccessfulLogin(userInfo, userType, app)
+                articleGranted = False
+                if(itemUrl is not None):
+                    articleGranted = _apiHelper.checkIfItemPurchased(dbObj, itemUrl, userInfo['id'])
+                result['articleGranted'] = articleGranted
+                ret = json.dumps({'message': 'success', 'data': result})
+            else:
+                ret = json.dumps({'message': 'Session invalid'}), 401
         else:
             ret = json.dumps({'message': 'Token invalid'}), 401
     elif(request.method == 'POST'):
@@ -161,8 +162,6 @@ def authenticate(userType, request):
             if('itemUrl' in data):
                 itemUrl = data['itemUrl']
             ret = _apiHelper.verifyUserByPassword(dbObj, username, password, userType, itemUrl, app)
-           
-
         else:
             ret = requiredParams(data, 'username', 'password')
     else:  
