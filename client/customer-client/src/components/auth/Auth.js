@@ -24,9 +24,14 @@ const useStyles = makeStyles(theme => ({
 
 
 const Auth = ({ pathname, params, history }) => {
-  const { recipientAddress, itemUrl } = params;
   const classes = useStyles();
  
+  let recipientUsername, itemUrl = null;
+  if(params && params.itemUrl) {
+      itemUrl = params.itemUrl;
+      recipientUsername = params.recipientUsername;
+  }
+
   return (
     <div className={classes.mainContainer}>
       <Typography variant="h5" align="left" className={classes.header}>
@@ -36,12 +41,12 @@ const Auth = ({ pathname, params, history }) => {
         <AuthForm
           pathname={ pathname } 
           history={ history }
-          recipientAddress={ recipientAddress }
+          recipientUsername={ recipientUsername }
           itemUrl={ itemUrl }
         />
         <AuthLinks 
           pathname={ pathname } 
-          recipientAddress={ recipientAddress }
+          recipientUsername={ recipientUsername }
           itemUrl={ itemUrl }
         />
       </div>

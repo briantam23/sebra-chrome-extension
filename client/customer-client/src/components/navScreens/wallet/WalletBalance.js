@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import Spinner from '../../shared/spinner/Spinner';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -34,7 +33,6 @@ const WalletBalance = () => {
     
     return(
         <Paper className={classes.paperContainer}>
-            { isNaN(Number(auth.accountBalance)) ? <Spinner/> : null }
             <Typography variant="h2" className={classes.smallHeader}>Wallet</Typography> 
             <Typography variant="h2" className={classes.largeHeader}>
                 { isNaN(Number(auth.accountBalance)) ? '≋  Libra' : `≋${auth.accountBalance} Libra` }

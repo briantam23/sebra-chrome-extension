@@ -28,10 +28,17 @@ const useStyles = makeStyles(theme => ({
 const Banner = ({ params, history }) => {
   const classes = useStyles();
   const auth = useSelector(store => store.auth);
+  
+  let recipientUsername, itemUrl = null;
+  if(params && params.itemUrl) {
+    itemUrl = params.itemUrl;
+    recipientUsername = params.recipientUsername;
+  }
 
-  const { itemUrl, recipientAddress } = params;
   const handleClick = () => {
-    !auth.address ? history.push(`/login/${itemUrl}/${recipientAddress}`) : history.push(`/account/${auth.address}/payment`)
+    if(!auth.address) history.push(`/login/${itemUrl}/${recipientUsername}`) 
+    else if(!auth.articleGranted) history.push(`/account/payment/${itemUrl}/${recipientUsername}`)
+    else history.push(`/account/payment-completed/${itemUrl}/${recipientUsername}`)
   }
   return(
       <div className={classes.container}>

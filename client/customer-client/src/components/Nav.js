@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
@@ -36,13 +35,14 @@ const Nav = ({ pathname, history }) => {
   const classes = useStyles();
 
   const [value, setValue] = useState('payment');
-  const auth = useSelector(store => store.auth);
-
+console.log()
   let _pathname = null;
-  if(pathname) _pathname = pathname.split('/')[3];
+  if(pathname) _pathname = pathname.split('/')[2];
+  pathname = pathname.slice(0, 8)
 
   useEffect(() => {
     if(_pathname === 'payment') setValue('payment');
+    else if(_pathname === 'payment-completed') setValue('payment');
     else if(_pathname === 'search') setValue('search');
     else if(_pathname === 'search-results') setValue('search');
     else if(_pathname === 'wallet') setValue('wallet');
@@ -52,13 +52,13 @@ const Nav = ({ pathname, history }) => {
   const handleChange = (e, newValue) => {
     setValue(newValue);
 
-    if(newValue === 'payment') history.push(`/account/${auth.address}/payment`);
-    else if(newValue === 'search') history.push(`/account/${auth.address}/search`);
-    else if(newValue === 'wallet') history.push(`/account/${auth.address}/wallet`);
-    else history.push(`/account/${auth.address}/settings`);
+    if(newValue === 'payment') history.push(`/account/payment`);
+    else if(newValue === 'search') history.push(`/account/search`);
+    else if(newValue === 'wallet') history.push(`/account/wallet`);
+    else history.push(`/account/settings`);
   }
-
-  if(!auth.address || pathname === '/') return null;
+  
+  if(pathname !== '/account') return null;
   return (
     <div className={classes.root}>
       <BottomNavigation value={value} onChange={handleChange} className={classes.navContainer}>

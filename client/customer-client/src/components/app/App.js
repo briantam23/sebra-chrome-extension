@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { HashRouter as Router, Route } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { exchangeTokenForAuth } from '../../store/actions/auth';
 import Banner from '../Banner';
@@ -19,16 +19,34 @@ const App = () => {
 
     return (
       <Router>
-        <Route exact path='/:itemUrl/:recipientAddress' render={ ({ match, history }) => <Banner params={ match.params } history={ history }/> } />
-        <Route exact path='/(login|create-account)' render={ ({ location, history }) => <Auth pathname={ location.pathname } history={ history }/> } />
-        <Route path='/(login|create-account)/:itemUrl/:recipientAddress' render={ ({ location, match, history }) => <Auth pathname={ location.pathname } params={ match.params } history={ history }/> } />
-        <Route path='/account/:authAddress/payment' render={ ({ location, match, history }) => <Payment pathname={ location.pathname } params={ match.params } history={ history }/> } />
-        <Route path='/account/:authAddress/payment-complete' render={ ({ location, match, history }) => <Payment pathname={ location.pathname } params={ match.params } history={ history }/> } />
-        <Route path='/account/:authAddress/search' render={ () => <FindSites/> } />
-        <Route path='/account/:authAddress/search-results' render={ () => <SiteResults/> } />
-        <Route path='/account/:authAddress/wallet' render={ () => <Wallet/> } />
-        <Route path='/account/:authAddress/settings' render={ ({ history }) => <Settings history={ history }/> } />
-        <Route path='/account/:authAddress/faq' render={ ({ history }) => <Faq history={ history }/> } />
+        <Switch>
+          <Route exact path='/account/payment/' render={ ({ location, history }) => 
+            <Payment pathname={ location.pathname } history={ history }/> } 
+          />
+          <Route exact path='/account/payment/:itemUrl/:recipientUsername' render={ ({ location, match, history }) => 
+            <Payment pathname={ location.pathname } params={ match.params } history={ history }/> } 
+          />
+          <Route exact path='/account/payment-completed/' render={ ({ location, history }) => 
+            <Payment pathname={ location.pathname } history={ history }/> } 
+          />
+          <Route exact path='/account/payment-completed/:itemUrl/:recipientUsername' render={ ({ location, match, history }) => 
+            <Payment pathname={ location.pathname } params={ match.params } history={ history }/> } 
+          />
+          <Route exact path='/(login|create-account)' render={ ({ location, history }) => 
+            <Auth pathname={ location.pathname } history={ history }/> } 
+          />
+          <Route path='/(login|create-account)/:itemUrl/:recipientUsername' render={ ({ location, match, history }) => 
+            <Auth pathname={ location.pathname } params={ match.params } history={ history }/> } 
+          />
+          <Route path='/account/search' render={ () => <FindSites/> } />
+          <Route path='/account/search-results' render={ () => <SiteResults/> } />
+          <Route path='/account/wallet' render={ () => <Wallet/> } />
+          <Route path='/account/settings' render={ ({ history }) => <Settings history={ history }/> } />
+          <Route path='/account/faq' render={ ({ history }) => <Faq history={ history }/> } />
+          <Route exact path='/' render={ ({ history }) => <Banner history={ history }/> }/>
+          <Route exact path='/:itemUrl/:recipientUsername' render={ ({ match, history }) => 
+            <Banner params={ match.params } history={ history }/> }/>
+        </Switch>
         <Route render={ ({ location, history }) => <Nav pathname={ location.pathname } history={ history }/> } />
       </Router>
     )

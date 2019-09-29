@@ -25,8 +25,10 @@ export const _updateCustomerUser = user => ({
     user
 })
 
-export const updateUser = password => (
-    dispatch => (
+export const updateUser = password => {
+    const token = window.localStorage.getItem('token');
+    
+    return dispatch => (
         axios.put('https://sebraapi.herokuapp.com/api/updateCustomerUser', 
             { headers: { authorization: token }, password }
         )
@@ -34,4 +36,4 @@ export const updateUser = password => (
             .then(data => dispatch(_setCustomerAuth(data)))
             .then(data => dispatch(_updateCustomerUser(data)))
     )
-)
+}

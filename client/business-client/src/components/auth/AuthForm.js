@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const AuthForm = ({ pathname, params, history }) => {
+const AuthForm = ({ pathname, history }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -58,14 +58,14 @@ const AuthForm = ({ pathname, params, history }) => {
 
     if(pathname.slice(0, 6) === '/login') {
       setState({ ...state, loading: true });
-      dispatch(login(state, params, history))
+      dispatch(login(state, history))
         .then(() => setState({ ...state, loading: false }))
         .catch(() => setState({ ...state, loading: false, error: 'Invalid credentials! Please try again.'}))
     }
     else {
       setState({ ...state, loading: true });
       dispatch(createUser(state))
-        .then(() => dispatch(login(state, params, history)))
+        .then(() => dispatch(login(state, history)))
         .then(() => setState({ ...state, loading: false }))
         .catch(() => setState({ ...state, loading: false, error: 'Error! Username taken. Please try again.'}))
     }

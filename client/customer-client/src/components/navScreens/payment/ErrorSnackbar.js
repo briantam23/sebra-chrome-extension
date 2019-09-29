@@ -6,7 +6,6 @@ import Snackbar from '@material-ui/core/Snackbar';
 
 
 const ErrorSnackbar = ({ pathname, history, params }) => {
-  /* const { recipientAddress, chargeAmount } = params; */
 
   const [open, setOpen] = useState(false);
   const [error, setError] = useState('');

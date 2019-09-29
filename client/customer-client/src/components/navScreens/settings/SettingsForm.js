@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { updateUser } from '../../../store/actions/users';
 import Spinner from '../../shared/spinner/Spinner';
 import { makeStyles } from '@material-ui/core/styles';
@@ -58,7 +58,6 @@ const inputLabelStyle = {
 const SettingsForm = ({ history }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const auth = useSelector(store => store.auth);
 
     const [state, setState] = useState({
       password: '',
@@ -83,7 +82,7 @@ const SettingsForm = ({ history }) => {
         .catch(() => setState({ ...state, loading: false, error: 'Invalid password! Please try again.'}))
     }
 
-    const handleFaqClick = () => history.push(`/account/${auth.address}/faq`);
+    const handleFaqClick = () => history.push(`/account/faq`);
 
     return(
         <Fragment>

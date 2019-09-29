@@ -2,10 +2,8 @@ import { SET_BUSINESS_AUTH, REMOVE_AUTH } from '../constants';
 import axios from 'axios';
 
 
-export const exchangeTokenForAuth = (params = {}, history) => (
+export const exchangeTokenForAuth = history => (
     dispatch => {
-        /* const { recipientAddress } = params;
-        const chargeAmount = Number(params.chargeAmount); */
 
         const token = window.localStorage.getItem('token');
 
@@ -31,15 +29,13 @@ const _removeAuth = auth => ({
     auth
 })
 
-export const logout = (history, recipientAddress, chargeAmount) => {
+export const logout = history => {
     window.localStorage.removeItem('token');
-    recipientAddress && chargeAmount 
-        ? history.push(`/login/${recipientAddress}/${chargeAmount}`) 
-        : history.push('/login')
+    history.push('/login')
     return _removeAuth({});
  }
 
-export const login = (state, params, history) => {
+export const login = (state, history) => {
     const { username, password } = state;
     
     return dispatch => (
@@ -49,7 +45,7 @@ export const login = (state, params, history) => {
             .then(res => res.data.data)
             .then(data => {
                 window.localStorage.setItem('token', data.token);
-                dispatch(exchangeTokenForAuth(params, history));
+                dispatch(exchangeTokenForAuth(history));
             })
     )
 }

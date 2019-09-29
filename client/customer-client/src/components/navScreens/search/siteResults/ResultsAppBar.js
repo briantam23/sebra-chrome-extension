@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -24,11 +23,10 @@ const useStyles = makeStyles(theme => ({
 
 const ResultsAppBar = () => {
     const classes = useStyles();
-    const auth = useSelector(store => store.auth);
 
     return(
         <div className={classes.iconContainer}>
-            <Link to={`/account/${auth.address}/search`}>
+            <Link to={`/account/search`}>
                 <ArrowBackIcon className={classes.arrowIcon}/>
             </Link>
             <div>

@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme => ({
       width: '202px',
       height: '56px',
       marginTop: '60px',
-      fontSize: '17px',
+      fontSize: '13px',
       padding: '10px 20px'
     },
     redirectLink: {
@@ -26,7 +26,10 @@ const Buttons = ({ pathname, history, params, setOpen, setLoading, setError }) =
 
     const auth = useSelector(store => store.auth);
 
-    const handleClick = e => {
+    let itemUrl = null;
+    if(params && params.itemUrl) itemUrl = 'https://' + params.itemUrl;
+  
+    const handlePayClick = e => {
         e.preventDefault();
         setOpen(true);
         setLoading(true);
@@ -39,16 +42,24 @@ const Buttons = ({ pathname, history, params, setOpen, setLoading, setError }) =
             })
         )
     }
+
+    const handleSearchClick = () => history.push('/account/search');
     
-    return pathname !== '/payment-complete' 
-        ? <Button onClick={handleClick} className={classes.button} variant="contained" color="primary" >
-            Pay with Libra
-          </Button>
-        : <a className={classes.redirectLink} href='https://www.wsj.com' rel="noopener noreferrer" target="_blank">
-            <Button className={classes.button} variant="contained" color="primary" >
-                Proceed to WSJ!
+    return (
+      itemUrl   
+        ? pathname !== '/payment-completed' 
+          ? <Button onClick={handlePayClick} className={classes.button} variant="contained" color="primary" >
+              Pay with Libra
             </Button>
-          </a>
+          : <a className={classes.redirectLink} href={ itemUrl } rel="noopener noreferrer" target="_blank">
+              <Button className={classes.button} variant="contained" color="primary" >
+                  Proceed to Article!
+              </Button>
+            </a>
+        : <Button onClick={handleSearchClick} className={classes.button} variant="contained" color="primary" >
+              Click here to search
+          </Button>
+    )
 }
 
 
