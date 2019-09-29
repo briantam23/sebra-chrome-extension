@@ -1,4 +1,4 @@
-import os, json, hashlib, jwt, datetime, time, mysql.connector
+import os, json, hashlib, jwt, datetime, time, mysql.connector, random, string
 from flask import session
 from libra_actions import account, balance, mint, transfer
 port = int(os.environ.get("PORT", 3306))
@@ -54,7 +54,9 @@ class ApiHelper:
                 result['address'] = row[fieldMap['address']]
                 result['password'] = row[fieldMap['password']]
                 result['mnemonic'] = row[fieldMap['mnemonic']]  
-                result['sequence'] = row[fieldMap['sequence']]  
+                result['sequence'] = row[fieldMap['sequence']]
+                if('internalLookup' in fieldMap):
+                      result['internalLookup'] = row[fieldMap['internalLookup']]
         return result
 
     #Decode JWT token, check for validity
@@ -84,11 +86,12 @@ class ApiHelper:
             session['userId'] = userInfo['id']
             session['userType'] = userType
             ret = self.returnSuccessfulLogin(userInfo, userType, app)
-            articleGranted = False
-            if(itemUrl is not None):
-                articleGranted = self.checkIfItemPurchased(dbObj, itemUrl, userInfo['id'])
-            
-            ret['articleGranted'] = articleGranted
+            if(userType == 'customer'):
+                articleGranted = False
+                if(itemUrl is not None):
+                    articleGranted = self.checkIfItemPurchased(dbObj, itemUrl, userInfo['id'])
+                
+                ret['articleGranted'] = articleGranted
             response = json.dumps({'message': 'success', 'data': ret})
             return response
         else:
@@ -103,6 +106,8 @@ class ApiHelper:
         ret['userType'] = userType
         tokenResp = jwt.encode({'user': userInfo['id'], 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60)}, app.config['SECRET_KEY'])
         ret['token'] = self.createToken(userInfo['id'], app)
+        if('internalLookup' in userInfo and userType == 'business'):
+            ret['internalLookup'] = userInfo['internalLookup']
         return ret
 
     def existingUserCheck(self, dbObj, userName, userType):
@@ -135,10 +140,15 @@ class ApiHelper:
         return 0
     def registerNewUser(self, dbObj, acc):
         table = 'customers'
+        query = "INSERT INTO `"+table+"` (username, password, mnemonic, address) VALUES ('"+acc['username']+"', '"+acc['password']+"', '"+acc['mnemonic']+"', '"+acc['address']+"')"
         if(acc['userType'] == 'business'):
             table = 'businesses'
+            internalLookup = self.getInternalLookup(dbObj, acc)
+            query = "INSERT INTO `"+table+"` (username, password, mnemonic, address, internalLookup) VALUES ('"+acc['username']+"', '"+acc['password']+"', '"+acc['mnemonic']+"', '"+acc['address']+"', '"+internalLookup+"')"
+            
         cursor = dbObj['cursor']
-        cursor.execute("INSERT INTO `"+table+"` (username, password, mnemonic, address) VALUES ('"+acc['username']+"', '"+acc['password']+"', '"+acc['mnemonic']+"', '"+acc['address']+"')" )
+
+        cursor.execute(query)
         if(cursor.rowcount > 0):
             dbObj['db'].commit()
             return cursor.lastrowid
@@ -155,3 +165,16 @@ class ApiHelper:
     def getTimestamp():
         ts = time.time()
         return datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+
+    def getInternalLookup(self, dbObj, acc):
+        cursor = dbObj['cursor']
+        script ="SELECT id FROM businesses ORDER BY id DESC LIMIT 1"
+        cursor.execute(script)
+        res = cursor.fetchall()
+        id=0
+        if(cursor.rowcount > 0):
+            fieldMap = self.fields(cursor)
+            for row in res:
+                id = row[fieldMap['id']]
+        return ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(9))+str(id)
+

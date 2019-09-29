@@ -145,10 +145,11 @@ def authenticate(userType, request):
                 session['userType'] = userType
                 userInfo = _apiHelper.getUserByUniqueValue('id', dbObj, str(userId), userType)
                 result = _apiHelper.returnSuccessfulLogin(userInfo, userType, app)
-                articleGranted = False
-                if(itemUrl is not None):
-                    articleGranted = _apiHelper.checkIfItemPurchased(dbObj, itemUrl, userInfo['id'])
-                result['articleGranted'] = articleGranted
+                if(userType == 'customer'):
+                    articleGranted = False
+                    if(itemUrl is not None):
+                        articleGranted = _apiHelper.checkIfItemPurchased(dbObj, itemUrl, userInfo['id'])
+                    result['articleGranted'] = articleGranted
                 ret = json.dumps({'message': 'success', 'data': result})
             else:
                 ret = json.dumps({'message': 'Session invalid'}), 401
