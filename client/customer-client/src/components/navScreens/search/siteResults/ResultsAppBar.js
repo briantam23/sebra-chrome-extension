@@ -21,7 +21,8 @@ const useStyles = makeStyles(theme => ({
         flexDirection: 'row'
     },
     deleteIcon: {
-        margin: '0px 10px'
+        margin: '0px 10px',
+        cursor: 'pointer'
     }
 }));
 

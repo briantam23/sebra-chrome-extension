@@ -26,7 +26,7 @@ const SiteResults = () => {
     const classes = useStyles();
 
     const [results, setResults] = useState(resultArr);
-    const [selectedIdx, setSelectedIdx] = useState(1);
+    const [selectedIdx, setSelectedIdx] = useState(null);
 
     const handleListItemClick = (e, idx) => setSelectedIdx(idx);
     const handleDeleteClick = (e, idx) => {

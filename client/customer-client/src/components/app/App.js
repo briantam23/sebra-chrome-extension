@@ -22,13 +22,13 @@ const App = () => {
           <Route exact path='/account/(payment|payment-completed)' render={ ({ location, history }) => 
             <Payment pathname={ location.pathname } history={ history }/> } 
           />
-          <Route path='/account/(payment|payment-completed)/:itemUrl/:recipientUsername' render={ ({ location, match, history }) => 
+          <Route path='/account/(payment|payment-completed)/:recipientUsername/:itemUrl' render={ ({ location, match, history }) => 
             <Payment pathname={ location.pathname } params={ match.params } history={ history }/> } 
           />
           <Route exact path='/(login|create-account)' render={ ({ location, history }) => 
             <Auth pathname={ location.pathname } history={ history }/> } 
           />
-          <Route path='/(login|create-account)/:itemUrl/:recipientUsername' render={ ({ location, match, history }) => 
+          <Route path='/(login|create-account)/:recipientUsername/:itemUrl' render={ ({ location, match, history }) => 
             <Auth pathname={ location.pathname } params={ match.params } history={ history }/> } 
           />
           <Route path='/account/search' render={ () => <FindSites/> } />
@@ -38,7 +38,7 @@ const App = () => {
             <Settings pathname={ location.pathname } history={ history }/> } 
           />
           <Route exact path='/' render={ ({ history }) => <Banner history={ history }/> }/>
-          <Route exact path='/:itemUrl/:recipientUsername' render={ ({ match, history }) => 
+          <Route path='/:itemUrl/:recipientUsername' render={ ({ match, history }) => 
             <Banner params={ match.params } history={ history }/> }
           />
         </Switch>
