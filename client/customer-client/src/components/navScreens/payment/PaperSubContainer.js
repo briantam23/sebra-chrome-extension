@@ -55,7 +55,7 @@ const PaperSubContainer = ({ pathname, params }) => {
             ? pathname !== '/payment-completed' 
                 ? <Fragment>
                     <Typography className={classes.subheader1a} variant="h2">Pay with Libra</Typography>
-                    <Typography className={classes.subheader2} variant="h2">Pay ≋0.25 to read</Typography>
+                    <Typography className={classes.subheader2} variant="h2">≋0.25 to read</Typography>
                   </Fragment>
                 : <Fragment>
                     <Typography className={classes.subheader1a} variant="h2">Paid with Libra!</Typography>

@@ -49,7 +49,7 @@ const Buttons = ({ pathname, history, params, setOpen, setLoading, setError }) =
       itemUrl   
         ? pathname !== '/payment-completed' 
           ? <Button onClick={handlePayClick} className={classes.button} variant="contained" color="primary" >
-              Pay with Libra
+              Click here to pay
             </Button>
           : <a className={classes.redirectLink} href={ itemUrl } rel="noopener noreferrer" target="_blank">
               <Button className={classes.button} variant="contained" color="primary" >
