@@ -45,20 +45,24 @@ const useStyles = makeStyles(theme => ({
 const ResultItem = ({ name, idx, selectedIdx, handleListItemClick }) => {
     const classes = useStyles();
 
-    let iconComponent, urlAddress = null;
+    let backgroundColor, iconComponent, urlAddress = null;
     if(name === 'Digital Ocean') {
+        backgroundColor = 'dodgerblue';
         iconComponent = <PoolIcon fontSize='inherit'/>;
         urlAddress = 'blog.digitalocean.com';
     }
     else if(name === 'Heap Analytics') {
+        backgroundColor = 'mediumseagreen';
         iconComponent = <MultilineChartIcon fontSize='inherit'/>;
         urlAddress = 'heap.io/blog';
     }
     else if(name === 'Shopify') {
+        backgroundColor = 'lightcoral';
         iconComponent = <StoreIcon fontSize='inherit'/>;
         urlAddress = 'shopify.com/blog';
     }
     /* else if(name === 'Heroku') {
+        backgroundColor = 'gold';
         iconComponent = <WebIcon fontSize='inherit'/>;
         urlAddress = 'heroku.com';
     } */
@@ -69,7 +73,7 @@ const ResultItem = ({ name, idx, selectedIdx, handleListItemClick }) => {
             onClick={e => handleListItemClick(e, idx)}
         >
             <ListItemAvatar className={classes.listItemAvatar}>
-                <Avatar className={classes.avatar}>
+                <Avatar style={{ backgroundColor }} className={classes.avatar}>
                     { iconComponent }
                 </Avatar>
             </ListItemAvatar>

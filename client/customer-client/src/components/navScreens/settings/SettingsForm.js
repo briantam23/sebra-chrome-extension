@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
         width: '100%'
     },
     updateButton: {
-      fontSize: '9px',
+      fontSize: '11px',
       maxWidth: '230px',
       minWidth: '230px',
       maxHeight: '30px',
@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
     faqButton: {
       backgroundColor: 'black',
       color: 'white',
-      fontSize: '9px',
+      fontSize: '11px',
       maxWidth: '230px',
       minWidth: '230px',
       maxHeight: '30px',

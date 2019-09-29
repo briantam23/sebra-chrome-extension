@@ -2,7 +2,8 @@
 
 A Libra Cryptocurrency Micropayment Chrome Extension developed with the aim of creating a simple UX that allows readers to bypass paywalls without a paid subscription or access free articles without ads via Libra micropayments. 
 
-![Auth page screenshot](./client/public/img/screenshots/auth_page.png)
+![Sebra logo](./client/customer-client/public/img/sebra_logo.png)<hr/>
+![Payment page screenshot](./client/customer-client/public/img/screenshots/payment_page.png)
 
 ## Table of contents
 * [Motivation](#motivation)
@@ -11,8 +12,10 @@ A Libra Cryptocurrency Micropayment Chrome Extension developed with the aim of c
 * [Live Demo](#live-demo)
 * [Dependencies](#dependencies)
 * [Requirements](#requirements)
-* [Installation](#installation)
+* [Customer-Client Installation](#customer-client-installation)
 * [Running Customer-Client Locally](#running-customer-client-locally)
+* [Business-Client Installation](#business-client-installation)
+* [Running Business-Client Locally](#running-business-client-locally)
 * [Tests](#tests)
 * [Contributors](#contributors)
 
@@ -58,6 +61,29 @@ npm install # or yarn install
 4. Click “Load unpacked” and open the “build” folder in this project, it should contain `index.html`, `manifest.json`, different sizes of logos, and bundled JavaScript files.
 5. If you have already published a version in production and you are testing a newer version, you should also disable the production version.
 6. To update the extension, run `npm build again`, and click the “Refresh” button.
+
+## Business-Client Installation
+Step 1: Clone Repo (if you haven't done so already)
+```sh
+git clone https://github.com/briantam23/sebra-chrome-extension.git` # or clone your own fork
+```
+
+Step 2: Change Directory to `business-client`
+```sh
+cd client/business-client
+```
+
+Step 3: Install `node_modules`
+```sh
+npm install # or yarn install
+```
+
+## Running Business-Client Locally
+1. Make sure you're in the `business-client` directory.
+2. `npm run start` to run the app in the development mode.
+3. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+4. The page will reload if you make edits.
+5. You will also see any lint errors in the console.
 
 ## Tests
 

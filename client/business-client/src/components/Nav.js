@@ -38,29 +38,16 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Nav = ({ pathname, history }) => {
-  const _pathname = pathname.split('/').slice(-2);
-  let recipientAddress = null;
-  if(typeof Number(_pathname[0]) === 'number') recipientAddress = Number(_pathname[0]);
-  let chargeAmount = null;
-  if(typeof Number(_pathname[1]) === 'number') chargeAmount = Number(_pathname[1]);
-  
+
   const classes = useStyles();
   const auth = useSelector(store => store.auth);
   const dispatch = useDispatch();
 
-  if(pathname === '/') auth.username ? history.push('/account') : history.push('/login'); 
+  if(pathname === '/') auth.username ? history.push('/dashboard') : history.push('/login'); 
 
   const handleClick = () => {
-    if(auth.username) {
-      recipientAddress && chargeAmount 
-        ? dispatch(logout(history, recipientAddress, chargeAmount ))
-        : dispatch(logout(history))
-    }
-    else {
-      recipientAddress && chargeAmount 
-        ? history.push(`/login/${recipientAddress}/${chargeAmount}`) 
-        : history.push('/login')
-    }
+    if(auth.username) dispatch(logout(history));
+    else history.push('/login');
   }
 
   return (
@@ -68,10 +55,7 @@ const Nav = ({ pathname, history }) => {
       <AppBar position="static">
         <Toolbar className={classes.nav}>
           <Typography variant="h6" className={classes.title}>
-          <Link 
-            to={ recipientAddress && chargeAmount ? `/login/${recipientAddress}/${chargeAmount}` : '/login' } 
-            className={classes.link}
-          >
+          <Link to={ auth.username ? '/dashboard' : '/login' } className={classes.link}>
             Sebra
           </Link>
           </Typography>
@@ -81,7 +65,7 @@ const Nav = ({ pathname, history }) => {
         </Toolbar>
       </AppBar>
     </div>
-  );
+  )
 }
 
 

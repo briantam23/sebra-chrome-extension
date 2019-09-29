@@ -1,6 +1,5 @@
 import axios from "axios";
 import { CREATE_CUSTOMER_USER, UPDATE_CUSTOMER_USER } from '../constants';
-import { _setCustomerAuth } from './auth';
 
 
 export const _createCustomerUser = user => ({
@@ -33,7 +32,6 @@ export const updateUser = password => {
             { headers: { authorization: token }, password }
         )
             .then(res => res.data.data)
-            .then(data => dispatch(_setCustomerAuth(data)))
             .then(data => dispatch(_updateCustomerUser(data)))
     )
 }

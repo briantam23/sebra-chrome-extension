@@ -17,7 +17,8 @@ const useStyles = makeStyles(theme => ({
     avatar: {
         fontSize: '20px',
         width: '30px',
-        height: '30px'
+        height: '30px',
+        backgroundColor: 'dodgerblue'
     },
     listItemText:{
         fontSize:'12px'
@@ -27,16 +28,28 @@ const useStyles = makeStyles(theme => ({
 const CategoryItem = ({ name }) => {
     const classes = useStyles();
 
-    let iconComponent = null;
-    if(name === 'Trending Sites') iconComponent = <ShareIcon fontSize='inherit'/>;
-    else if(name === 'Money') iconComponent = <CreditCardIcon fontSize='inherit'/>;
-    else if(name === 'Productivity') iconComponent = <MailOutlineIcon fontSize='inherit'/>;
-    else if(name === 'Technology') iconComponent = <SmartphoneIcon fontSize='inherit'/>;
+    let backgroundColor, iconComponent = null;
+    if(name === 'Trending Sites') {
+        backgroundColor = 'dodgerblue';
+        iconComponent = <ShareIcon fontSize='inherit'/>;
+    }
+    else if(name === 'Money') {
+        backgroundColor = 'mediumseagreen';
+        iconComponent = <CreditCardIcon fontSize='inherit'/>;
+    }
+    else if(name === 'Productivity') {
+        backgroundColor = 'lightcoral';
+        iconComponent = <MailOutlineIcon fontSize='inherit'/>;
+    }
+    else if(name === 'Technology') {
+        backgroundColor = 'gold';
+        iconComponent = <SmartphoneIcon fontSize='inherit'/>;
+    }
     
     return(
         <ListItem>
             <ListItemAvatar className={classes.listItemAvatar}>
-                <Avatar className={classes.avatar}>
+                <Avatar style={{ backgroundColor }} className={classes.avatar}>
                     { iconComponent }
                 </Avatar>
             </ListItemAvatar>

@@ -2,29 +2,30 @@ import React, { useState } from 'react';
 import ShareMenuItem from './ShareMenuItem';
 import { withStyles } from '@material-ui/core/styles';
 import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import ShareIcon from '@material-ui/icons/Share';
 
 
-const StyledMenu = withStyles({
-  paper: {
-    border: '1px solid #d3d4d5'
-  }
-})(props => (
+const StyledMenu = withStyles({ paper: { border: '1px solid #d3d4d5' } })(props => (
   <Menu
     elevation={0}
     getContentAnchorEl={null}
-    anchorOrigin={{
-      vertical: 'bottom',
-      horizontal: 'center',
-    }}
-    transformOrigin={{
-      vertical: 'top',
-      horizontal: 'right',
-    }}
+    anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+    transformOrigin={{ vertical: 'top', horizontal: 'right' }}
     {...props}
   />
 ));
 
+const StyledMenuItem = withStyles(theme => ({
+  root: {
+    '&:focus': {
+      backgroundColor: theme.palette.primary.main,
+      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+        color: theme.palette.common.white,
+      }
+    }
+  }
+}))(MenuItem);
 
 const menuItems = ['Facebook', 'LinkedIn', 'Instagram'];
 
@@ -36,7 +37,7 @@ const ShareMenu = () => {
 
   return (
     <div>
-      <ShareIcon onClick={handleClick}/> 
+      <ShareIcon style={{ cursor: 'pointer' }} onClick={handleClick}/> 
       <StyledMenu
         id="customized-menu"
         anchorEl={anchorEl}
@@ -46,7 +47,9 @@ const ShareMenu = () => {
       >
     {
         menuItems.map((menuItem, idx) => (
-            <ShareMenuItem key={ idx } name={ menuItem }/>
+          <StyledMenuItem key={ idx }>
+            <ShareMenuItem name={ menuItem }/>
+          </StyledMenuItem>
         ))
     }
       </StyledMenu>

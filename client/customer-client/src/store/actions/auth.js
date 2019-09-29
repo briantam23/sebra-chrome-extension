@@ -2,7 +2,7 @@ import { SET_CUSTOMER_AUTH, REMOVE_AUTH } from '../constants';
 import axios from 'axios';
 
 
-export const exchangeTokenForAuth = history => (
+export const exchangeTokenForAuth = (history, recipientUsername, itemUrl) => (
     dispatch => {
 
         const token = window.localStorage.getItem('token');
@@ -14,7 +14,8 @@ export const exchangeTokenForAuth = history => (
             .then(res => res.data.data)
             .then(auth => {
                 dispatch(_setCustomerAuth(auth));
-                history.push('/');
+                if(history && itemUrl) history.push(`/${recipientUsername}/${itemUrl}`);
+                else if(history) history.push('/');
             })
             .catch(ex => window.localStorage.removeItem('token'))
     }
@@ -35,17 +36,17 @@ export const logout = history => {
     return _removeAuth({});
  }
 
-export const login = (state, recipientAddress, itemUrl, history) => {
+export const login = (state, recipientUsername, itemUrl, history) => {
     const { username, password } = state;
     
     return dispatch => (
         axios.post('https://sebraapi.herokuapp.com/api/authCustomer', 
-            { username, password, recipientAddress, itemUrl }
+            { username, password, recipientUsername, itemUrl }
         )
             .then(res => res.data.data)
             .then(data => {
                 window.localStorage.setItem('token', data.token);
-                dispatch(exchangeTokenForAuth(history));
+                dispatch(exchangeTokenForAuth(history, recipientUsername, itemUrl));
             })
     )
 }
