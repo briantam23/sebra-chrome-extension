@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const ResultItem = ({ name }) => {
+const ResultItem = ({ name, idx, selectedIdx, handleListItemClick }) => {
     const classes = useStyles();
 
     let iconComponent, urlAddress = null;
@@ -62,9 +62,12 @@ const ResultItem = ({ name }) => {
         iconComponent = <WebIcon fontSize='inherit'/>;
         urlAddress = 'heroku.com';
     } */
-    
     return(
-        <ListItem>
+        <ListItem 
+            button
+            selected={selectedIdx === idx}
+            onClick={e => handleListItemClick(e, idx)}
+        >
             <ListItemAvatar className={classes.listItemAvatar}>
                 <Avatar className={classes.avatar}>
                     { iconComponent }

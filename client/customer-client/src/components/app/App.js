@@ -9,7 +9,6 @@ import FindSites from '../navScreens/search/findSites/FindSites';
 import SiteResults from '../navScreens/search/siteResults/SiteResults';
 import Wallet from '../navScreens/wallet/Wallet';
 import Settings from '../navScreens/settings/Settings';
-import Faq from '../navScreens/settings/Faq';
 import Nav from '../Nav';
 
 
@@ -20,16 +19,10 @@ const App = () => {
     return (
       <Router>
         <Switch>
-          <Route exact path='/account/payment/' render={ ({ location, history }) => 
+          <Route exact path='/account/(payment|payment-completed)' render={ ({ location, history }) => 
             <Payment pathname={ location.pathname } history={ history }/> } 
           />
-          <Route exact path='/account/payment/:itemUrl/:recipientUsername' render={ ({ location, match, history }) => 
-            <Payment pathname={ location.pathname } params={ match.params } history={ history }/> } 
-          />
-          <Route exact path='/account/payment-completed/' render={ ({ location, history }) => 
-            <Payment pathname={ location.pathname } history={ history }/> } 
-          />
-          <Route exact path='/account/payment-completed/:itemUrl/:recipientUsername' render={ ({ location, match, history }) => 
+          <Route path='/account/(payment|payment-completed)/:itemUrl/:recipientUsername' render={ ({ location, match, history }) => 
             <Payment pathname={ location.pathname } params={ match.params } history={ history }/> } 
           />
           <Route exact path='/(login|create-account)' render={ ({ location, history }) => 
@@ -41,11 +34,13 @@ const App = () => {
           <Route path='/account/search' render={ () => <FindSites/> } />
           <Route path='/account/search-results' render={ () => <SiteResults/> } />
           <Route path='/account/wallet' render={ () => <Wallet/> } />
-          <Route path='/account/settings' render={ ({ history }) => <Settings history={ history }/> } />
-          <Route path='/account/faq' render={ ({ history }) => <Faq history={ history }/> } />
+          <Route path='/account/(settings|faq)' render={ ({ location, history }) => 
+            <Settings pathname={ location.pathname } history={ history }/> } 
+          />
           <Route exact path='/' render={ ({ history }) => <Banner history={ history }/> }/>
           <Route exact path='/:itemUrl/:recipientUsername' render={ ({ match, history }) => 
-            <Banner params={ match.params } history={ history }/> }/>
+            <Banner params={ match.params } history={ history }/> }
+          />
         </Switch>
         <Route render={ ({ location, history }) => <Nav pathname={ location.pathname } history={ history }/> } />
       </Router>

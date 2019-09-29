@@ -22,14 +22,14 @@ const useStyles = makeStyles(theme => ({
     button: {
         textAlign: 'right',
         marginTop: '41px',
-        marginLeft: '76%',
+        marginLeft: '77%',
         marginRight: '7px',
-        fontSize: '19px',
-        padding: '18px 36px',
+        fontSize: '17px',
+        padding: '7px 14px',
         [theme.breakpoints.down('1080')]: {
+          marginLeft: '79%',
           marginBottom: '7px',
-          fontSize: '13px',
-          padding: '12px 24px'
+          fontSize: '13px'
         }
     }
 }))
