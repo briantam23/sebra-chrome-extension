@@ -43,10 +43,10 @@ const Nav = ({ pathname, history }) => {
   const auth = useSelector(store => store.auth);
   const dispatch = useDispatch();
 
-  if(pathname === '/') auth.username ? history.push('/dashboard') : history.push('/login'); 
+  if(pathname === '/') auth.address ? history.push('/dashboard') : history.push('/login'); 
 
   const handleClick = () => {
-    if(auth.username) dispatch(logout(history));
+    if(auth.address) dispatch(logout(history));
     else history.push('/login');
   }
 
@@ -55,12 +55,12 @@ const Nav = ({ pathname, history }) => {
       <AppBar position="static">
         <Toolbar className={classes.nav}>
           <Typography variant="h6" className={classes.title}>
-          <Link to={ auth.username ? '/dashboard' : '/login' } className={classes.link}>
+          <Link to={ auth.address ? '/dashboard' : '/login' } className={classes.link}>
             Sebra
           </Link>
           </Typography>
           <Button className={classes.button} onClick={ handleClick } color="inherit">
-            { auth.username ? 'Logout' : 'Login' }
+            { auth.address ? 'Logout' : 'Login' }
           </Button>
         </Toolbar>
       </AppBar>

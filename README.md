@@ -2,7 +2,7 @@
 
 A Libra Cryptocurrency Micropayment Chrome Extension developed with the aim of creating a simple UX that allows readers to bypass paywalls without a paid subscription or access free articles without ads via Libra micropayments. 
 
-![Sebra logo](./client/customer-client/public/img/sebra_logo.png)<hr/>
+![Sebra logo](./client/customer-client/public/img/logo/sebra_logo.png)<hr/>
 ![Payment page screenshot](./client/customer-client/public/img/screenshots/payment_page.png)
 
 ## Table of contents
@@ -27,6 +27,9 @@ Libra is a permissioned blockchain digital currency proposed by the American soc
 ## Login Credentials
 
 ## Live Demo
+
+* [Customer-Client (Chrome Extension)](https://chrome.google.com/webstore/detail/sebra/nphapdbgcogmapagdbljcfpkoeflmijf)
+* [Business-Client (Web App)](https://sebra-business.herokuapp.com)
 
 ## Dependencies
 * [React](https://reactjs.org)

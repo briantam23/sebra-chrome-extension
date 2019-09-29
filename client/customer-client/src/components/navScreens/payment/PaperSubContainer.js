@@ -51,24 +51,25 @@ const PaperSubContainer = ({ pathname, params }) => {
 
     return(
         <div className={classes.paperSubContainer}>
-        {  itemUrl 
-            ? pathname !== '/payment-completed' 
+        {  
+          pathname === '/payment-completed' 
+            ? <Fragment>
+                <Typography className={classes.subheader1a} variant="h2">Paid with Libra!</Typography>
+                <div className={classes.emojiContainer}>
+                  <span className={classes.emoji} role="img" aria-label="party-popper">🎉</span>
+                </div>
+              </Fragment>
+            : itemUrl 
                 ? <Fragment>
                     <Typography className={classes.subheader1a} variant="h2">Pay with Libra</Typography>
                     <Typography className={classes.subheader2} variant="h2">≋0.25 to read</Typography>
                   </Fragment>
                 : <Fragment>
-                    <Typography className={classes.subheader1a} variant="h2">Paid with Libra!</Typography>
+                    <Typography className={classes.subheader1b} variant="h2">Find Participating Sites</Typography>
                     <div className={classes.emojiContainer}>
-                      <span className={classes.emoji} role="img" aria-label="party-popper">🎉</span>
+                      <span className={classes.emoji} role="img" aria-label="search">🔍</span>
                     </div>
                   </Fragment>
-            : <Fragment>
-                <Typography className={classes.subheader1b} variant="h2">Find Participating Sites</Typography>
-                <div className={classes.emojiContainer}>
-                  <span className={classes.emoji} role="img" aria-label="search">🔍</span>
-                </div>
-              </Fragment>
         }
         </div>
     )

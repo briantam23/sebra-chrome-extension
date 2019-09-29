@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import DialogTitle from './DialogTitle';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -36,7 +35,6 @@ const DialogActions = withStyles(theme => ({ root: { margin: 0, padding: theme.s
 const Snippet = ({ amount, error }) => {
   amount = amount * 100;
   const classes = useStyles();
-  const auth = useSelector(store => store.auth);
 
   const [open, setOpen] = React.useState(false);
 
@@ -64,10 +62,12 @@ const Snippet = ({ amount, error }) => {
           </Typography>
           <Divider className={classes.divider} />
           <Typography gutterBottom className={classes.code}>
-            { '<link rel="stylesheet" href="https://dgo.nz/hau0x/btn.css"></link>' } <br/>
-            { '<button class="sebra-button">' } <br/> 
-            &thinsp; { `<a class="sebra-link" rel="noopener noreferrer" target="_blank" href="https://sebra-client.herokuapp.com/#/login/${auth.address}/${amount}">Pay with Sebra</a>` } <br/>
-            { '</button>' }
+            { `(function() { ` } <br/>
+            &thinsp; { `var se = document.createElement('script'); se.type = 'text/javascript';` } <br/>
+            &thinsp; { `se.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dgo.nz/tmp/sebra.js';` } <br/>
+            &thinsp; { `var s = document.getElementsByTagName('script')[0];` } <br/>
+            &thinsp; { `s.parentNode.insertBefore(se, s);` } <br/>
+            { `})();` }
           </Typography>
         </DialogContent>
         <DialogActions>

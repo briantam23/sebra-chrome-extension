@@ -16,15 +16,18 @@ export const updateOrder = (auth, history, params) => {
     }
 
     const token = window.localStorage.getItem('token');
-
+    
     return dispatch => (
-        axios.post('https://sebraapi.herokuapp.com/api/transaction', 
-            { amount, recipientUsername, itemUrl, senderUsername: auth.username }, 
+        axios.post('https://sebraapi.herokuapp.com/api/buyItem', 
+            { amount, recipientUsername, itemUrl, senderUsername: auth.userName }, 
             { headers: { authorization: token } }
         )
             .then(res => res.data.data)
             .then(data => {
-                history.push(`/account/payment-completed`);
+                if(params && params.itemUrl && params.recipientUsername) {
+                    history.push(`/account/payment-completed/${recipientUsername}/${itemUrl}`);
+                }
+                else history.push('/account/payment-completed');
                 dispatch(_updateOrder(data));
             })
     )
