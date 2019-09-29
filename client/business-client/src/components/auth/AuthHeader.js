@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
         margin: '45px 0px 45px 13px',
         fontWeight: 250,
         [theme.breakpoints.down('1080')]: {
-          margin: '45px 0px -13px 5px',
+          margin: '40px 0px -13px 5px',
           fontWeight: '240',
           fontSize: '25px'
         }

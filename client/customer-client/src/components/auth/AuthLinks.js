@@ -16,16 +16,16 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const AuthLinks = ({ pathname, recipientAddress, chargeAmount }) => {
+const AuthLinks = ({ pathname, recipientAddress, itemUrl }) => {
     const classes = useStyles();
     return(
         <Typography className={classes.linkParent} variant="body2" align="left">
           {
             pathname.slice(0, 6) === '/login' 
-              ? <Link to={`/create-account/${recipientAddress}/${chargeAmount}`} className={classes.linkChild}>
+              ? <Link to={`/create-account/${recipientAddress}/${itemUrl}`} className={classes.linkChild}>
                   New to Sebra? Create your account here.
                 </Link>
-              : <Link to={`/login/${recipientAddress}/${chargeAmount}`} className={classes.linkChild}>
+              : <Link to={`/login/${recipientAddress}/${itemUrl}`} className={classes.linkChild}>
                   Have an account? Log in here.
                 </Link>
           }

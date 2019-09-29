@@ -2,15 +2,15 @@ import { SET_CUSTOMER_AUTH, REMOVE_AUTH } from '../constants';
 import axios from 'axios';
 
 
-export const exchangeTokenForAuth = (params = {}, history) => (
+export const exchangeTokenForAuth = history => (
     dispatch => {
-        /* const { recipientAddress } = params;
-        const chargeAmount = Number(params.chargeAmount); */
 
         const token = window.localStorage.getItem('token');
 
         if(!token) return;
-        return axios.get('https://vast-plains-55545.herokuapp.com/api/auth', { headers: { authorization: token } })
+        return axios.get('https://sebraapi.herokuapp.com/api/authCustomer', 
+            { headers: { authorization: token } }
+        )
             .then(res => res.data.data)
             .then(auth => {
                 dispatch(_setCustomerAuth(auth));
@@ -20,7 +20,7 @@ export const exchangeTokenForAuth = (params = {}, history) => (
     }
 )
 
-const _setCustomerAuth = auth => ({
+export const _setCustomerAuth = auth => ({
     type: SET_CUSTOMER_AUTH,
     auth
 })
@@ -35,15 +35,17 @@ export const logout = history => {
     return _removeAuth({});
  }
 
-export const login = (state, params, history) => {
+export const login = (state, recipientAddress, itemUrl, history) => {
     const { username, password } = state;
     
     return dispatch => (
-        axios.post('https://vast-plains-55545.herokuapp.com/api/auth', { username, password })
+        axios.post('https://sebraapi.herokuapp.com/api/authCustomer', 
+            { username, password, recipientAddress, itemUrl }
+        )
             .then(res => res.data.data)
             .then(data => {
                 window.localStorage.setItem('token', data.token);
-                dispatch(exchangeTokenForAuth(params, history));
+                dispatch(exchangeTokenForAuth(history));
             })
     )
 }

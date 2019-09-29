@@ -12,16 +12,22 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Results = ['Digital Ocean', 'Heap Analytics', 'Shopify'/* , 'Heroku' */];
 
-const ResultList = () => {
+
+const ResultList = ({ results, selectedIdx, handleListItemClick }) => {
   const classes = useStyles();
 
   return (
     <List className={classes.root}>
     { 
-        Results.map((resultName, idx) => (
-            <ResultItem name={ resultName } key={ idx }/>
+        results.map((resultName, idx) => (
+            <ResultItem 
+              name={ resultName } 
+              idx={ idx } 
+              selectedIdx={ selectedIdx }
+              handleListItemClick={ handleListItemClick }
+              key={ idx }
+            />
         ))
     }
     </List>

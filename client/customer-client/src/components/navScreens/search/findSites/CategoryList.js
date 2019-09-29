@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CategoryItem from './CategoryItem';
 import { makeStyles } from '@material-ui/core/styles';
@@ -21,13 +20,12 @@ const useStyles = makeStyles(theme => ({
 
 const CategoryList = ({ filteredList }) => {
   const classes = useStyles();
-  const auth = useSelector(store => store.auth);
 
   return (
     <List className={classes.root}>
     { 
       filteredList.map((categoryName, idx) => (
-        <Link to={`/account/${auth.address}/search-results`} className={classes.link} key={ idx }>
+        <Link to={`/account/search-results`} className={classes.link} key={ idx }>
           <CategoryItem name={ categoryName }/>
         </Link>
       ))

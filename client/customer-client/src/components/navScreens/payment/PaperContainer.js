@@ -21,7 +21,7 @@ const PaperContainer = ({ pathname, params, history }) => {
   return(
     <Paper className={classes.paperContainer}>
       <Fragment>
-        <PaperSubContainer pathname={ pathname }/>
+        <PaperSubContainer pathname={ pathname } params={ params }/>
         <ErrorSnackbar pathname={ pathname } history={ history } params={ params }/>
       </Fragment>
     </Paper>

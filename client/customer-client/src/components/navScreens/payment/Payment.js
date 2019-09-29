@@ -16,8 +16,8 @@ const useStyles = makeStyles(theme => ({
 
 const Payment = ({ pathname, params, history }) => {
   const classes = useStyles();
-  pathname = pathname.slice(-17);
-
+  pathname = pathname.slice(8, 26);
+  
   return (
     <div className={classes.mainContainer}>
       <Header heading='Sebra'/>

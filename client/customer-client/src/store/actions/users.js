@@ -1,5 +1,6 @@
 import axios from "axios";
-import { CREATE_CUSTOMER_USER } from '../constants';
+import { CREATE_CUSTOMER_USER, UPDATE_CUSTOMER_USER } from '../constants';
+import { _setCustomerAuth } from './auth';
 
 
 export const _createCustomerUser = user => ({
@@ -11,8 +12,28 @@ export const createUser = state => {
     const { username, password } = state;
 
     return dispatch => (
-        axios.post('https://vast-plains-55545.herokuapp.com/api/register', { username, password })
+        axios.post('https://sebraapi.herokuapp.com/api/register', 
+            { username, password, userType: 'customer' }
+        )
             .then(res => res.data.data)
             .then(data => dispatch(_createCustomerUser(data)))
+    )
+}
+
+export const _updateCustomerUser = user => ({
+    type: UPDATE_CUSTOMER_USER,
+    user
+})
+
+export const updateUser = password => {
+    const token = window.localStorage.getItem('token');
+    
+    return dispatch => (
+        axios.put('https://sebraapi.herokuapp.com/api/updateCustomerUser', 
+            { headers: { authorization: token }, password }
+        )
+            .then(res => res.data.data)
+            .then(data => dispatch(_setCustomerAuth(data)))
+            .then(data => dispatch(_updateCustomerUser(data)))
     )
 }

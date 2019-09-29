@@ -13,7 +13,9 @@ const useStyles = makeStyles(theme => ({
     formControl: {
         margin: theme.spacing(1),
         width: '93%',
-        [theme.breakpoints.down('1080')]: { margin: theme.spacing(1) }
+        [theme.breakpoints.down('1080')]: { 
+            marginTop: '20px'
+        }
     },
     textField: {
         marginLeft: theme.spacing(1),
@@ -26,9 +28,9 @@ const useStyles = makeStyles(theme => ({
     },
     visibilityIcon: { top: '-2px' },
     error: {
-        margin: '2px 0px -14px 8px',
+        margin: '-20px 0px 8px 8px',
         [theme.breakpoints.down('1080')]: { 
-            margin: '0px 0px -12px -2px'
+            margin: '-11px 0px -1px -2px'
         }
     }
 }))
@@ -41,6 +43,11 @@ const AuthInput = ({ state, handleChange, handleClickShowPassword }) => {
   return (
     <Fragment>
         <FormControl className={classes.formControl} error>
+        {
+            state.error 
+                ? <FormHelperText className={classes.error}>{state.error}</FormHelperText>  
+                : null
+        }
             <TextField
                 required
                 autoFocus
@@ -54,11 +61,6 @@ const AuthInput = ({ state, handleChange, handleClickShowPassword }) => {
                 inputProps={{ style: { height: '6px' } }} 
                 InputLabelProps={{ style: { top: '-9px' }}}
             />
-            {
-            state.error 
-                ? <FormHelperText className={classes.error}>{state.error}</FormHelperText>  
-                : null
-            }
         </FormControl>
         <FormControl className={classes.formControl}>
             <TextField
