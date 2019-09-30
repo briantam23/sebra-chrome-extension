@@ -1,3 +1,5 @@
+/* global chrome */
+
 import { SET_CUSTOMER_AUTH, REMOVE_AUTH } from '../constants';
 import axios from 'axios';
 
@@ -32,6 +34,7 @@ const _removeAuth = auth => ({
 
 export const logout = history => {
     window.localStorage.removeItem('token');
+    chrome.storage.local.remove('jwtToken');
     history.push('/')
     return _removeAuth({});
  }
@@ -46,6 +49,7 @@ export const login = (state, recipientUsername, itemUrl, history) => {
             .then(res => res.data.data)
             .then(data => {
                 window.localStorage.setItem('token', data.token);
+                chrome.storage.local.set({ jwtToken: localStorage['token'] });
                 dispatch(exchangeTokenForAuth(history, recipientUsername, itemUrl));
             })
     )

@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "Sebra",
     "author": "Brian Tam, Sydney Lai, & Allen Shegay",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "A Libra Cryptocurrency Payment app developed with the aim of creating a simple UX that allows users to make simple transactions.",
     "short_name": "Libra Cryptocurrency Payment app",
     "homepage_url": "https://sebra-business.herokuapp.com",
@@ -14,6 +14,18 @@
       "48": "img/icons/48.png",
       "128": "img/icons/128.png"
     },
+    "content_scripts": [
+      {
+        "matches": ["http://*/*", "https://*/*"],
+        "js": ["contentScript.js"]
+      }
+    ],
+    "background": {
+      "scripts": ["background.js"],
+      "persistent": false
+    },
     "permissions": [
-    ]
+      "storage"
+    ],
+    "web_accessible_resources" : ["*.html"]
 }

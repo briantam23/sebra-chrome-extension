@@ -14,7 +14,13 @@ import Nav from '../Nav';
 
 const App = () => {
     const dispatch = useDispatch();
-    useEffect(() => { dispatch(exchangeTokenForAuth()) });
+
+    useEffect(() => { 
+      dispatch(exchangeTokenForAuth()) 
+      /* chrome.storage.local.set({foo: 'h', jwtToken: localStorage['token']}, function() {
+        console.log('Settings saved');
+      }); */
+    });
 
     return (
       <Router>
