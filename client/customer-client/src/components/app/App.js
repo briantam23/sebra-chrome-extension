@@ -14,7 +14,13 @@ import Nav from '../Nav';
 
 const App = () => {
     const dispatch = useDispatch();
-    useEffect(() => { dispatch(exchangeTokenForAuth()) });
+
+    useEffect(() => { 
+      dispatch(exchangeTokenForAuth()) 
+      /* chrome.storage.local.set({foo: 'h', jwtToken: localStorage['token']}, function() {
+        console.log('Settings saved');
+      }); */
+    });
 
     return (
       <Router>
@@ -38,7 +44,7 @@ const App = () => {
             <Settings pathname={ location.pathname } history={ history }/> } 
           />
           <Route exact path='/' render={ ({ history }) => <Banner history={ history }/> }/>
-          <Route path='/:itemUrl/:recipientUsername' render={ ({ match, history }) => 
+          <Route path='/:recipientUsername/:itemUrl' render={ ({ match, history }) => 
             <Banner params={ match.params } history={ history }/> }
           />
         </Switch>

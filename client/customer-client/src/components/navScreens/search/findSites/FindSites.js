@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
     header: {
         fontSize: '20px',
         fontWeight: 500,
-        margin: '10px 0px 0px 15px',
+        margin: '10px 0px 0px 11px',
         color: 'darkslateblue',
     },
     search: {
