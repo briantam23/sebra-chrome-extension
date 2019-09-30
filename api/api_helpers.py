@@ -18,7 +18,7 @@ class ApiHelper:
         else:
             config = {
                 'host': 'db',
-                'port': port,
+                'port': 3306,
                 'database': 'sebra',
                 'user': 'root',
                 'password': 'e0N28ttq@%B',
@@ -128,12 +128,12 @@ class ApiHelper:
         #commenting out until we fix Libra Testnet Integration for transfers
         #affectedCount = cursor.execute("UPDATE `"+table+"` SET sequence = "+newSequenceNumber+" WHERE id = '"+userId+"'")
        
-        if(userType == 'business' and itemUrl is not None):
+        if(userType == 'customer' and itemUrl is not None):
             insertScript = "INSERT INTO consumerarticles (userId, username, url, timestamp)\
                 VALUES ('{userId}', '{username}', '{itemUrl}', '{timestamp}')"\
-                .format(userId=userId, username=username, itemUrl=itemUrl, timestamp=getTimestamp())
+                .format(userId=userId, username=username, itemUrl=itemUrl, timestamp=self.getTimestamp())
             cursor.execute(insertScript)
-        dbObj['db'].commit()
+        dbObj['db']. commit()
         
         #return affectedCount
         #UNDO this once Testnet changes are done.
@@ -162,7 +162,7 @@ class ApiHelper:
         res = cursor.fetchall()
         return cursor.rowcount > 0
     
-    def getTimestamp():
+    def getTimestamp(self):
         ts = time.time()
         return datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
 

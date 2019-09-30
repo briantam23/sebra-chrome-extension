@@ -5,12 +5,14 @@ from libra_actions import account, balance, mint, transfer
 from api_helpers import ApiHelper 
 from flask_cors import CORS
 
+
 app = Flask(__name__)
+
 app.secret_key = os.urandom(24)
 app.config['SECRET_KEY'] = 'zj8F?7uj9x41'
 
 #---------DEBUGGING-------------
-# address = ('0.0.0.0', 3001)
+# address = ('0.0.0.0', 5001)
 # ptvsd.enable_attach(address)
 # ptvsd.wait_for_attach()
 #---------DEBUGGING-------------
@@ -90,29 +92,26 @@ def buyItem():
         tokenInfo = _apiHelper.verifyToken(token, app)
 
         if(tokenInfo is not None and 'userId' in tokenInfo):
-            if(session is not None and 'userId' in session and session['userId'] == tokenInfo['userId'] and session['userType'] == userType):
-                customerInfo = _apiHelper.getUserByUniqueValue('id', dbObj, tokenInfo['userId'], userType)
-                recipientInfo = _apiHelper.getUserByUniqueValue('username', dbObj, recipientUsername, 'business')
-                if(customerInfo is not None and 'username' in customerInfo and customerInfo['username'] == senderUsername \
-                    and recipientInfo is not None and 'itemUrl' in data):
-                    #Check the customer has not yet paid for this item..
-                    if(_apiHelper.checkIfItemPurchased(dbObj, itemUrl, tokenInfo['userId'])):
-                        ret = json.dumps({'message': 'Success', 'data': 'Item already purchased'})
-                    else:
-                        senderMnemonic = customerInfo['mnemonic']
-                        sequenceNumber = 1
-                        newSequenceNumber = transfer(senderMnemonic, recipientInfo['address'], amount, sequenceNumber)
-                        result = {}
-                        result['success'] = True
-                        result['transferAmount'] = amount
-                        result['recipientUsername'] = recipientUsername
-                        result['senderUsername'] = senderUsername
-                        _apiHelper.updateCustomerSequenceAndItems(dbObj, tokenInfo['userId'], userType, senderUsername, newSequenceNumber, itemUrl)
-                        ret = json.dumps({'message': 'Success', 'data': result})
-                else :
-                    ret = json.dumps({'message': 'Not authorized', 'session': 'none'}), 401
-            else:
-                ret = json.dumps({'message': 'Session invalid'}), 401
+            customerInfo = _apiHelper.getUserByUniqueValue('id', dbObj, tokenInfo['userId'], userType)
+            recipientInfo = _apiHelper.getUserByUniqueValue('username', dbObj, recipientUsername, 'business')
+            if(customerInfo is not None and 'username' in customerInfo and customerInfo['username'] == senderUsername \
+                and recipientInfo is not None and 'itemUrl' in data):
+                #Check the customer has not yet paid for this item..
+                if(_apiHelper.checkIfItemPurchased(dbObj, itemUrl, tokenInfo['userId'])):
+                    ret = json.dumps({'message': 'Success', 'data': 'Item already purchased'})
+                else:
+                    senderMnemonic = customerInfo['mnemonic']
+                    sequenceNumber = 1
+                    newSequenceNumber = transfer(senderMnemonic, recipientInfo['address'], amount, sequenceNumber)
+                    result = {}
+                    result['success'] = True
+                    result['transferAmount'] = amount
+                    result['recipientUsername'] = recipientUsername
+                    result['senderUsername'] = senderUsername
+                    _apiHelper.updateCustomerSequenceAndItems(dbObj, tokenInfo['userId'], userType, senderUsername, newSequenceNumber, itemUrl)
+                    ret = json.dumps({'message': 'Success', 'data': result})
+            else :
+                ret = json.dumps({'message': 'Not authorized', 'session': 'none'}), 401
         else:
             ret = json.dumps({'message': 'Token not valid'}), 401
     else:
@@ -140,19 +139,16 @@ def authenticate(userType, request):
         userId = None
         if(data is not None and 'userId' in data):
             userId = data['userId']
-            if(session is not None and 'userId' in session and session['userId'] == userId and session['userType'] == userType):
-                session['userId'] = userId
-                session['userType'] = userType
-                userInfo = _apiHelper.getUserByUniqueValue('id', dbObj, str(userId), userType)
-                result = _apiHelper.returnSuccessfulLogin(userInfo, userType, app)
-                if(userType == 'customer'):
-                    articleGranted = False
-                    if(itemUrl is not None):
-                        articleGranted = _apiHelper.checkIfItemPurchased(dbObj, itemUrl, userInfo['id'])
-                    result['articleGranted'] = articleGranted
-                ret = json.dumps({'message': 'success', 'data': result})
-            else:
-                ret = json.dumps({'message': 'Session invalid'}), 401
+            session['userId'] = userId
+            session['userType'] = userType
+            userInfo = _apiHelper.getUserByUniqueValue('id', dbObj, str(userId), userType)
+            result = _apiHelper.returnSuccessfulLogin(userInfo, userType, app)
+            if(userType == 'customer'):
+                articleGranted = False
+                if(itemUrl is not None):
+                    articleGranted = _apiHelper.checkIfItemPurchased(dbObj, itemUrl, userInfo['id'])
+                result['articleGranted'] = articleGranted
+            ret = json.dumps({'message': 'success', 'data': result})
         else:
             ret = json.dumps({'message': 'Token invalid'}), 401
     elif(request.method == 'POST'):

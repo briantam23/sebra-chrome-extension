@@ -8,7 +8,7 @@ services:
     volumes:
       - .:/usr/src/app
     ports:
-      - 81:3001
+      - 5001:5001
       - 80:3000
   db:
     image: mysql:5.7

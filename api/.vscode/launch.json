@@ -8,7 +8,7 @@
             "name": "Attach (Remote Debug)",
             "type": "python",
             "request": "attach",
-            "port": 81,
+            "port": 5001,
             "host": "localhost",
             "pathMappings": [
                 {"localRoot": "${workspaceFolder}", "remoteRoot": "/usr/src/app/"}
