@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const SnippetContainer = () => {
+const SnippetContainer = ({ auth }) => {
   const classes = useStyles();
 
   const [amount, setAmount] = useState('');
@@ -44,7 +44,7 @@ const SnippetContainer = () => {
         <Paper className={classes.paperRightContainer}>
           <FormControl className={classes.formControl} error>
             <SnippetInput amount={ amount } error={ error } handleChange={ handleChange }/>
-            <Snippet amount={ amount } error={ error }/>
+            <Snippet amount={ amount } error={ error } auth={ auth }/>
           </FormControl>
         </Paper>
       </Grid>

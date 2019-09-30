@@ -32,7 +32,7 @@ const DialogContent = withStyles(theme => ({ root: { padding: theme.spacing(2) }
 const DialogActions = withStyles(theme => ({ root: { margin: 0, padding: theme.spacing(1) }}))(MuiDialogActions);
 
 
-const Snippet = ({ amount, error }) => {
+const Snippet = ({ amount, error, auth }) => {
   amount = amount * 100;
   const classes = useStyles();
 
@@ -64,7 +64,7 @@ const Snippet = ({ amount, error }) => {
           <Typography gutterBottom className={classes.code}>
             { `(function() { ` } <br/>
             &thinsp; { `var se = document.createElement('script'); se.type = 'text/javascript';` } <br/>
-            &thinsp; { `se.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dgo.nz/tmp/sebra.js';` } <br/>
+            &thinsp; { `se.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dgo.nz/tmp/sebra.js?recipientUsername=${auth.userName}';` } <br/>
             &thinsp; { `var s = document.getElementsByTagName('script')[0];` } <br/>
             &thinsp; { `s.parentNode.insertBefore(se, s);` } <br/>
             { `})();` }

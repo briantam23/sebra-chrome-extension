@@ -34,7 +34,7 @@ const _removeAuth = auth => ({
 
 export const logout = history => {
     window.localStorage.removeItem('token');
-    chrome.storage.local.remove('jwtToken');
+    if(chrome.storage) chrome.storage.local.remove('jwtToken');
     history.push('/')
     return _removeAuth({});
  }
@@ -49,7 +49,7 @@ export const login = (state, recipientUsername, itemUrl, history) => {
             .then(res => res.data.data)
             .then(data => {
                 window.localStorage.setItem('token', data.token);
-                chrome.storage.local.set({ jwtToken: localStorage['token'] });
+                if(chrome.storage) chrome.storage.local.set({ jwtToken: localStorage['token'] });
                 dispatch(exchangeTokenForAuth(history, recipientUsername, itemUrl));
             })
     )

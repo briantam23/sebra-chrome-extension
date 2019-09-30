@@ -22,7 +22,7 @@ const Dashboard = ({ history }) => {
   return (
     <Grid container className={classes.root}>
       <Balance auth={ auth }/>
-      <SnippetContainer/>
+      <SnippetContainer auth={ auth }/>
     </Grid>
   );
 }
