@@ -1,4 +1,6 @@
-import React, { useEffect } from 'react';
+/* global chrome */
+
+import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { exchangeTokenForAuth } from '../../store/actions/auth';
@@ -14,13 +16,15 @@ import Nav from '../Nav';
 
 const App = () => {
     const dispatch = useDispatch();
+    
+    const [itemUrl, setItemUrl] = useState(null);
 
-    useEffect(() => { 
-      dispatch(exchangeTokenForAuth()) 
-      /* chrome.storage.local.set({foo: 'h', jwtToken: localStorage['token']}, function() {
-        console.log('Settings saved');
-      }); */
-    });
+    useEffect(() => {
+      chrome.storage.local.get(['itemUrl'], (items) => {
+        setItemUrl(items.itemUrl);
+      })
+      setTimeout(() => dispatch(exchangeTokenForAuth(null, null, itemUrl)), 10);
+    }, [])
 
     return (
       <Router>

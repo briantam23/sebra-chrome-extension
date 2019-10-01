@@ -1,12 +1,11 @@
+/* global chrome */
+
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-
 import Spinner from '../shared/spinner/Spinner';
 import AuthInput from './AuthInput';
-
 import { login } from '../../store/actions/auth';
 import { createUser } from '../../store/actions/users';
-
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
@@ -24,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const AuthForm = ({ pathname, history, recipientUsername, itemUrl }) => {
+const AuthForm = ({ pathname, history, recipientUsername/* , itemUrl  */}) => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
@@ -35,7 +34,14 @@ const AuthForm = ({ pathname, history, recipientUsername, itemUrl }) => {
       error: '',
       showPassword: false
     });
-  
+    const [itemUrl, setItemUrl] = useState(null);
+
+    useEffect(() => {
+      chrome.storage.local.get(['itemUrl'], (items) => {
+        setItemUrl(items.itemUrl);
+      })
+    }, [])
+
     useEffect(() => setState({
       username: '',
       password: '',

@@ -6,18 +6,16 @@ import axios from 'axios';
 
 export const exchangeTokenForAuth = (history, recipientUsername, itemUrl) => (
     dispatch => {
-
         const token = window.localStorage.getItem('token');
 
         if(!token) return;
-        return axios.get('https://sebraapi.herokuapp.com/api/authCustomer', 
+        return axios.get(`https://sebraapi.herokuapp.com/api/authCustomer?itemUrl=${itemUrl}`,
             { headers: { authorization: token } }
         )
             .then(res => res.data.data)
             .then(auth => {
                 dispatch(_setCustomerAuth(auth));
-                if(history && itemUrl) history.push(`/${recipientUsername}/${itemUrl}`);
-                else if(history) history.push('/');
+                history.push('/');
             })
             .catch(ex => window.localStorage.removeItem('token'))
     }
@@ -49,7 +47,7 @@ export const login = (state, recipientUsername, itemUrl, history) => {
             .then(res => res.data.data)
             .then(data => {
                 window.localStorage.setItem('token', data.token);
-                if(chrome.storage) chrome.storage.local.set({ jwtToken: localStorage['token'] });
+                if(chrome.storage) chrome.storage.local.set({ token: localStorage['token'] });
                 dispatch(exchangeTokenForAuth(history, recipientUsername, itemUrl));
             })
     )
