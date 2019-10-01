@@ -35,7 +35,7 @@ const Nav = ({ pathname, history }) => {
   const classes = useStyles();
 
   const [value, setValue] = useState('payment');
-console.log()
+
   let _pathname = null;
   if(pathname) _pathname = pathname.split('/')[2];
   pathname = pathname.slice(0, 8)
