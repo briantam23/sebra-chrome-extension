@@ -1,17 +1,12 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Button from '@material-ui/core/Button';
-
-import PoolIcon from '@material-ui/icons/Pool';
-import MultilineChartIcon from '@material-ui/icons/MultilineChart';
-import StoreIcon from '@material-ui/icons/Store';
-//import WebIcon from '@material-ui/icons/Web';
+import { getSiteIcon } from '../../../../util';
 
 
 const useStyles = makeStyles(theme => ({
@@ -44,28 +39,8 @@ const useStyles = makeStyles(theme => ({
 
 const ResultItem = ({ name, idx, selectedIdx, handleListItemClick }) => {
     const classes = useStyles();
+    const [backgroundColor, iconComponent, urlAddress] = getSiteIcon(name)
 
-    let backgroundColor, iconComponent, urlAddress = null;
-    if(name === 'Digital Ocean') {
-        backgroundColor = 'dodgerblue';
-        iconComponent = <PoolIcon fontSize='inherit'/>;
-        urlAddress = 'blog.digitalocean.com';
-    }
-    else if(name === 'Heap Analytics') {
-        backgroundColor = 'mediumseagreen';
-        iconComponent = <MultilineChartIcon fontSize='inherit'/>;
-        urlAddress = 'heap.io/blog';
-    }
-    else if(name === 'Shopify') {
-        backgroundColor = 'lightcoral';
-        iconComponent = <StoreIcon fontSize='inherit'/>;
-        urlAddress = 'shopify.com/blog';
-    }
-    /* else if(name === 'Heroku') {
-        backgroundColor = 'gold';
-        iconComponent = <WebIcon fontSize='inherit'/>;
-        urlAddress = 'heroku.com';
-    } */
     return(
         <ListItem 
             button

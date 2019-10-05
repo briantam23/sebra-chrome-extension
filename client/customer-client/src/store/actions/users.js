@@ -7,17 +7,15 @@ export const _createCustomerUser = user => ({
     user
 })
 
-export const createUser = state => {
-    const { username, password } = state;
-
-    return dispatch => (
+export const createUser = (username, password) => (
+    dispatch => (
         axios.post('https://sebraapi.herokuapp.com/api/register', 
             { username, password, userType: 'customer' }
         )
             .then(res => res.data.data)
             .then(data => dispatch(_createCustomerUser(data)))
     )
-}
+)
 
 export const _updateCustomerUser = user => ({
     type: UPDATE_CUSTOMER_USER,
@@ -28,7 +26,7 @@ export const updateUser = password => {
     const token = window.localStorage.getItem('token');
     
     return dispatch => (
-        axios.put('https://sebraapi.herokuapp.com/api/updateCustomerUser', 
+        axios.put('https://sebraapi.herokuapp.com/api/updateUser', 
             { headers: { authorization: token }, password }
         )
             .then(res => res.data.data)

@@ -25,29 +25,16 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const Banner = ({ params, history }) => {
+const Banner = ({ history }) => {
   const classes = useStyles();
   const auth = useSelector(store => store.auth);
-  
-  let recipientUsername, itemUrl = null;
-  if(params && params.itemUrl) {
-    itemUrl = params.itemUrl;
-    recipientUsername = params.recipientUsername;
-  }
 
   const handleClick = () => {
-    if(!auth.address) { 
-      if(itemUrl) history.push(`/login/${recipientUsername}/${itemUrl}`); 
-      else history.push('/login');
-    }
-    else if(!auth.articleGranted) {
-      if(itemUrl) history.push(`/account/payment/${recipientUsername}/${itemUrl}`);
-      else history.push('/account/payment');
-    }
-    else {
-      if(itemUrl) history.push(`/account/payment-completed/${recipientUsername}/${itemUrl}`);
-      else history.push('/account/payment-completed');
-    }
+    if(!auth.address) history.push('/login');
+
+    else if(!auth.articleGranted) history.push('/account/payment');
+
+    else history.push('/account/payment-completed');
   }
   return(
       <div className={classes.container}>

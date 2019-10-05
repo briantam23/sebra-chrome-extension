@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import { faqList } from '../../../util';
 
 
 const useStyles = makeStyles(theme => ({
@@ -10,20 +11,6 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const faqList = [
-    {
-        question: 'Dicunt cotidieque comprehensam?',
-        answer: 'Cu sit, mei purto docendi ea, ubique graeci scripserit qui cu.'
-    },
-    {
-        question: 'Lorem ipsum dolor sit amet?',
-        answer: 'Quos blanditiis tenetur suscipit, quam beatae rerum inventore.'
-    },
-    {
-        question: 'Est et interesset?',
-        answer: 'Intellegebat, ex eum odio adipisci incorrupte.'
-    }
-]
 
 const Faq = () => {
     const classes = useStyles();

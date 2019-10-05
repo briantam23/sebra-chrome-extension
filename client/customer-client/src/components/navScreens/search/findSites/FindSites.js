@@ -4,6 +4,7 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
+import { searchCategories } from '../../../../util';
 
 
 const useStyles = makeStyles(theme => ({
@@ -50,6 +51,7 @@ const useStyles = makeStyles(theme => ({
 
 const categories = ['Trending Sites', 'Money', 'Productivity', 'Technology'];
 
+
 const FindSites = () => {
     const classes = useStyles();
 
@@ -57,23 +59,7 @@ const FindSites = () => {
 
     useEffect(() => setFilteredList(filteredList), [filteredList]);
 
-    const handleChange = e => {
-        let currentList = [];
-        let newList = [];
-
-        if(e.target.value !== "") {
-            currentList = categories;
-            newList = currentList.filter(item => {
-                const _item = item.toLowerCase();
-                const searchStr = e.target.value.toLowerCase();
-
-                return _item.includes(searchStr);
-            })
-        } 
-        else newList = categories;
-            
-        setFilteredList(newList);
-    }
+    const handleChange = e => setFilteredList(searchCategories(e, categories));
 
     return(
         <div className={classes.mainContainer}>

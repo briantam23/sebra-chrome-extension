@@ -4,10 +4,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
-import ShareIcon from '@material-ui/icons/Share';
-import CreditCardIcon from '@material-ui/icons/CreditCard';
-import MailOutlineIcon from '@material-ui/icons/MailOutline';
-import SmartphoneIcon from '@material-ui/icons/Smartphone';
+import { getCategoryIcon } from '../../../../util';
 
 
 const useStyles = makeStyles(theme => ({
@@ -27,24 +24,7 @@ const useStyles = makeStyles(theme => ({
 
 const CategoryItem = ({ name }) => {
     const classes = useStyles();
-
-    let backgroundColor, iconComponent = null;
-    if(name === 'Trending Sites') {
-        backgroundColor = 'dodgerblue';
-        iconComponent = <ShareIcon fontSize='inherit'/>;
-    }
-    else if(name === 'Money') {
-        backgroundColor = 'mediumseagreen';
-        iconComponent = <CreditCardIcon fontSize='inherit'/>;
-    }
-    else if(name === 'Productivity') {
-        backgroundColor = 'lightcoral';
-        iconComponent = <MailOutlineIcon fontSize='inherit'/>;
-    }
-    else if(name === 'Technology') {
-        backgroundColor = 'gold';
-        iconComponent = <SmartphoneIcon fontSize='inherit'/>;
-    }
+    const [backgroundColor, iconComponent] = getCategoryIcon(name);
     
     return(
         <ListItem>

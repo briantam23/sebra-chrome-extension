@@ -5,7 +5,7 @@ import SnackbarContentWrapper from './SnackbarContentWrapper';
 import Snackbar from '@material-ui/core/Snackbar';
 
 
-const ErrorSnackbar = ({ pathname, history, params }) => {
+const ErrorSnackbar = ({ pathname, history }) => {
 
   const [open, setOpen] = useState(false);
   const [error, setError] = useState('');
@@ -22,7 +22,6 @@ const ErrorSnackbar = ({ pathname, history, params }) => {
       <Buttons 
         pathname={ pathname }
         history={ history }
-        params={ params } 
         setOpen={ setOpen } 
         setLoading={ setLoading }
         setError={ setError }

@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const AuthForm = ({ pathname, history, recipientUsername/* , itemUrl  */}) => {
+const AuthForm = ({ pathname, history }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
@@ -36,10 +36,12 @@ const AuthForm = ({ pathname, history, recipientUsername/* , itemUrl  */}) => {
     });
     const [itemUrl, setItemUrl] = useState(null);
 
+    const { username, password, loading, showPassword } = state;
+
     useEffect(() => {
-      chrome.storage.local.get(['itemUrl'], (items) => {
-        setItemUrl(items.itemUrl);
-      })
+      if(chrome.storage) {
+        chrome.storage.local.get(['itemUrl'], items => setItemUrl(items.itemUrl));
+      }
     }, [])
 
     useEffect(() => setState({
@@ -54,24 +56,25 @@ const AuthForm = ({ pathname, history, recipientUsername/* , itemUrl  */}) => {
       setState({ ...state, loading: true });
       
       if(pathname.slice(0, 6) === '/login') {
-        dispatch(login(state, recipientUsername, itemUrl, history))
+        dispatch(login(username, password, null, itemUrl, history))
           .then(() => setState({ ...state, loading: false }))
           .catch(() => setState({ ...state, loading: false, error: 'Invalid credentials! Please try again.'}))
       }
       else {
-        dispatch(createUser(state))
-          .then(() => dispatch(login(state, recipientUsername, itemUrl, history)))
+        dispatch(createUser(username, password))
+          .then(() => dispatch(login(username, password, null, itemUrl, history)))
           .then(() => setState({ ...state, loading: false }))
           .catch(() => setState({ ...state, loading: false, error: 'Username taken! Please try again.'}))
       }
     }
 
-    const handleClickShowPassword = () => setState({ ...state, showPassword: !state.showPassword });
+    const handleClickShowPassword = () => setState({ ...state, showPassword: !showPassword });
+    
     return(
       <form className={classes.formContainer2} noValidate autoComplete="off">
-        { state.loading ? <Spinner/> : null }
+        { loading ? <Spinner/> : null }
         <AuthInput 
-          state={ state } 
+          { ...state }
           handleChange={ handleChange } 
           handleClickShowPassword={ handleClickShowPassword }
         />

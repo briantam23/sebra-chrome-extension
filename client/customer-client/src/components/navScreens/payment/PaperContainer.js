@@ -15,14 +15,14 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const PaperContainer = ({ pathname, params, history }) => {
+const PaperContainer = ({ pathname, history }) => {
   const classes = useStyles();
 
   return(
     <Paper className={classes.paperContainer}>
       <Fragment>
-        <PaperSubContainer pathname={ pathname } params={ params }/>
-        <ErrorSnackbar pathname={ pathname } history={ history } params={ params }/>
+        <PaperSubContainer pathname={ pathname }/>
+        <ErrorSnackbar pathname={ pathname } history={ history }/>
       </Fragment>
     </Paper>
   )

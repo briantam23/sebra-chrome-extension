@@ -31,7 +31,7 @@ const ResultsAppBar = ({ handleDeleteClick }) => {
 
     return(
         <div className={classes.iconContainer}>
-            <Link to={`/account/search`}>
+            <Link to={'/account/search'}>
                 <ArrowBackIcon className={classes.arrowIcon}/>
             </Link>
             <div className={classes.rightContainer}>

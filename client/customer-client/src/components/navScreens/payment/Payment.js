@@ -14,14 +14,14 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const Payment = ({ pathname, params, history }) => {
+const Payment = ({ pathname, history }) => {
   const classes = useStyles();
   pathname = pathname.slice(8, 26);
   
   return (
     <div className={classes.mainContainer}>
       <Header heading='Sebra'/>
-      <PaperContainer pathname={ pathname } params={ params } history={ history }/>
+      <PaperContainer pathname={ pathname } history={ history }/>
     </div>
   );
 }

@@ -43,11 +43,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const PaperSubContainer = ({ pathname, params }) => {
+const PaperSubContainer = ({ pathname }) => {
     const classes = useStyles();
-    
-    let itemUrl = null;
-    if(params && params.itemUrl) itemUrl = params.itemUrl;
 
     return(
         <div className={classes.paperSubContainer}>

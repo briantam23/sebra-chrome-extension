@@ -39,16 +39,16 @@ const CustomTextField = ({ InputLabelProps = {}, ...props }) => (
   <TextField InputLabelProps={{ ...InputLabelProps, shrink: true }} {...props} />
 )
 
-const AuthInput = ({ state, handleChange, handleClickShowPassword }) => {
+const AuthInput = ({ username, password, error, showPassword, handleChange, handleClickShowPassword }) => {
   const classes = useStyles();
   const handleMouseDownPassword = e => e.preventDefault();
-  
+
   return(
     <Fragment>
       <FormControl className={classes.formControl} error>
         {
-          state.error 
-            ? <FormHelperText className={classes.error}>{state.error}</FormHelperText>  
+          error 
+            ? <FormHelperText className={classes.error}>{error}</FormHelperText>  
             : null
         }
         <CustomTextField
@@ -58,7 +58,7 @@ const AuthInput = ({ state, handleChange, handleClickShowPassword }) => {
           id="username"
           label="Username"
           className={classes.textField}
-          value={state.username}
+          value={username}
           onChange={handleChange('username')}
           margin="normal"
           variant="outlined"
@@ -71,10 +71,10 @@ const AuthInput = ({ state, handleChange, handleClickShowPassword }) => {
           required
           fullWidth
           id="password"
-          type={state.showPassword ? 'text' : 'password'}
+          type={showPassword ? 'text' : 'password'}
           label="Password"
           className={classes.textField}
-          value={state.password}
+          value={password}
           onChange={handleChange('password')}
           margin="normal"
           variant="outlined"
@@ -88,7 +88,7 @@ const AuthInput = ({ state, handleChange, handleClickShowPassword }) => {
                   onClick={handleClickShowPassword}
                   onMouseDown={handleMouseDownPassword}
                 >
-                  {state.showPassword ? <VisibilityOff /> : <Visibility />}
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
               </InputAdornment>
             )

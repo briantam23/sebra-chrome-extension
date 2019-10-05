@@ -23,14 +23,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const Auth = ({ pathname, params, history }) => {
+const Auth = ({ pathname, history }) => {
   const classes = useStyles();
- 
-  let recipientUsername, itemUrl = null;
-  if(params && params.itemUrl) {
-      itemUrl = params.itemUrl;
-      recipientUsername = params.recipientUsername;
-  }
 
   return (
     <div className={classes.mainContainer}>
@@ -38,17 +32,8 @@ const Auth = ({ pathname, params, history }) => {
         { pathname.slice(0, 6) === '/login' ? 'Login.' : 'Create your account.' }  
       </Typography>
       <div className={classes.formContainer1}>
-        <AuthForm
-          pathname={ pathname } 
-          history={ history }
-          recipientUsername={ recipientUsername }
-          itemUrl={ itemUrl }
-        />
-        <AuthLinks 
-          pathname={ pathname } 
-          recipientUsername={ recipientUsername }
-          itemUrl={ itemUrl }
-        />
+        <AuthForm pathname={ pathname } history={ history }/>
+        <AuthLinks pathname={ pathname }/>
       </div>
     </div>
   );

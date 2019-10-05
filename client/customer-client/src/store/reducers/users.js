@@ -6,7 +6,7 @@ const usersReducer = (state = [], action) => {
         case CREATE_CUSTOMER_USER:
             return [...state, action.user];
         case UPDATE_CUSTOMER_USER:
-            return state.map(user => user.address !== action.user.address ? user : action.user);
+            return state;
         default:
             return state;
     }

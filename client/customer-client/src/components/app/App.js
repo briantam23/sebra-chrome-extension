@@ -20,11 +20,11 @@ const App = () => {
     const [itemUrl, setItemUrl] = useState(null);
 
     useEffect(() => {
-      chrome.storage.local.get(['itemUrl'], (items) => {
-        setItemUrl(items.itemUrl);
-      })
-      setTimeout(() => dispatch(exchangeTokenForAuth(null, null, itemUrl)), 10);
-    }, [])
+      if(chrome.storage) {
+        chrome.storage.local.get(['itemUrl'], items => setItemUrl(items.itemUrl));
+      }
+      setTimeout(() => dispatch(exchangeTokenForAuth(null, itemUrl)), 10);
+    }, [dispatch, itemUrl])
 
     return (
       <Router>
@@ -32,14 +32,8 @@ const App = () => {
           <Route exact path='/account/(payment|payment-completed)' render={ ({ location, history }) => 
             <Payment pathname={ location.pathname } history={ history }/> } 
           />
-          <Route path='/account/(payment|payment-completed)/:recipientUsername/:itemUrl' render={ ({ location, match, history }) => 
-            <Payment pathname={ location.pathname } params={ match.params } history={ history }/> } 
-          />
           <Route exact path='/(login|create-account)' render={ ({ location, history }) => 
             <Auth pathname={ location.pathname } history={ history }/> } 
-          />
-          <Route path='/(login|create-account)/:recipientUsername/:itemUrl' render={ ({ location, match, history }) => 
-            <Auth pathname={ location.pathname } params={ match.params } history={ history }/> } 
           />
           <Route path='/account/search' render={ () => <FindSites/> } />
           <Route path='/account/search-results' render={ () => <SiteResults/> } />
@@ -48,9 +42,6 @@ const App = () => {
             <Settings pathname={ location.pathname } history={ history }/> } 
           />
           <Route exact path='/' render={ ({ history }) => <Banner history={ history }/> }/>
-          <Route path='/:recipientUsername/:itemUrl' render={ ({ match, history }) => 
-            <Banner params={ match.params } history={ history }/> }
-          />
         </Switch>
         <Route render={ ({ location, history }) => <Nav pathname={ location.pathname } history={ history }/> } />
       </Router>

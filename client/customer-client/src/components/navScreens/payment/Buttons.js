@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-const Buttons = ({ pathname, history, params, setOpen, setLoading, setError }) => {
+const Buttons = ({ pathname, history, setOpen, setLoading, setError }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
@@ -32,10 +32,12 @@ const Buttons = ({ pathname, history, params, setOpen, setLoading, setError }) =
     const [recipientUsername, setRecipientUsername] = useState(null);
 
     useEffect(() => {
-      chrome.storage.local.get(['itemUrl', 'recipientUsername'], (items) => {
-        setItemUrl(items.itemUrl);
-        setRecipientUsername(items.recipientUsername);
-      })
+      if(chrome.storage) {
+        chrome.storage.local.get(['itemUrl', 'recipientUsername'], items => {
+          setItemUrl(items.itemUrl);
+          setRecipientUsername(items.recipientUsername);
+        })
+      }
     }, [])
 
     const handlePayClick = e => {
@@ -43,7 +45,7 @@ const Buttons = ({ pathname, history, params, setOpen, setLoading, setError }) =
         setOpen(true);
         setLoading(true);
         return (
-          dispatch(updateOrder(auth, history, itemUrl, recipientUsername))
+          dispatch(updateOrder(auth.userName, history, itemUrl, recipientUsername))
             .then(() => setLoading(false))
             .catch(() => {
               setLoading(false);
@@ -52,7 +54,7 @@ const Buttons = ({ pathname, history, params, setOpen, setLoading, setError }) =
         )
     }
 
-    const handleSearchClick = () => history.push('/account/search');
+    //const handleSearchClick = () => history.push('/account/search');
     
     return (
       /* itemUrl   

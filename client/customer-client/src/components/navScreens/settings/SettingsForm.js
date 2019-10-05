@@ -66,6 +66,8 @@ const SettingsForm = ({ history }) => {
       loading: false
     })
     
+    const { password, confirmPassword, error, loading } = state;
+
     const handleChange = id => e => setState({ ...state, [id]: e.target.value });
 
     const handleUpdateClick = () => {
@@ -77,20 +79,20 @@ const SettingsForm = ({ history }) => {
       
       setState({ ...state, loading: true });
       
-      dispatch(updateUser(state))
+      dispatch(updateUser(password))
         .then(() => setState({ ...state, loading: false }))
         .catch(() => setState({ ...state, loading: false, error: 'Invalid password! Please try again.'}))
     }
 
-    const handleFaqClick = () => history.push(`/account/faq`);
+    const handleFaqClick = () => history.push('/account/faq');
 
     return(
         <Fragment>
-          { state.loading ? <Spinner/> : null }
+          { loading ? <Spinner/> : null }
           <FormControl className={classes.formControl} error>
             {
-              state.error 
-              ? <FormHelperText className={classes.error}>{state.error}</FormHelperText>  
+              error 
+              ? <FormHelperText className={classes.error}>{error}</FormHelperText>  
               : null
             }
             <TextField
@@ -100,7 +102,7 @@ const SettingsForm = ({ history }) => {
               type='password'
               label="Password"
               className={classes.textField}
-              value={state.password}
+              value={password}
               onChange={handleChange('password')}
               margin="normal"
               variant="filled"
@@ -116,7 +118,7 @@ const SettingsForm = ({ history }) => {
               type='password'
               label="Confirm Password"
               className={classes.textField}
-              value={state.confirmPassword}
+              value={confirmPassword}
               onChange={handleChange('confirmPassword')}
               margin="normal"
               variant="filled"

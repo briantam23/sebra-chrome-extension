@@ -25,7 +25,7 @@ const CategoryList = ({ filteredList }) => {
     <List className={classes.root}>
     { 
       filteredList.map((categoryName, idx) => (
-        <Link to={`/account/search-results`} className={classes.link} key={ idx }>
+        <Link to={'/account/search-results'} className={classes.link} key={ idx }>
           <CategoryItem name={ categoryName }/>
         </Link>
       ))
