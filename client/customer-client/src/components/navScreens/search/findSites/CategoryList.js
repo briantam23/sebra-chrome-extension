@@ -20,7 +20,6 @@ const useStyles = makeStyles(theme => ({
 
 const CategoryList = ({ filteredList }) => {
   const classes = useStyles();
-
   return (
     <List className={classes.root}>
     { 

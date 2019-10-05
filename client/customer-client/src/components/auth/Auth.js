@@ -25,7 +25,6 @@ const useStyles = makeStyles(theme => ({
 
 const Auth = ({ pathname, history }) => {
   const classes = useStyles();
-
   return (
     <div className={classes.mainContainer}>
       <Typography variant="h5" align="left" className={classes.header}>

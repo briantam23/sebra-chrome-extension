@@ -35,15 +35,11 @@ const AuthForm = ({ pathname, history }) => {
       showPassword: false
     });
     const [itemUrl, setItemUrl] = useState(null);
-
     const { username, password, loading, showPassword } = state;
 
     useEffect(() => {
-      if(chrome.storage) {
-        chrome.storage.local.get(['itemUrl'], items => setItemUrl(items.itemUrl));
-      }
+      if(chrome.storage) chrome.storage.local.get(['itemUrl'], items => setItemUrl(items.itemUrl));
     }, [])
-
     useEffect(() => setState({
       username: '',
       password: '',
@@ -51,7 +47,6 @@ const AuthForm = ({ pathname, history }) => {
      }), [pathname])
 
     const handleChange = id => e => setState({ ...state, [id]: e.target.value });
-  
     const handleClick = () => {
       setState({ ...state, loading: true });
       
@@ -67,7 +62,6 @@ const AuthForm = ({ pathname, history }) => {
           .catch(() => setState({ ...state, loading: false, error: 'Username taken! Please try again.'}))
       }
     }
-
     const handleClickShowPassword = () => setState({ ...state, showPassword: !showPassword });
     
     return(

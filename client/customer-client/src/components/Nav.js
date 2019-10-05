@@ -35,7 +35,6 @@ const Nav = ({ pathname, history }) => {
   const classes = useStyles();
 
   const [value, setValue] = useState('payment');
-
   pathname = pathname.split('/')[2];
 
   useEffect(() => {

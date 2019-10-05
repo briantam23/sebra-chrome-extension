@@ -24,11 +24,11 @@ const useStyles = makeStyles(theme => ({
         margin: '0px 10px',
         cursor: 'pointer'
     }
-}));
+}))
+
 
 const ResultsAppBar = ({ handleDeleteClick }) => {
     const classes = useStyles();
-
     return(
         <div className={classes.iconContainer}>
             <Link to={'/account/search'}>

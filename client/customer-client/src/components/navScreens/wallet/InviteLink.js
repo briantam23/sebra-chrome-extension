@@ -44,7 +44,6 @@ const useStyles = makeStyles(theme => ({
 
 const InviteLink = () => {
     const classes = useStyles();
-
     return(
         <Paper className={classes.paperContainer}>
             <Typography variant="h2" className={classes.header}>

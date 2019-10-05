@@ -9,12 +9,11 @@ const useStyles = makeStyles(theme => ({
         width: '227px',
         margin: '15px 0px 0px 12px'
     }
-}));
+}))
 
 
 const Faq = () => {
     const classes = useStyles();
-    
     return(
         <div className={classes.bodyContainer}>
         {

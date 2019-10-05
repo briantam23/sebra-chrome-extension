@@ -31,11 +31,10 @@ const Banner = ({ history }) => {
 
   const handleClick = () => {
     if(!auth.address) history.push('/login');
-
     else if(!auth.articleGranted) history.push('/account/payment');
-
     else history.push('/account/payment-completed');
   }
+  
   return(
       <div className={classes.container}>
           <Typography variant="h2" className={classes.header}>Sebra</Typography>

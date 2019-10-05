@@ -22,6 +22,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+
 const Settings = ({ pathname, history }) => {
     const classes = useStyles();
     pathname = pathname.slice(8, 17);

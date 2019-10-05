@@ -16,7 +16,6 @@ const useStyles = makeStyles(theme => ({
 
 const ResultList = ({ results, selectedIdx, handleListItemClick }) => {
   const classes = useStyles();
-
   return (
     <List className={classes.root}>
     { 

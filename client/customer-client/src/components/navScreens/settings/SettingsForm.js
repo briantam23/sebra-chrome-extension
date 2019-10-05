@@ -65,14 +65,10 @@ const SettingsForm = ({ history }) => {
       error: '',
       loading: false
     })
-    
     const { password, confirmPassword, error, loading } = state;
 
     const handleChange = id => e => setState({ ...state, [id]: e.target.value });
-
     const handleUpdateClick = () => {
-      const { password, confirmPassword } = state;
-      
       if(password !== confirmPassword) {
         return setState({ ...state, error: 'Passwords must match! Please try again.'})
       }
@@ -83,12 +79,11 @@ const SettingsForm = ({ history }) => {
         .then(() => setState({ ...state, loading: false }))
         .catch(() => setState({ ...state, loading: false, error: 'Invalid password! Please try again.'}))
     }
-
     const handleFaqClick = () => history.push('/account/faq');
 
     return(
         <Fragment>
-          { loading ? <Spinner/> : null }
+        { loading ? <Spinner/> : null }
           <FormControl className={classes.formControl} error>
             {
               error 

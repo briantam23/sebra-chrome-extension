@@ -16,13 +16,10 @@ import Nav from '../Nav';
 
 const App = () => {
     const dispatch = useDispatch();
-    
     const [itemUrl, setItemUrl] = useState(null);
 
     useEffect(() => {
-      if(chrome.storage) {
-        chrome.storage.local.get(['itemUrl'], items => setItemUrl(items.itemUrl));
-      }
+      if(chrome.storage) chrome.storage.local.get(['itemUrl'], items => setItemUrl(items.itemUrl));
       setTimeout(() => dispatch(exchangeTokenForAuth(null, itemUrl)), 10);
     }, [dispatch, itemUrl])
 

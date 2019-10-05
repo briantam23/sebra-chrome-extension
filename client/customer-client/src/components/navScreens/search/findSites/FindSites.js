@@ -56,7 +56,6 @@ const FindSites = () => {
     const classes = useStyles();
 
     const [filteredList, setFilteredList] = useState(categories);
-
     useEffect(() => setFilteredList(filteredList), [filteredList]);
 
     const handleChange = e => setFilteredList(searchCategories(e, categories));

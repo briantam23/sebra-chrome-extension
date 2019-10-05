@@ -11,11 +11,11 @@ const useStyles = makeStyles(theme => ({
         color: 'darkslateblue',
         alignSelf: 'center'
     }
-}));
+}))
+
 
 const Header = ({ heading }) => {
     const classes = useStyles();
-
     return(
         <Typography className={classes.header} variant="h2" align="center">
             { heading }

@@ -45,7 +45,6 @@ const useStyles = makeStyles(theme => ({
 
 const PaperSubContainer = ({ pathname }) => {
     const classes = useStyles();
-
     return(
         <div className={classes.paperSubContainer}>
         {  
@@ -59,8 +58,7 @@ const PaperSubContainer = ({ pathname }) => {
             : <Fragment>
                 <Typography className={classes.subheader1a} variant="h2">Pay with Libra</Typography>
                 <Typography className={classes.subheader2} variant="h2">≋0.25 to read</Typography>
-              </Fragment>
-              
+              </Fragment>         
                 /*<Fragment>
                     <Typography className={classes.subheader1b} variant="h2">Find Participating Sites</Typography>
                     <div className={classes.emojiContainer}>

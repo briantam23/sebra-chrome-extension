@@ -6,7 +6,6 @@ import { getShareIcon } from '../../../../util';
 
 const ShareMenuItem = ({ name }) => {
   const iconComponent = getShareIcon(name);
-
   return(
     <Fragment>
       <ListItemIcon>

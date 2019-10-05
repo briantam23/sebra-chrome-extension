@@ -27,7 +27,6 @@ const Buttons = ({ pathname, history, setOpen, setLoading, setError }) => {
     const dispatch = useDispatch();
 
     const auth = useSelector(store => store.auth);
-    
     const [itemUrl, setItemUrl] = useState(null);
     const [recipientUsername, setRecipientUsername] = useState(null);
 
@@ -53,12 +52,11 @@ const Buttons = ({ pathname, history, setOpen, setLoading, setError }) => {
             })
         )
     }
-
     //const handleSearchClick = () => history.push('/account/search');
     
     return (
       /* itemUrl   
-        ?  */pathname !== '/payment-completed' 
+   ?  */pathname !== '/payment-completed' 
           ? <Button onClick={handlePayClick} className={classes.button} variant="contained" color="primary" >
               Click here to pay
             </Button>

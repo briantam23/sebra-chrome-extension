@@ -1,4 +1,5 @@
 import React from 'react';
+
 import ShareIcon from '@material-ui/icons/Share';
 import CreditCardIcon from '@material-ui/icons/CreditCard';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
@@ -47,21 +48,15 @@ export const getCategoryIcon = name => {
 }
 
 export const searchCategories = (e, categories) => {
-    let currentList = [];
-    let newList = [];
-
     if(e.target.value !== "") {
-        currentList = categories;
-        newList = currentList.filter(item => {
+        return categories.filter(item => {
             const _item = item.toLowerCase();
             const searchStr = e.target.value.toLowerCase();
 
             return _item.includes(searchStr);
         })
     } 
-    else newList = categories;
-
-    return newList
+    return categories;
 }
 
 

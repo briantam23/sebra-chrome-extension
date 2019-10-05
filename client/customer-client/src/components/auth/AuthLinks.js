@@ -18,7 +18,6 @@ const useStyles = makeStyles(theme => ({
 
 const AuthLinks = ({ pathname }) => {
     const classes = useStyles();
-    
     return(
         <Typography className={classes.linkParent} variant="body2" align="left">
           {

@@ -17,7 +17,6 @@ const useStyles = makeStyles(theme => ({
 
 const PaperContainer = ({ pathname, history }) => {
   const classes = useStyles();
-
   return(
     <Paper className={classes.paperContainer}>
       <Fragment>

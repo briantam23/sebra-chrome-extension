@@ -14,9 +14,9 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+
 const Wallet = () => {
     const classes = useStyles();
-    
     return(
         <div className={classes.mainContainer}>
             <Header heading='Sebra'/>
