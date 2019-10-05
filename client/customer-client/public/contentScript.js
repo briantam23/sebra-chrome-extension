@@ -20,10 +20,17 @@ chrome.storage.local.get(['token'], function(items) {
 
     if(items.token) window.localStorage.setItem('token', items.token);
     else window.localStorage.removeItem('token');
-    
 
+    
     itemUrl = window.localStorage.getItem('itemUrl');
     recipientUsername = window.localStorage.getItem('recipientUsername');
 
     chrome.storage.local.set({ itemUrl: itemUrl, recipientUsername: recipientUsername });
 })
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    console.log("something happening from the extension");
+    var event = document.createEvent('Event');
+    event.initEvent('hello');
+    document.dispatchEvent(event);
+});
