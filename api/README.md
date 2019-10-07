@@ -8,7 +8,7 @@ Created with Python. Utilises:
 - MySQL
 
 ## Run Locally:
-In the api directory, run: docker-compose build followed by docker-compose up. By default, the server is hosted on port :80
+In the api directory, run: docker-compose build followed by docker-compose up. By default, the server is hosted on port `:80`
 
 ## Debugging
 Debugging is possible via VS Code:
