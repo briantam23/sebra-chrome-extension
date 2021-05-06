@@ -19,7 +19,7 @@
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
-    "bestzip": "^2.1.4"
+    "bestzip": "^2.1.7"
   },
   "scripts": {
     "start": "react-scripts start",
